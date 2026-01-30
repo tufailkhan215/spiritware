@@ -9,8 +9,8 @@
  */
 {
   "current": {
-    "header_style": "default",
-    "footer_style": "default",
+    "header_style": "preview",
+    "footer_style": "preview",
     "sections": {
       "header": {
         "type": "header",
