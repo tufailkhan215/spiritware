@@ -374,6 +374,64 @@
     },
     "instagram-feed": {
       "type": "instagram-feed",
+      "blocks": {
+        "image_QVLfVe": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/87.jpg",
+            "link": "",
+            "like_count": ""
+          }
+        },
+        "image_kztqce": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/87.jpg",
+            "link": "",
+            "like_count": ""
+          }
+        },
+        "image_UcTwFA": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/87.jpg",
+            "link": "",
+            "like_count": ""
+          }
+        },
+        "image_mFqcfR": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/87.jpg",
+            "link": "",
+            "like_count": ""
+          }
+        },
+        "image_MQ6iPn": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/87.jpg",
+            "link": "",
+            "like_count": ""
+          }
+        },
+        "image_RMTQCK": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/87.jpg",
+            "link": "",
+            "like_count": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_QVLfVe",
+        "image_kztqce",
+        "image_UcTwFA",
+        "image_mFqcfR",
+        "image_MQ6iPn",
+        "image_RMTQCK"
+      ],
       "settings": {
         "instagram_handle": "",
         "heading": "",

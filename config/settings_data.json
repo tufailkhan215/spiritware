@@ -28,13 +28,13 @@
       "footer": {
         "type": "footer",
         "settings": {
-          "newsletter_heading": "",
-          "newsletter_description": "",
-          "company_description": "",
-          "shop_menu": "",
-          "company_menu": "",
-          "instagram_url": "",
-          "facebook_url": ""
+          "newsletter_heading": "Newsletter heading",
+          "newsletter_description": "Newsletter description",
+          "company_description": "Company description",
+          "shop_menu": "footer",
+          "company_menu": "main-menu",
+          "instagram_url": "#",
+          "facebook_url": "#"
         }
       }
     },
