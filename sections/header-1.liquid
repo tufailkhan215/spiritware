@@ -13,7 +13,7 @@
       <nav class="header-1__nav" aria-label="Main">
         {%- if section.settings.menu != blank -%}
           {%- for link in linklists[section.settings.menu].links -%}
-            <div class="header-1__nav-item">
+            <div class="header-1__nav-item" {% if link.links != empty %}aria-haspopup="true" aria-expanded="false"{% endif %}>
               <a href="{{ link.url }}" class="header-1__nav-link {% if link.active %}header-1__nav-link--active{% endif %}">
                 {{ link.title | escape }}
                 {%- if link.links != empty or forloop.index <= 2 -%}
@@ -22,6 +22,13 @@
                   </span>
                 {%- endif -%}
               </a>
+              {%- if link.links != empty -%}
+                <div class="header-1__dropdown" role="menu" aria-label="{{ link.title | escape }}">
+                  {%- for child in link.links -%}
+                    <a href="{{ child.url }}" class="header-1__dropdown-link" role="menuitem">{{ child.title | escape }}</a>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
             </div>
           {%- endfor -%}
         {%- endif -%}
