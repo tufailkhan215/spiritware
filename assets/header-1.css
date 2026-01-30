@@ -150,8 +150,8 @@
 
 .header-1__cart-icon {
   display: inline-flex;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 2.25rem;
+  height: 2.25rem;
   color: var(--header-1-text);
   transition: transform var(--header-1-transition-fast) ease;
 }
