@@ -12,6 +12,7 @@
 /* Smooth scroll — source index.css (this file only loads when Sacred Rebel layout is active) */
 html {
   scroll-behavior: smooth;
+  font-size: 62.5%;
 }
 
 /* Sacred Rebel palette — from source index.css @layer base :root */

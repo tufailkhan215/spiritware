@@ -193,8 +193,8 @@
 /* text-[#FAF7F2]/60 text-sm font-sans leading-relaxed mb-6 */
 .footer-1__brand-tagline {
   color: var(--footer-1-text-muted);
-  font-size: 1.875rem;
-  line-height: 2;
+  font-size: 1.4rem;
+  line-height: 1.8;
   margin-bottom: 2.5rem;
   margin-top: 0;
   font-family: 'Inter', -apple-system, sans-serif;
