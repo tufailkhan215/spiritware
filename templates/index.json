@@ -99,14 +99,110 @@
     },
     "shop-by-category": {
       "type": "shop-by-category",
+      "blocks": {
+        "category_Ft6LJM": {
+          "type": "category",
+          "settings": {
+            "title": "Title",
+            "description": "Description",
+            "image": "shopify://shop_images/photo-1533090481720-856c6e3c1fdc.jpg",
+            "link": "#",
+            "large_card": false
+          }
+        },
+        "category_rXbAKm": {
+          "type": "category",
+          "settings": {
+            "title": "Title",
+            "description": "Description",
+            "image": "shopify://shop_images/photo-1598300042247-d088f8ab3a91.jpg",
+            "link": "",
+            "large_card": false
+          }
+        },
+        "category_bQyAyr": {
+          "type": "category",
+          "settings": {
+            "title": "Title",
+            "description": "Description",
+            "image": "shopify://shop_images/1.jpg",
+            "link": "#",
+            "large_card": false
+          }
+        },
+        "category_DxyVfP": {
+          "type": "category",
+          "settings": {
+            "title": "Title",
+            "description": "Description",
+            "image": "shopify://shop_images/1.jpg",
+            "link": "#",
+            "large_card": false
+          }
+        }
+      },
+      "block_order": [
+        "category_Ft6LJM",
+        "category_rXbAKm",
+        "category_bQyAyr",
+        "category_DxyVfP"
+      ],
       "settings": {
-        "label": "",
-        "heading": "",
-        "description": ""
+        "label": "Label",
+        "heading": "Heading",
+        "description": "Heading Description"
       }
     },
     "feature-showcase": {
       "type": "feature-showcase",
+      "blocks": {
+        "feature_8hGmhp": {
+          "type": "feature",
+          "settings": {
+            "layout": "left",
+            "label": "Label",
+            "heading": "Heading",
+            "description": "Description",
+            "main_image": "shopify://shop_images/78.jpg",
+            "thumbnail_image": "shopify://shop_images/photo-1598300042247-d088f8ab3a91.jpg",
+            "badge_text": "Badge text",
+            "price": "Price",
+            "show_sizes": true,
+            "button_text": "Button text",
+            "button_link": "#",
+            "button_style": "primary",
+            "list_item_1": "",
+            "list_item_2": "",
+            "list_item_3": "",
+            "list_item_4": ""
+          }
+        },
+        "feature_xADPVc": {
+          "type": "feature",
+          "settings": {
+            "layout": "right",
+            "label": "Label",
+            "heading": "Heading",
+            "description": "Description",
+            "main_image": "shopify://shop_images/1.jpg",
+            "thumbnail_image": "shopify://shop_images/79.jpg",
+            "badge_text": "",
+            "price": "",
+            "show_sizes": false,
+            "button_text": "",
+            "button_link": "",
+            "button_style": "outline",
+            "list_item_1": "List item 1",
+            "list_item_2": "List item 2",
+            "list_item_3": "List item 2",
+            "list_item_4": "List item 2"
+          }
+        }
+      },
+      "block_order": [
+        "feature_8hGmhp",
+        "feature_xADPVc"
+      ],
       "settings": {}
     },
     "home-showcase": {
