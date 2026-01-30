@@ -9,6 +9,7 @@
  */
 {
   "current": {
+    "header_style": "header_1",
     "sections": {
       "hero-slider": {
         "type": "hero-slider",
