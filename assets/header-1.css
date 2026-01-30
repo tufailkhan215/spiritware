@@ -64,14 +64,15 @@
   text-decoration: none;
   color: var(--header-1-text);
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  font-size: 1.5rem;
+  font-size: 2.4rem;
   font-weight: 600;
   letter-spacing: 0.025em;
+  line-height: 1.2;
 }
 
 @media (min-width: 768px) {
   .header-1__logo {
-    font-size: 1.875rem;
+    font-size: 3rem;
   }
 }
 
@@ -102,7 +103,8 @@
   align-items: center;
   gap: 0.25rem;
   font-family: ui-sans-serif, system-ui, sans-serif;
-  font-size: 0.875rem;
+  font-size: 1.4rem;
+  line-height: 1.6;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--header-1-text-muted);
@@ -170,8 +172,9 @@
   justify-content: center;
   background-color: var(--header-1-accent);
   color: #fff;
-  font-size: 10px;
+  font-size: 1.2rem;
   font-weight: 500;
+  line-height: 1.6;
   border-radius: 9999px;
 }
 
@@ -244,8 +247,8 @@
   padding: 0.5rem;
   border: 0;
   background: none;
-  font-size: 1.5rem;
-  line-height: 1;
+  font-size: 2.4rem;
+  line-height: 1.6;
   color: var(--header-1-text);
   cursor: pointer;
 }
@@ -259,7 +262,8 @@
 
 .header-1-mobile__link {
   font-family: ui-sans-serif, system-ui, sans-serif;
-  font-size: 0.875rem;
+  font-size: 1.4rem;
+  line-height: 1.6;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--header-1-text);

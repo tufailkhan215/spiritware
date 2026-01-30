@@ -62,11 +62,11 @@
   }
 }
 
-/* Join the Rebellion — font-serif text-3xl md:text-4xl mb-4 */
+/* Join the Rebellion — font-serif text-3xl md:text-4xl mb-4; line-height 1.6 × font-size */
 .footer-1__newsletter-heading {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.875rem;
-  line-height: 2.25rem;
+  font-size: 3rem;
+  line-height: 4.8rem;
   margin-bottom: 1rem;
   margin-top: 0;
   font-weight: 400;
@@ -74,17 +74,17 @@
 
 @media (min-width: 768px) {
   .footer-1__newsletter-heading {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
+    font-size: 3.6rem;
+    line-height: 5.76rem;
   }
 }
 
-/* text-[#FAF7F2]/60 font-sans text-base max-w-md */
+/* text-[#FAF7F2]/60 font-sans text-base max-w-md; line-height 1.6 × font-size */
 .footer-1__newsletter-desc {
   color: var(--footer-1-text-muted);
   font-family: 'Inter', -apple-system, sans-serif;
-  font-size: 1rem;
-  line-height: 1.5rem;
+  font-size: 1.6rem;
+  line-height: 2.56rem;
   max-width: 28rem;
   margin: 0;
 }
@@ -107,7 +107,8 @@
   padding-left: 0;
   color: var(--footer-1-text);
   font-family: 'Inter', -apple-system, sans-serif;
-  font-size: 1rem;
+  font-size: 1.6rem;
+  line-height: 1.6;
   transition: border-color var(--footer-1-transition) ease;
 }
 
@@ -175,12 +176,12 @@
   }
 }
 
-/* Sacred Rebel — font-serif text-2xl mb-6 */
+/* Sacred Rebel — font-serif text-2xl mb-6; line-height 1.6 × font-size */
 .footer-1__brand-name {
   display: inline-block;
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.5rem;
-  line-height: 2rem;
+  font-size: 2.4rem;
+  line-height: 3.84rem;
   margin-bottom: 1.5rem;
   color: var(--footer-1-text);
   text-decoration: none;
@@ -194,8 +195,8 @@
 /* text-[#FAF7F2]/60 text-sm font-sans leading-relaxed mb-6 */
 .footer-1__brand-tagline {
   color: var(--footer-1-text-muted);
-  font-size: 0.875rem;
-  line-height: 1.625;
+  font-size: 1.4rem;
+  line-height: 1.6;
   margin-bottom: 1.5rem;
   margin-top: 0;
   font-family: 'Inter', -apple-system, sans-serif;
@@ -230,11 +231,11 @@
   height: 1rem;
 }
 
-/* Column heading — font-sans text-xs tracking-widest uppercase mb-6 text-[#FAF7F2]/40 */
+/* Column heading — font-sans text-xs tracking-widest uppercase mb-6 text-[#FAF7F2]/40; line-height 1.6 × font-size */
 .footer-1__col-heading {
   font-family: 'Inter', -apple-system, sans-serif;
-  font-size: 0.75rem;
-  line-height: 1rem;
+  font-size: 1.2rem;
+  line-height: 1.92rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-bottom: 1.5rem;
@@ -256,7 +257,8 @@
 /* text-sm text-[#FAF7F2]/70 hover:text-[#C4A77D] transition-colors duration-300 font-sans */
 .footer-1__link {
   font-family: 'Inter', -apple-system, sans-serif;
-  font-size: 0.875rem;
+  font-size: 1.4rem;
+  line-height: 1.6;
   color: var(--footer-1-text-dim-70);
   text-decoration: none;
   transition: color var(--footer-1-transition) ease;
@@ -285,11 +287,11 @@
   }
 }
 
-/* text-[#FAF7F2]/40 text-xs font-sans */
+/* text-[#FAF7F2]/40 text-xs font-sans; line-height 1.6 × font-size */
 .footer-1__copyright {
   color: var(--footer-1-text-dim);
-  font-size: 0.75rem;
-  line-height: 1rem;
+  font-size: 1.2rem;
+  line-height: 1.92rem;
   margin: 0;
   font-family: 'Inter', -apple-system, sans-serif;
 }
@@ -298,7 +300,7 @@
 .footer-1__legal {
   display: flex;
   gap: 1.5rem;
-  font-size: 0.75rem;
+  font-size: 1.2rem;
 }
 
 /* text-[#FAF7F2]/40 hover:text-[#FAF7F2] transition-colors duration-300 font-sans */
@@ -306,6 +308,8 @@
   color: var(--footer-1-text-dim);
   text-decoration: none;
   font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.2rem;
+  line-height: 1.6;
   transition: color var(--footer-1-transition) ease;
 }
 
