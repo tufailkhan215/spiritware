@@ -39,6 +39,19 @@
         "cta_link": ""
       }
     },
+    "shop_homepage_9nEXF6": {
+      "type": "shop-homepage",
+      "name": "Shop Homepage",
+      "settings": {
+        "section_id": "shop",
+        "subheading": "The Collection",
+        "heading": "Wearable Prayers",
+        "collection": "frontpage",
+        "products_to_show": 4,
+        "view_all_text": "View All",
+        "view_all_link": ""
+      }
+    },
     "hero-slider": {
       "type": "hero-slider",
       "blocks": {
@@ -477,6 +490,7 @@
   "order": [
     "hero_1_AHTeLw",
     "story_1_ENFzzD",
+    "shop_homepage_9nEXF6",
     "hero-slider",
     "feature-icons",
     "featured-products",
