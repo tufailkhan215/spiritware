@@ -9,6 +9,20 @@
  */
 {
   "sections": {
+    "hero_1_AHTeLw": {
+      "type": "hero-1",
+      "name": "Hero 1",
+      "settings": {
+        "image": "shopify://shop_images/pexels-photo-33648329_65.jpg",
+        "tagline": "Where Sacred Meets Savage",
+        "heading": "Wear Your Truth",
+        "description": "Consciously crafted clothing for those who live with presence and move with purpose. Minimal, powerful, poetic.",
+        "primary_button_text": "Explore Collection",
+        "primary_button_link": "",
+        "secondary_button_text": "Our Story",
+        "secondary_button_link": ""
+      }
+    },
     "hero-slider": {
       "type": "hero-slider",
       "blocks": {
@@ -37,6 +51,7 @@
         "slide_DQYzbp",
         "slide_7A7AEW"
       ],
+      "disabled": true,
       "settings": {
         "auto_play_delay": 5,
         "show_dots": true,
@@ -444,6 +459,7 @@
     }
   },
   "order": [
+    "hero_1_AHTeLw",
     "hero-slider",
     "feature-icons",
     "featured-products",
