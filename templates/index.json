@@ -23,6 +23,22 @@
         "secondary_button_link": ""
       }
     },
+    "story_1_ENFzzD": {
+      "type": "story-1",
+      "name": "Story 1",
+      "settings": {
+        "section_id": "story",
+        "image": "shopify://shop_images/pexels-photo-6944915.jpg",
+        "quote": "\"Your body is the altar. Your style is the ritual.\"",
+        "subheading": "A Movement",
+        "heading": "More Than Fashion",
+        "paragraph_1": "Sacred Rebel is for the ones who refuse to be boxed in. The warriors, mystics, and revolutionaries who walk the line between the sacred and the rebellious, the divine and the untamed.",
+        "paragraph_2": "Through poems, prayers, and passages woven into every thread, we invite self-awareness, spiritual aliveness, and intentional living into the everyday. Each piece becomes a sacred vessel—soft & bold, cozy & powerful, rightful & rooted.",
+        "paragraph_3": "This isn't just fashion. It's expression with impact. A movement of mindful design, intentional living, and everyday boldness.",
+        "cta_text": "Discover Our Ethos",
+        "cta_link": ""
+      }
+    },
     "hero-slider": {
       "type": "hero-slider",
       "blocks": {
@@ -460,6 +476,7 @@
   },
   "order": [
     "hero_1_AHTeLw",
+    "story_1_ENFzzD",
     "hero-slider",
     "feature-icons",
     "featured-products",
