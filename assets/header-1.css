@@ -34,10 +34,10 @@
   box-shadow: 0 1px 0 rgba(26, 26, 26, 0.06);
 }
 
-/* max-w-7xl = 80rem, centered; matches source */
+/* 124rem ≈ 1240px (1rem = 10px with 62.5% root) */
 .header-1__container {
   width: 100%;
-  max-width: 80rem;
+  max-width: 124rem;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1.5rem;
