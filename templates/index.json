@@ -1,74 +1,53 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero-slider": {
       "type": "hero-slider",
-      "settings": {},
-      "blocks": {},
-      "block_order": [],
-      "order": 1
+      "settings": {}
     },
     "feature-icons": {
       "type": "feature-icons",
-      "settings": {},
-      "blocks": {},
-      "block_order": [],
-      "order": 2
+      "settings": {}
     },
     "featured-products": {
       "type": "featured-products",
-      "settings": {},
-      "blocks": {},
-      "block_order": [],
-      "order": 3
+      "settings": {}
     },
     "shop-by-category": {
       "type": "shop-by-category",
-      "settings": {},
-      "blocks": {},
-      "block_order": [],
-      "order": 4
+      "settings": {}
     },
     "feature-showcase": {
       "type": "feature-showcase",
-      "settings": {},
-      "blocks": {},
-      "block_order": [],
-      "order": 5
+      "settings": {}
     },
     "home-showcase": {
       "type": "home-showcase",
-      "settings": {},
-      "blocks": {},
-      "block_order": [],
-      "order": 6
+      "settings": {}
     },
     "homepage-about": {
       "type": "homepage-about",
-      "settings": {},
-      "blocks": {},
-      "block_order": [],
-      "order": 7
+      "settings": {}
     },
     "customer-testimonials": {
       "type": "customer-testimonials",
-      "settings": {},
-      "blocks": {},
-      "block_order": [],
-      "order": 8
+      "settings": {}
     },
     "blog-posts": {
       "type": "blog-posts",
-      "settings": {},
-      "blocks": {},
-      "block_order": [],
-      "order": 9
+      "settings": {}
     },
     "instagram-feed": {
       "type": "instagram-feed",
-      "settings": {},
-      "blocks": {},
-      "block_order": [],
-      "order": 10
+      "settings": {}
     }
   },
   "order": [

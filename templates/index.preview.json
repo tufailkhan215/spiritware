@@ -1,53 +1,41 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "preview_hero": {
       "type": "preview-hero",
-      "settings": {},
-      "blocks": {},
-      "block_order": [],
-      "order": 1
+      "settings": {}
     },
     "preview_story": {
       "type": "preview-story",
-      "settings": {},
-      "blocks": {},
-      "block_order": [],
-      "order": 2
+      "settings": {}
     },
     "preview_shop": {
       "type": "preview-shop",
-      "settings": {},
-      "blocks": {},
-      "block_order": [],
-      "order": 3
+      "settings": {}
     },
     "preview_ethos": {
       "type": "preview-ethos",
-      "settings": {},
-      "blocks": {},
-      "block_order": [],
-      "order": 4
+      "settings": {}
     },
     "preview_manifesto": {
       "type": "preview-manifesto",
-      "settings": {},
-      "blocks": {},
-      "block_order": [],
-      "order": 5
+      "settings": {}
     },
     "preview_community": {
       "type": "preview-community",
-      "settings": {},
-      "blocks": {},
-      "block_order": [],
-      "order": 6
+      "settings": {}
     },
     "preview_cta": {
       "type": "preview-cta",
-      "settings": {},
-      "blocks": {},
-      "block_order": [],
-      "order": 7
+      "settings": {}
     }
   },
   "order": [
