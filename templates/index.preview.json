@@ -1,0 +1,62 @@
+{
+  "sections": {
+    "preview_hero": {
+      "type": "preview-hero",
+      "settings": {},
+      "blocks": {},
+      "block_order": [],
+      "order": 1
+    },
+    "preview_story": {
+      "type": "preview-story",
+      "settings": {},
+      "blocks": {},
+      "block_order": [],
+      "order": 2
+    },
+    "preview_shop": {
+      "type": "preview-shop",
+      "settings": {},
+      "blocks": {},
+      "block_order": [],
+      "order": 3
+    },
+    "preview_ethos": {
+      "type": "preview-ethos",
+      "settings": {},
+      "blocks": {},
+      "block_order": [],
+      "order": 4
+    },
+    "preview_manifesto": {
+      "type": "preview-manifesto",
+      "settings": {},
+      "blocks": {},
+      "block_order": [],
+      "order": 5
+    },
+    "preview_community": {
+      "type": "preview-community",
+      "settings": {},
+      "blocks": {},
+      "block_order": [],
+      "order": 6
+    },
+    "preview_cta": {
+      "type": "preview-cta",
+      "settings": {},
+      "blocks": {},
+      "block_order": [],
+      "order": 7
+    }
+  },
+  "order": [
+    "preview_hero",
+    "preview_story",
+    "preview_shop",
+    "preview_ethos",
+    "preview_manifesto",
+    "preview_community",
+    "preview_cta"
+  ]
+}

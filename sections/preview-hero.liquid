@@ -1,0 +1,51 @@
+{% comment %} Spiritware preview hero: full-viewport, bg image, label, headline, copy, 2 CTAs, scroll indicator. {% endcomment %}
+<section class="preview-hero preview-theme" id="preview-hero">
+  <div class="preview-hero__bg">
+    {% if section.settings.background_image != blank %}
+      <img src="{{ section.settings.background_image | image_url: width: 1920 }}" alt="{{ section.settings.heading | default: 'Hero' | escape }}" class="preview-hero__img" width="1920" loading="eager">
+    {% else %}
+      <div class="preview-hero__placeholder"></div>
+    {% endif %}
+    <div class="preview-hero__overlay"></div>
+  </div>
+  <div class="preview-hero__content preview-section">
+    {% if section.settings.label != blank %}
+      <span class="preview-label preview-hero__label">{{ section.settings.label }}</span>
+    {% endif %}
+    {% if section.settings.heading != blank %}
+      <h1 class="preview-heading-serif preview-heading-xl preview-hero__heading">{{ section.settings.heading }}</h1>
+    {% endif %}
+    {% if section.settings.copy != blank %}
+      <p class="preview-body preview-body-muted preview-hero__copy">{{ section.settings.copy }}</p>
+    {% endif %}
+    <div class="preview-hero__ctas">
+      {% if section.settings.cta_primary_text != blank and section.settings.cta_primary_link != blank %}
+        <a href="{{ section.settings.cta_primary_link }}" class="preview-btn preview-btn--primary">{{ section.settings.cta_primary_text }}</a>
+      {% endif %}
+      {% if section.settings.cta_secondary_text != blank and section.settings.cta_secondary_link != blank %}
+        <a href="{{ section.settings.cta_secondary_link }}" class="preview-btn preview-btn--outline">{{ section.settings.cta_secondary_text }}</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="preview-hero__scroll" data-scroll-indicator aria-hidden="true">
+    <span class="preview-hero__scroll-label">Scroll</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path></svg>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Preview Hero",
+  "class": "section-preview-hero",
+  "settings": [
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "text", "id": "label", "label": "Label", "default": "Where Sacred Meets Savage" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Wear Your Truth" },
+    { "type": "textarea", "id": "copy", "label": "Copy", "default": "Consciously crafted clothing for those who live with presence and move with purpose. Minimal, powerful, poetic." },
+    { "type": "text", "id": "cta_primary_text", "label": "Primary button text", "default": "Explore Collection" },
+    { "type": "url", "id": "cta_primary_link", "label": "Primary button link" },
+    { "type": "text", "id": "cta_secondary_text", "label": "Secondary button text", "default": "Our Story" },
+    { "type": "url", "id": "cta_secondary_link", "label": "Secondary button link" }
+  ]
+}
+{% endschema %}

@@ -88,6 +88,16 @@
   <link rel="stylesheet" href="{{ 'components.css' | asset_url }}">
   <link rel="stylesheet" href="{{ 'utilities.css' | asset_url }}">
   <link rel="stylesheet" href="{{ 'responsive.css' | asset_url }}">
+  {% if settings.header_style == 'preview' %}
+    <link rel="stylesheet" href="{{ 'header-preview.css' | asset_url }}">
+  {% endif %}
+  {% if settings.footer_style == 'preview' %}
+    <link rel="stylesheet" href="{{ 'footer-preview.css' | asset_url }}">
+  {% endif %}
+  {% if template.suffix == 'preview' %}
+    <link rel="stylesheet" href="{{ 'preview-theme.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'preview-sections.css' | asset_url }}">
+  {% endif %}
 
   <script src="{{ 'global.js' | asset_url }}" defer></script>
   <script src="{{ 'visual-editor.js' | asset_url }}" defer></script>
@@ -97,7 +107,11 @@
     {{ 'accessibility.skip_to_text' | t }}
   </a>
 
-  {% section 'header' %}
+  {% if settings.header_style == 'preview' %}
+    {% section 'header-preview' %}
+  {% else %}
+    {% section 'header' %}
+  {% endif %}
 
   {% render 'cart-drawer' %}
 
@@ -105,7 +119,11 @@
     {{ content_for_layout }}
   </main>
 
-  {% section 'footer' %}
+  {% if settings.footer_style == 'preview' %}
+    {% section 'footer-preview' %}
+  {% else %}
+    {% section 'footer' %}
+  {% endif %}
 
   <ul class="visually-hidden" aria-hidden="true">
     <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
@@ -149,7 +167,13 @@
   <script src="{{ 'filters.js' | asset_url }}" defer></script>
   <script src="{{ 'product.js' | asset_url }}" defer></script>
   <script src="{{ 'menu.js' | asset_url }}" defer></script>
+  {% if settings.header_style == 'preview' %}
+    <script src="{{ 'header-preview.js' | asset_url }}" defer></script>
+  {% endif %}
   <script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
   <script src="{{ 'animations.js' | asset_url }}" defer></script>
+  {% if template.suffix == 'preview' %}
+    <script src="{{ 'preview-homepage.js' | asset_url }}" defer></script>
+  {% endif %}
 </body>
 </html>

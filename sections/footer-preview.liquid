@@ -1,0 +1,102 @@
+{% comment %}
+  Sacred Rebel footer: Join the Rebellion newsletter, 4 columns, bottom bar.
+  CSS: assets/footer-preview.css
+{% endcomment %}
+<footer class="footer-preview" role="contentinfo">
+  <div class="footer-preview__newsletter">
+    <div class="preview-section footer-preview__newsletter-inner">
+      <div class="footer-preview__newsletter-grid">
+        <div class="footer-preview__newsletter-content">
+          <h3 class="footer-preview__newsletter-heading">{{ section.settings.newsletter_heading | default: 'Join the Rebellion' }}</h3>
+          <p class="footer-preview__newsletter-desc">{{ section.settings.newsletter_description | default: 'Be the first to know about exclusive drops, sacred stories, and conscious community gatherings.' }}</p>
+        </div>
+        <div class="footer-preview__newsletter-form-wrap">
+          {% form 'customer', class: 'footer-preview__newsletter-form' %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <input type="email" name="contact[email]" class="footer-preview__newsletter-input" placeholder="{{ section.settings.newsletter_placeholder | default: 'Enter your email' }}" required>
+            <button type="submit" class="footer-preview__newsletter-submit" aria-label="{{ 'customer.newsletter.submit' | t }}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </button>
+          {% endform %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-preview__main preview-section">
+    <div class="footer-preview__grid">
+      <div class="footer-preview__brand">
+        <a href="{{ routes.root_url }}" class="footer-preview__brand-title">{{ section.settings.brand_title | default: shop.name }}</a>
+        <p class="footer-preview__brand-tagline">{{ section.settings.brand_tagline | default: 'Wearable prayers for the ones who live boldly, love deeply, and walk in purpose.' }}</p>
+        <div class="footer-preview__social">
+          {% if section.settings.instagram_url != blank %}
+            <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener noreferrer" class="footer-preview__social-link" aria-label="Instagram">{% render 'icon-instagram' %}</a>
+          {% endif %}
+          {% if section.settings.tiktok_url != blank %}
+            <a href="{{ section.settings.tiktok_url }}" target="_blank" rel="noopener noreferrer" class="footer-preview__social-link" aria-label="TikTok">{% render 'icon-tiktok' %}</a>
+          {% endif %}
+        </div>
+      </div>
+      {% if section.settings.shop_menu != blank and linklists[section.settings.shop_menu].links.size > 0 %}
+        <div class="footer-preview__column">
+          <h4 class="footer-preview__column-heading">{{ section.settings.shop_heading | default: 'Shop' }}</h4>
+          <ul class="footer-preview__links">
+            {% for link in linklists[section.settings.shop_menu].links %}
+              <li><a href="{{ link.url }}" class="footer-preview__link">{{ link.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      {% if section.settings.company_menu != blank and linklists[section.settings.company_menu].links.size > 0 %}
+        <div class="footer-preview__column">
+          <h4 class="footer-preview__column-heading">{{ section.settings.company_heading | default: 'Company' }}</h4>
+          <ul class="footer-preview__links">
+            {% for link in linklists[section.settings.company_menu].links %}
+              <li><a href="{{ link.url }}" class="footer-preview__link">{{ link.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      {% if section.settings.support_menu != blank and linklists[section.settings.support_menu].links.size > 0 %}
+        <div class="footer-preview__column">
+          <h4 class="footer-preview__column-heading">{{ section.settings.support_heading | default: 'Support' }}</h4>
+          <ul class="footer-preview__links">
+            {% for link in linklists[section.settings.support_menu].links %}
+              <li><a href="{{ link.url }}" class="footer-preview__link">{{ link.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    </div>
+    <div class="footer-preview__bottom">
+      <p class="footer-preview__copyright">{{ section.settings.copyright | default: '© 2025 Sacred Rebel. All rights reserved.' }}</p>
+      <div class="footer-preview__legal">
+        <a href="{{ routes.root_url }}pages/privacy-policy" class="footer-preview__legal-link">{{ 'layout.footer.privacy' | t }}</a>
+        <a href="{{ routes.root_url }}pages/terms-of-service" class="footer-preview__legal-link">{{ 'layout.footer.terms' | t }}</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer (Preview style)",
+  "class": "section-footer-preview",
+  "settings": [
+    { "type": "text", "id": "newsletter_heading", "label": "Newsletter heading", "default": "Join the Rebellion" },
+    { "type": "textarea", "id": "newsletter_description", "label": "Newsletter description" },
+    { "type": "text", "id": "newsletter_placeholder", "label": "Newsletter placeholder", "default": "Enter your email" },
+    { "type": "text", "id": "brand_title", "label": "Brand title", "default": "Sacred Rebel" },
+    { "type": "textarea", "id": "brand_tagline", "label": "Brand tagline" },
+    { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
+    { "type": "url", "id": "tiktok_url", "label": "TikTok URL" },
+    { "type": "link_list", "id": "shop_menu", "label": "Shop menu" },
+    { "type": "text", "id": "shop_heading", "label": "Shop column heading", "default": "Shop" },
+    { "type": "link_list", "id": "company_menu", "label": "Company menu" },
+    { "type": "text", "id": "company_heading", "label": "Company column heading", "default": "Company" },
+    { "type": "link_list", "id": "support_menu", "label": "Support menu" },
+    { "type": "text", "id": "support_heading", "label": "Support column heading", "default": "Support" },
+    { "type": "text", "id": "copyright", "label": "Copyright text" }
+  ]
+}
+{% endschema %}

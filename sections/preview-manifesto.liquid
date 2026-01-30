@@ -1,0 +1,59 @@
+{% comment %} Spiritware preview manifesto: cream/beige bg, serif quote lines. {% endcomment %}
+<section class="preview-manifesto preview-theme">
+  <div class="preview-manifesto__grain" aria-hidden="true"></div>
+  <div class="preview-section preview-manifesto__inner">
+    {% if section.settings.label != blank %}
+      <span class="preview-label preview-manifesto__label">{{ section.settings.label }}</span>
+    {% endif %}
+    {% if section.settings.heading != blank %}
+      <h2 class="preview-heading-serif preview-manifesto__heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+    <div class="preview-manifesto__quotes">
+      {% for block in section.blocks %}
+        {% if block.type == 'line' and block.settings.text != blank %}
+          <p class="preview-manifesto__line" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% if section.settings.footer_text != blank %}
+      <div class="preview-manifesto__footer">
+        <div class="preview-manifesto__footer-line" aria-hidden="true"></div>
+        <p class="preview-manifesto__footer-text">{{ section.settings.footer_text }}</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Preview Manifesto",
+  "class": "section-preview-manifesto",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label", "default": "Our Words" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Sacred Rebel Manifesto" },
+    { "type": "textarea", "id": "footer_text", "label": "Footer quote", "default": "You don't wear this to be seen—you wear it to be remembered." }
+  ],
+  "blocks": [
+    {
+      "type": "line",
+      "name": "Quote line",
+      "settings": [
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Preview Manifesto",
+      "blocks": [
+        { "type": "line", "settings": { "text": "We dress to reclaim our softness as strength." } },
+        { "type": "line", "settings": { "text": "Our beauty as boundary." } },
+        { "type": "line", "settings": { "text": "Our bodies as altar." } },
+        { "type": "line", "settings": { "text": "Power doesn't have to shout." } },
+        { "type": "line", "settings": { "text": "We wear our truth like armor." } },
+        { "type": "line", "settings": { "text": "We rebel by remembering." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

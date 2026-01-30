@@ -114,6 +114,30 @@
         "type": "image_picker",
         "id": "favicon",
         "label": "Favicon"
+      },
+      {
+        "type": "header",
+        "content": "Header & Footer style"
+      },
+      {
+        "type": "select",
+        "id": "header_style",
+        "label": "Header style",
+        "options": [
+          { "value": "default", "label": "Default header" },
+          { "value": "preview", "label": "Preview header (Sacred Rebel)" }
+        ],
+        "default": "default"
+      },
+      {
+        "type": "select",
+        "id": "footer_style",
+        "label": "Footer style",
+        "options": [
+          { "value": "default", "label": "Default footer" },
+          { "value": "preview", "label": "Preview footer (Sacred Rebel)" }
+        ],
+        "default": "default"
       }
     ]
   }

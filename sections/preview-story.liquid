@@ -1,0 +1,57 @@
+{% comment %} Spiritware preview story: two-column, image + quote block, "More Than Fashion". {% endcomment %}
+<section class="preview-story preview-theme" id="story">
+  <div class="preview-story__deco preview-story__deco--1" aria-hidden="true"></div>
+  <div class="preview-story__deco preview-story__deco--2" aria-hidden="true"></div>
+  <div class="preview-section preview-story__inner">
+    <div class="preview-story__grid">
+      <div class="preview-story__media">
+        <div class="preview-story__image-wrap">
+          {% if section.settings.image != blank %}
+            <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.heading | default: 'Story' | escape }}" class="preview-story__image" width="800" loading="lazy">
+          {% else %}
+            <div class="preview-story__placeholder"></div>
+          {% endif %}
+        </div>
+        {% if section.settings.quote != blank %}
+          <div class="preview-story__quote">
+            <p class="preview-story__quote-text">{{ section.settings.quote }}</p>
+          </div>
+        {% endif %}
+      </div>
+      <div class="preview-story__content">
+        {% if section.settings.label != blank %}
+          <span class="preview-label preview-story__label">{{ section.settings.label }}</span>
+        {% endif %}
+        {% if section.settings.heading != blank %}
+          <h2 class="preview-heading-serif preview-heading-lg preview-story__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+        <div class="preview-story__body">
+          {% if section.settings.paragraph_1 != blank %}<p class="preview-body preview-body-muted">{{ section.settings.paragraph_1 }}</p>{% endif %}
+          {% if section.settings.paragraph_2 != blank %}<p class="preview-body preview-body-muted">{{ section.settings.paragraph_2 }}</p>{% endif %}
+          {% if section.settings.paragraph_3 != blank %}<p class="preview-body preview-body-muted">{{ section.settings.paragraph_3 }}</p>{% endif %}
+        </div>
+        {% if section.settings.link_text != blank and section.settings.link_url != blank %}
+          <a href="{{ section.settings.link_url }}" class="preview-story__link">{{ section.settings.link_text }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Preview Story",
+  "class": "section-preview-story",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "textarea", "id": "quote", "label": "Quote", "default": "\"Your body is the altar. Your style is the ritual.\"" },
+    { "type": "text", "id": "label", "label": "Label", "default": "A Movement" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "More Than Fashion" },
+    { "type": "textarea", "id": "paragraph_1", "label": "Paragraph 1" },
+    { "type": "textarea", "id": "paragraph_2", "label": "Paragraph 2" },
+    { "type": "textarea", "id": "paragraph_3", "label": "Paragraph 3" },
+    { "type": "text", "id": "link_text", "label": "Link text", "default": "Discover Our Ethos" },
+    { "type": "url", "id": "link_url", "label": "Link URL" }
+  ]
+}
+{% endschema %}

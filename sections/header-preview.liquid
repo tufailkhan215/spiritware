@@ -1,0 +1,68 @@
+{% comment %}
+  Sacred Rebel style header: fixed, transparent bg, logo text, nav with chevrons, cart with badge, mobile menu.
+  CSS: assets/header-preview.css | JS: assets/header-preview.js
+{% endcomment %}
+<header class="header-preview" role="banner" data-header-preview>
+  <div class="header-preview__inner">
+    <a class="header-preview__logo" href="{{ routes.root_url }}">
+      <h1 class="header-preview__logo-text">{{ section.settings.logo_text | default: 'Sacred Rebel' }}</h1>
+    </a>
+
+    <nav class="header-preview__nav" aria-label="{{ 'general.accessibility.main_nav' | t }}">
+      {% if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 %}
+        <ul class="header-preview__nav-list">
+          {% for link in linklists[section.settings.menu].links %}
+            <li class="header-preview__nav-item">
+              <a href="{{ link.url }}" class="header-preview__nav-link {% if link.active %}header-preview__nav-link--active{% endif %}">
+                {{ link.title }}
+                {% if link.links.size > 0 %}
+                  <svg class="header-preview__nav-chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+                {% endif %}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </nav>
+
+    <div class="header-preview__actions">
+      <button type="button" class="header-preview__cart-btn" data-open-cart-drawer aria-label="{{ 'layout.cart.title' | t }}">
+        <svg class="header-preview__cart-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+          <path d="M3 6h18"></path>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <span class="header-preview__cart-badge" data-cart-count>({{ cart.item_count }})</span>
+      </button>
+      <button type="button" class="header-preview__menu-btn" data-open-mobile-menu-preview aria-label="{{ 'general.accessibility.menu' | t }}" aria-controls="MobileMenuPreview">
+        <svg class="header-preview__menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 12h16"></path>
+          <path d="M4 18h16"></path>
+          <path d="M4 6h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+{% render 'header-preview-mobile', menu: section.settings.menu %}
+
+{% schema %}
+{
+  "name": "Header (Preview style)",
+  "class": "section-header-preview",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "Sacred Rebel"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu"
+    }
+  ]
+}
+{% endschema %}

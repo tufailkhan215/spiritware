@@ -89,7 +89,8 @@
       "quantity": {
         "label": "Quantity"
       },
-      "media_thumbnail": "View image {{ index }}"
+      "media_thumbnail": "View image {{ index }}",
+      "quick_add": "Quick Add"
     }
   },
   "collections": {
