@@ -1,6 +1,6 @@
 /**
- * Home sections — Hero 1, Story 1, Shop Homepage.
- * Single file for hero, story, and shop section styles. Generic: works with any header.
+ * Home sections — Hero 1, Story 1, Shop Homepage, Ethos 1, Manifesto 1, Community Testimonials 1, CTA 1.
+ * Single file for hero, story, shop, ethos, manifesto, testimonials, cta. Generic: works with any header.
  * Design: #FAF7F2, #1A1A1A, #C4A77D, #EDE8E0.
  */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700&family=Inter:wght@400;500;600&display=swap');
@@ -436,7 +436,7 @@
 }
 
 .shop-homepage__container {
-  max-width: 80rem;
+  max-width: 124rem;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1.5rem;
@@ -679,4 +679,637 @@
   font-weight: 500;
   color: #1A1A1A;
   margin: 0;
+}
+
+/* ==========================================================================
+   Ethos 1 — Dark section: subheading, heading, intro, grid of principle cards.
+   ========================================================================== */
+.ethos-1 {
+  position: relative;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  background-color: #1A1A1A;
+  color: #FAF7F2;
+  overflow: hidden;
+}
+
+.ethos-1__line {
+  position: absolute;
+  width: 1px;
+  height: 8rem;
+  background: linear-gradient(to bottom, transparent 0%, rgba(196, 167, 125, 0.3) 100%);
+  pointer-events: none;
+}
+
+.ethos-1__line--top {
+  top: 0;
+  left: 25%;
+}
+
+.ethos-1__line--bottom {
+  bottom: 0;
+  right: 25%;
+  background: linear-gradient(to top, transparent 0%, rgba(196, 167, 125, 0.3) 100%);
+}
+
+.ethos-1__container {
+  position: relative;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .ethos-1__container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.ethos-1__header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.ethos-1__subheading {
+  display: block;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C4A77D;
+  margin-bottom: 1rem;
+}
+
+.ethos-1__heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.25rem;
+  font-weight: 400;
+  color: #FAF7F2;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .ethos-1__heading {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ethos-1__heading {
+    font-size: 3.75rem;
+  }
+}
+
+.ethos-1__intro {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.8rem;
+  line-height: 1.6;
+  color: rgba(250, 247, 242, 0.6);
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.ethos-1__grid {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .ethos-1__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .ethos-1__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.ethos-1__card {
+  text-align: center;
+  padding: 2rem;
+  border: 1px solid rgba(250, 247, 242, 0.1);
+  transition: border-color 0.5s ease;
+}
+
+.ethos-1__card:hover {
+  border-color: rgba(196, 167, 125, 0.5);
+}
+
+.ethos-1__card-icon-wrap {
+  width: 4rem;
+  height: 4rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(196, 167, 125, 0.3);
+  border-radius: 9999px;
+  transition: border-color 0.5s ease;
+}
+
+.ethos-1__card:hover .ethos-1__card-icon-wrap {
+  border-color: #C4A77D;
+}
+
+.ethos-1__card-icon {
+  width: 2.8rem;
+  height: 2.8rem;
+  color: #C4A77D;
+  display: block;
+}
+
+.ethos-1__card-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #FAF7F2;
+  margin: 0 0 1rem 0;
+  line-height: 1.3;
+}
+
+.ethos-1__card-desc {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.6;
+  color: rgba(250, 247, 242, 0.6);
+  margin: 0;
+}
+
+/* ==========================================================================
+   Manifesto 1 — Centered manifesto: subheading, heading, lines, divider, closing.
+   ========================================================================== */
+.manifesto-1 {
+  position: relative;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  background-color: #EDE8E0;
+  overflow: hidden;
+}
+
+.manifesto-1__grain {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.manifesto-1__grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+}
+
+.manifesto-1__container {
+  position: relative;
+  z-index: 1;
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .manifesto-1__container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.manifesto-1__header {
+  margin-bottom: 0;
+}
+
+.manifesto-1__subheading {
+  display: block;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C4A77D;
+  margin-bottom: 1.5rem;
+}
+
+.manifesto-1__heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 3rem;
+  font-weight: 400;
+  color: #1A1A1A;
+  margin: 0 0 3rem 0;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .manifesto-1__heading {
+    font-size: 3.6rem;
+  }
+}
+
+.manifesto-1__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.manifesto-1__line {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2rem;
+  line-height: 1.6;
+  color: rgba(26, 26, 26, 0.8);
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .manifesto-1__line {
+    font-size: 2.4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .manifesto-1__line {
+    font-size: 3rem;
+  }
+}
+
+.manifesto-1__closing {
+  margin-top: 4rem;
+}
+
+.manifesto-1__divider {
+  width: 4rem;
+  height: 1px;
+  background-color: #C4A77D;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+}
+
+.manifesto-1__closing-text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.8rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: #1A1A1A;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .manifesto-1__closing-text {
+    font-size: 2rem;
+  }
+}
+
+/* ==========================================================================
+   Community Testimonials 1 — Carousel: subheading, heading, testimonial slides, prev/next, dots.
+   ========================================================================== */
+.community-testimonials-1 {
+  position: relative;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  background-color: #FAF7F2;
+}
+
+.community-testimonials-1__container {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .community-testimonials-1__container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.community-testimonials-1__header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.community-testimonials-1__subheading {
+  display: block;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C4A77D;
+  margin-bottom: 1rem;
+}
+
+.community-testimonials-1__heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.25rem;
+  font-weight: 400;
+  color: #1A1A1A;
+  margin: 0;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .community-testimonials-1__heading {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .community-testimonials-1__heading {
+    font-size: 3.75rem;
+  }
+}
+
+.community-testimonials-1__slider {
+  position: relative;
+  max-width: 64rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.community-testimonials-1__slides {
+  position: relative;
+}
+
+.community-testimonials-1__slide {
+  display: none;
+}
+
+.community-testimonials-1__slide--active {
+  display: block;
+}
+
+.community-testimonials-1__grid {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .community-testimonials-1__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.community-testimonials-1__media {
+  position: relative;
+}
+
+.community-testimonials-1__image-wrap {
+  aspect-ratio: 1;
+  overflow: hidden;
+  background-color: #EDE8E0;
+}
+
+.community-testimonials-1__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.community-testimonials-1__image-placeholder {
+  aspect-ratio: 1;
+  background-color: #EDE8E0;
+}
+
+.community-testimonials-1__quote-icon {
+  position: absolute;
+  bottom: -1.5rem;
+  right: -1.5rem;
+  width: 3rem;
+  height: 3rem;
+  background-color: #C4A77D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.community-testimonials-1__quote-icon svg {
+  width: 2rem;
+  height: 2rem;
+  color: #FAF7F2;
+  display: block;
+}
+
+.community-testimonials-1__quote {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.4rem;
+  line-height: 1.6;
+  color: #1A1A1A;
+  margin: 0 0 2rem 0;
+}
+
+@media (min-width: 768px) {
+  .community-testimonials-1__quote {
+    font-size: 3rem;
+  }
+}
+
+.community-testimonials-1__attribution {
+  margin: 0;
+}
+
+.community-testimonials-1__name {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #1A1A1A;
+  margin: 0 0 0.25rem 0;
+}
+
+.community-testimonials-1__location {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.4rem;
+  color: rgba(26, 26, 26, 0.6);
+  margin: 0;
+}
+
+.community-testimonials-1__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.community-testimonials-1__btn {
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: 1px solid rgba(26, 26, 26, 0.2);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #1A1A1A;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.community-testimonials-1__btn:hover {
+  border-color: #C4A77D;
+  color: #C4A77D;
+}
+
+.community-testimonials-1__btn svg {
+  width: 2rem;
+  height: 2rem;
+  display: block;
+}
+
+.community-testimonials-1__dots {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.community-testimonials-1__dot {
+  width: 0.8rem;
+  height: 0.8rem;
+  padding: 0;
+  border: none;
+  border-radius: 9999px;
+  background-color: rgba(26, 26, 26, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s ease, width 0.3s ease;
+}
+
+.community-testimonials-1__dot:hover {
+  background-color: rgba(26, 26, 26, 0.4);
+}
+
+.community-testimonials-1__dot--active {
+  width: 2rem;
+  background-color: #C4A77D;
+}
+
+/* ==========================================================================
+   CTA 1 — Call to action: bg image + dark overlay, heading, text, button.
+   ========================================================================== */
+.cta-1 {
+  position: relative;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  overflow: hidden;
+}
+
+.cta-1__bg {
+  position: absolute;
+  inset: 0;
+}
+
+.cta-1__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cta-1__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(26, 26, 26, 0.7);
+  pointer-events: none;
+}
+
+.cta-1__container {
+  position: relative;
+  z-index: 1;
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .cta-1__container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.cta-1__heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.25rem;
+  font-weight: 400;
+  color: #FAF7F2;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .cta-1__heading {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cta-1__heading {
+    font-size: 3.75rem;
+  }
+}
+
+.cta-1__text {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.8rem;
+  line-height: 1.6;
+  color: rgba(250, 247, 242, 0.7);
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2.5rem;
+  margin-top: 0;
+}
+
+@media (min-width: 768px) {
+  .cta-1__text {
+    font-size: 2rem;
+  }
+}
+
+.cta-1__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 3rem;
+  background-color: #FAF7F2;
+  color: #1A1A1A;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.cta-1__btn:hover {
+  background-color: #C4A77D;
+  color: #FAF7F2;
+}
+
+.cta-1__btn-icon {
+  margin-left: 0.75rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  transition: transform 0.3s ease;
+}
+
+.cta-1__btn:hover .cta-1__btn-icon {
+  transform: translateX(0.5rem);
 }
