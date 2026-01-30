@@ -10,6 +10,7 @@
 {
   "current": {
     "header_style": "header_1",
+    "footer_style": "footer_1",
     "sections": {
       "hero-slider": {
         "type": "hero-slider",
@@ -370,6 +371,30 @@
           "description": "Browse our collection of apparel and home decor, inspired by the backroads of California.",
           "button_text": "Shop Now",
           "button_link": "shopify://collections/all"
+        }
+      },
+      "header-1": {
+        "type": "header-1",
+        "settings": {
+          "logo_text": "Sacred Rebel",
+          "menu": "main-menu",
+          "header_scrolled_bg": true
+        }
+      },
+      "footer-1": {
+        "type": "footer-1",
+        "settings": {
+          "newsletter_heading": "Join the Rebellion",
+          "newsletter_description": "Be the first to know about exclusive drops, sacred stories, and conscious community gatherings.",
+          "newsletter_placeholder": "Enter your email",
+          "brand_name": "Sacred Rebel",
+          "brand_tagline": "Wearable prayers for the ones who live boldly, love deeply, and walk in purpose.",
+          "instagram_url": "",
+          "tiktok_url": "",
+          "shop_menu": "main-menu",
+          "company_menu": "footer",
+          "support_menu": "main-menu",
+          "copyright": "Sacred Rebel. All rights reserved."
         }
       }
     },
