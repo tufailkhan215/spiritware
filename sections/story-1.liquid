@@ -1,0 +1,136 @@
+{% comment %}
+  Story 1 — Two-column story: image + quote overlay, subheading, heading, body copy, CTA link.
+  Generic: works with any header. Design: #FAF7F2, #1A1A1A, #C4A77D, #EDE8E0.
+{% endcomment %}
+
+<section class="story-1" id="{{ section.settings.section_id | default: 'story' }}" aria-label="Story">
+  <div class="story-1__blur story-1__blur--top" aria-hidden="true"></div>
+  <div class="story-1__blur story-1__blur--bottom" aria-hidden="true"></div>
+
+  <div class="story-1__container">
+    <div class="story-1__grid">
+      <div class="story-1__media">
+        <div class="story-1__media-bg" aria-hidden="true"></div>
+        {%- if section.settings.image != blank -%}
+          <div class="story-1__image-wrap image-hover">
+            <img
+              class="story-1__image"
+              src="{{ section.settings.image | image_url: width: 800 }}"
+              alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+              width="800"
+              height="1000"
+              loading="lazy"
+            >
+          </div>
+        {%- endif -%}
+        {%- if section.settings.quote != blank -%}
+          <div class="story-1__quote">
+            <p class="story-1__quote-text">{{ section.settings.quote | escape }}</p>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="story-1__content">
+        {%- if section.settings.subheading != blank -%}
+          <span class="story-1__subheading">{{ section.settings.subheading | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="story-1__heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        <div class="story-1__body">
+          {%- if section.settings.paragraph_1 != blank -%}
+            <p class="story-1__paragraph">{{ section.settings.paragraph_1 }}</p>
+          {%- endif -%}
+          {%- if section.settings.paragraph_2 != blank -%}
+            <p class="story-1__paragraph">{{ section.settings.paragraph_2 }}</p>
+          {%- endif -%}
+          {%- if section.settings.paragraph_3 != blank -%}
+            <p class="story-1__paragraph">{{ section.settings.paragraph_3 }}</p>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.cta_text != blank -%}
+          <div class="story-1__cta-wrap">
+            <a href="{{ section.settings.cta_link | default: '#ethos' }}" class="story-1__cta">
+              {{ section.settings.cta_text | escape }}
+              <span class="story-1__cta-line" aria-hidden="true"></span>
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Story 1",
+  "tag": "section",
+  "class": "section-story-1",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section ID (for anchor links)",
+      "default": "story",
+      "info": "Use 'story' to link with #story from navigation."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote overlay",
+      "default": "\"Your body is the altar. Your style is the ritual.\""
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "A Movement"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "More Than Fashion"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_1",
+      "label": "Paragraph 1",
+      "default": "Sacred Rebel is for the ones who refuse to be boxed in. The warriors, mystics, and revolutionaries who walk the line between the sacred and the rebellious, the divine and the untamed."
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_2",
+      "label": "Paragraph 2",
+      "default": "Through poems, prayers, and passages woven into every thread, we invite self-awareness, spiritual aliveness, and intentional living into the everyday. Each piece becomes a sacred vessel—soft & bold, cozy & powerful, rightful & rooted."
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_3",
+      "label": "Paragraph 3",
+      "default": "This isn't just fashion. It's expression with impact. A movement of mindful design, intentional living, and everyday boldness."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Discover Our Ethos"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Story 1"
+    }
+  ]
+}
+{% endschema %}

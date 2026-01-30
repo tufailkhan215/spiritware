@@ -1,0 +1,225 @@
+/**
+ * Story 1 — Two-column story: image + quote overlay, subheading, heading, body, CTA.
+ * Generic: works with any header. Design: #FAF7F2, #1A1A1A, #C4A77D, #EDE8E0.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700&family=Inter:wght@400;500;600&display=swap');
+
+.story-1 {
+  position: relative;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  background-color: #FAF7F2;
+  overflow: hidden;
+}
+
+.story-1__blur {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+.story-1__blur--top {
+  top: 5rem;
+  right: 0;
+  width: 24rem;
+  height: 24rem;
+  background-color: rgba(196, 167, 125, 0.05);
+  filter: blur(48px);
+}
+
+.story-1__blur--bottom {
+  bottom: 5rem;
+  left: 0;
+  width: 16rem;
+  height: 16rem;
+  background-color: rgba(237, 232, 224, 0.5);
+  filter: blur(32px);
+}
+
+.story-1__container {
+  position: relative;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .story-1__container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.story-1__grid {
+  display: grid;
+  gap: 4rem;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .story-1__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+  }
+}
+
+/* Left column: image + quote (on desktop order first) */
+.story-1__media {
+  position: relative;
+  order: 2;
+}
+
+@media (min-width: 1024px) {
+  .story-1__media {
+    order: 1;
+  }
+}
+
+.story-1__media-bg {
+  position: absolute;
+  inset: -1rem;
+  z-index: -1;
+  background-color: #EDE8E0;
+}
+
+.story-1__image-wrap {
+  overflow: hidden;
+}
+
+.story-1__image-wrap img {
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.story-1__image-wrap:hover img {
+  transform: scale(1.05);
+}
+
+.story-1__image {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+}
+
+.story-1__quote {
+  position: absolute;
+  bottom: -2rem;
+  right: -2rem;
+  background-color: #1A1A1A;
+  color: #FAF7F2;
+  padding: 2rem;
+  max-width: 20rem;
+}
+
+@media (min-width: 1024px) {
+  .story-1__quote {
+    bottom: -2rem;
+    right: -4rem;
+  }
+}
+
+.story-1__quote-text {
+  margin: 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.25rem;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* Right column: content */
+.story-1__content {
+  order: 1;
+}
+
+@media (min-width: 1024px) {
+  .story-1__content {
+    order: 2;
+  }
+}
+
+.story-1__subheading {
+  display: block;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C4A77D;
+  margin-bottom: 1rem;
+}
+
+.story-1__heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.25rem;
+  font-weight: 400;
+  color: #1A1A1A;
+  margin-top: 0;
+  margin-bottom: 2rem;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .story-1__heading {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .story-1__heading {
+    font-size: 3.75rem;
+  }
+}
+
+.story-1__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.story-1__paragraph {
+  margin: 0;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.6;
+  color: rgba(26, 26, 26, 0.7);
+}
+
+@media (min-width: 768px) {
+  .story-1__paragraph {
+    font-size: 1.8rem;
+  }
+}
+
+.story-1__cta-wrap {
+  margin-top: 2.5rem;
+}
+
+.story-1__cta {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1A1A1A;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.story-1__cta:hover {
+  color: #1A1A1A;
+}
+
+.story-1__cta-line {
+  display: inline-block;
+  margin-left: 0.75rem;
+  width: 2rem;
+  height: 1px;
+  background-color: #1A1A1A;
+  transition: width 0.3s ease;
+}
+
+.story-1__cta:hover .story-1__cta-line {
+  width: 3rem;
+}
