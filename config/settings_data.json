@@ -280,24 +280,21 @@
           "image_C7DUWG"
         ],
         "settings": {
-          "heading": "Follow Us on Instagram",
           "instagram_handle": "@cahwy89",
+          "heading": "Follow Us on Instagram",
           "instagram_url": ""
         }
       },
       "feature-showcase": {
         "type": "feature-showcase",
-        "blocks": {},
         "settings": {}
       },
       "home-showcase": {
         "type": "home-showcase",
-        "blocks": {},
         "settings": {}
       },
       "homepage-about": {
         "type": "homepage-about",
-        "blocks": {},
         "settings": {}
       },
       "header": {
@@ -313,6 +310,19 @@
       },
       "footer": {
         "type": "footer",
+        "blocks": {
+          "store_ibMHJb": {
+            "type": "store",
+            "settings": {
+              "name": "California 89 - Truckee",
+              "address": "10052 Donner Pass Rd, Truckee, CA 96161",
+              "hours": "Daily 10am - 6pm"
+            }
+          }
+        },
+        "block_order": [
+          "store_ibMHJb"
+        ],
         "settings": {
           "newsletter_heading": "Join the 89 Community",
           "newsletter_description": "Get the scoop on new arrivals, special promos and sales.",
