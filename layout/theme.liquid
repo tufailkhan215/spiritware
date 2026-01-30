@@ -225,6 +225,9 @@
       {{ 'sacred-rebel-base.css' | asset_url | stylesheet_tag }}
       {{ 'header-1.css' | asset_url | stylesheet_tag }}
     {% endif %}
+    {% if settings.footer_style == 'footer_1' %}
+      {{ 'footer-1.css' | asset_url | stylesheet_tag }}
+    {% endif %}
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -259,7 +262,11 @@
       {{ content_for_layout }}
     </main>
 
-    {% section 'footer' %}
+    {% if settings.footer_style == 'footer_1' %}
+      {% section 'footer-1' %}
+    {% else %}
+      {% section 'footer' %}
+    {% endif %}
 
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>

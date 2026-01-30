@@ -12,6 +12,17 @@
         ],
         "default": "default",
         "info": "Header 1 matches the Sacred Rebel homepage design (fixed, transparent-to-solid on scroll)."
+      },
+      {
+        "type": "select",
+        "id": "footer_style",
+        "label": "Footer style",
+        "options": [
+          { "value": "default", "label": "Default" },
+          { "value": "footer_1", "label": "Footer 1 (Sacred Rebel)" }
+        ],
+        "default": "default",
+        "info": "Footer 1 matches the Sacred Rebel design (dark charcoal, newsletter, brand + link columns)."
       }
     ]
   }
