@@ -1,0 +1,43 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "promo_text": "Promo bar text",
+          "logo": "shopify://shop_images/klogo.jpg",
+          "logo_text": "California 89",
+          "logo_subtitle": "",
+          "menu": "main-menu",
+          "sticky_header": true
+        }
+      },
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "newsletter_heading": "",
+          "newsletter_description": "",
+          "company_description": "",
+          "shop_menu": "",
+          "company_menu": "",
+          "instagram_url": "",
+          "facebook_url": ""
+        }
+      }
+    },
+    "content_for_index": []
+  }
+}
