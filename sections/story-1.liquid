@@ -1,0 +1,67 @@
+{% comment %} Spiritware story-1: two-column, image + quote block, "More Than Fashion". {% endcomment %}
+<section class="story-1 theme-1" id="story">
+  <div class="story-1__deco story-1__deco--1" aria-hidden="true"></div>
+  <div class="story-1__deco story-1__deco--2" aria-hidden="true"></div>
+  <div class="theme-1-section story-1__inner">
+    <div class="story-1__grid">
+      <div class="story-1__media">
+        <div class="story-1__image-wrap">
+          {% if section.settings.image != blank %}
+            <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.heading | default: 'Story' | escape }}" class="story-1__image" width="800" loading="lazy">
+          {% else %}
+            <div class="story-1__placeholder"></div>
+          {% endif %}
+        </div>
+        {% if section.settings.quote != blank %}
+          <div class="story-1__quote">
+            <p class="story-1__quote-text">{{ section.settings.quote }}</p>
+          </div>
+        {% endif %}
+      </div>
+      <div class="story-1__content">
+        {% if section.settings.label != blank %}
+          <span class="theme-1-label story-1__label">{{ section.settings.label }}</span>
+        {% endif %}
+        {% if section.settings.heading != blank %}
+          <h2 class="theme-1-heading-serif theme-1-heading-lg story-1__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+        <div class="story-1__body">
+          {% if section.settings.paragraph_1 != blank %}<p class="theme-1-body theme-1-body-muted">{{ section.settings.paragraph_1 }}</p>{% endif %}
+          {% if section.settings.paragraph_2 != blank %}<p class="theme-1-body theme-1-body-muted">{{ section.settings.paragraph_2 }}</p>{% endif %}
+          {% if section.settings.paragraph_3 != blank %}<p class="theme-1-body theme-1-body-muted">{{ section.settings.paragraph_3 }}</p>{% endif %}
+        </div>
+        {% if section.settings.link_text != blank and section.settings.link_url != blank %}
+          <a href="{{ section.settings.link_url }}" class="story-1__link">{{ section.settings.link_text }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Story 1",
+  "class": "section-story-1",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "textarea", "id": "quote", "label": "Quote", "default": "\"Your body is the altar. Your style is the ritual.\"" },
+    { "type": "text", "id": "label", "label": "Label", "default": "A Movement" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "More Than Fashion" },
+    { "type": "textarea", "id": "paragraph_1", "label": "Paragraph 1" },
+    { "type": "textarea", "id": "paragraph_2", "label": "Paragraph 2" },
+    { "type": "textarea", "id": "paragraph_3", "label": "Paragraph 3" },
+    { "type": "text", "id": "link_text", "label": "Link text", "default": "Discover Our Ethos" },
+    { "type": "url", "id": "link_url", "label": "Link URL" }
+  ],
+  "presets": [
+    {
+      "name": "Story 1",
+      "settings": {
+        "paragraph_1": "Sacred Rebel is for the ones who refuse to be boxed in. The warriors, mystics, and revolutionaries who walk the line between the sacred and the rebellious.",
+        "paragraph_2": "Through poems, prayers, and passages woven into every thread, we invite self-awareness, spiritual aliveness, and intentional living into the everyday.",
+        "paragraph_3": "This isn't just fashion. It's expression with impact. A movement of mindful design, intentional living, and everyday boldness."
+      }
+    }
+  ]
+}
+{% endschema %}

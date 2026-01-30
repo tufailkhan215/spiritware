@@ -1,0 +1,35 @@
+{% comment %} Product card style 1: aspect 3/4, badge, Quick Add bar on hover, title, short desc, price. {% endcomment %}
+<div class="product-card-1 theme-1">
+  <a href="{{ product.url }}" class="product-card-1__link">
+    <div class="product-card-1__image-wrap">
+      {% if product.featured_media %}
+        <img src="{{ product.featured_media | image_url: width: 600 }}" alt="{{ product.featured_media.alt | default: product.title | escape }}" class="product-card-1__image" width="600" loading="lazy">
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag: 'product-card-1__placeholder' }}
+      {% endif %}
+      {% if section.settings.show_badges %}
+        {% if product.compare_at_price > product.price %}
+          <span class="product-card-1__badge">{{ 'products.product.on_sale' | t }}</span>
+        {% elsif product.tags contains 'Best Seller' or product.tags contains 'best-seller' %}
+          <span class="product-card-1__badge">Best Seller</span>
+        {% elsif product.tags contains 'New' or product.tags contains 'new' %}
+          <span class="product-card-1__badge">New</span>
+        {% elsif product.tags contains 'Limited' or product.tags contains 'limited' %}
+          <span class="product-card-1__badge">Limited</span>
+        {% endif %}
+      {% endif %}
+      <div class="product-card-1__quick-add">
+        <button type="button" class="product-card-1__quick-add-btn" data-quick-add-product="{{ product.id }}" data-quick-add-variant="{{ product.selected_or_first_available_variant.id }}">
+          {{ 'products.product.quick_add' | t | default: 'Quick Add' }}
+        </button>
+      </div>
+    </div>
+    <div class="product-card-1__info">
+      <h3 class="product-card-1__title">{{ product.title }}</h3>
+      {% if product.description != blank and section.settings.show_description %}
+        <p class="product-card-1__desc">{{ product.description | strip_html | truncate: 80 }}</p>
+      {% endif %}
+      <p class="product-card-1__price">{{ product.price | money }}</p>
+    </div>
+  </a>
+</div>

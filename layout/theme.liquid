@@ -89,14 +89,14 @@
   <link rel="stylesheet" href="{{ 'utilities.css' | asset_url }}">
   <link rel="stylesheet" href="{{ 'responsive.css' | asset_url }}">
   {% if settings.header_style == 'preview' %}
-    <link rel="stylesheet" href="{{ 'header-preview.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'header-1.css' | asset_url }}">
   {% endif %}
   {% if settings.footer_style == 'preview' %}
-    <link rel="stylesheet" href="{{ 'footer-preview.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'footer-1.css' | asset_url }}">
   {% endif %}
-  {% if template.suffix == 'preview' %}
-    <link rel="stylesheet" href="{{ 'preview-theme.css' | asset_url }}">
-    <link rel="stylesheet" href="{{ 'preview-sections.css' | asset_url }}">
+  {% if template.suffix == '1' %}
+    <link rel="stylesheet" href="{{ 'theme-1.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'sections-1.css' | asset_url }}">
   {% endif %}
 
   <script src="{{ 'global.js' | asset_url }}" defer></script>
@@ -108,7 +108,7 @@
   </a>
 
   {% if settings.header_style == 'preview' %}
-    {% section 'header-preview' %}
+    {% section 'header-1' %}
   {% else %}
     {% section 'header' %}
   {% endif %}
@@ -120,7 +120,7 @@
   </main>
 
   {% if settings.footer_style == 'preview' %}
-    {% section 'footer-preview' %}
+    {% section 'footer-1' %}
   {% else %}
     {% section 'footer' %}
   {% endif %}
@@ -168,12 +168,12 @@
   <script src="{{ 'product.js' | asset_url }}" defer></script>
   <script src="{{ 'menu.js' | asset_url }}" defer></script>
   {% if settings.header_style == 'preview' %}
-    <script src="{{ 'header-preview.js' | asset_url }}" defer></script>
+    <script src="{{ 'header-1.js' | asset_url }}" defer></script>
   {% endif %}
   <script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
   <script src="{{ 'animations.js' | asset_url }}" defer></script>
-  {% if template.suffix == 'preview' %}
-    <script src="{{ 'preview-homepage.js' | asset_url }}" defer></script>
+  {% if template.suffix == '1' %}
+    <script src="{{ 'homepage-1.js' | asset_url }}" defer></script>
   {% endif %}
 </body>
 </html>

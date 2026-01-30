@@ -1,38 +1,38 @@
-{% comment %} Spiritware preview shop: "Wearable Prayers", product grid with Quick Add. {% endcomment %}
-<section class="preview-shop preview-theme" id="shop">
-  <div class="preview-section preview-shop__inner">
-    <div class="preview-shop__header">
+{% comment %} Spiritware shop-1: "Wearable Prayers", product grid with Quick Add. {% endcomment %}
+<section class="shop-1 theme-1" id="shop">
+  <div class="theme-1-section shop-1__inner">
+    <div class="shop-1__header">
       <div>
         {% if section.settings.label != blank %}
-          <span class="preview-label preview-shop__label">{{ section.settings.label }}</span>
+          <span class="theme-1-label shop-1__label">{{ section.settings.label }}</span>
         {% endif %}
         {% if section.settings.heading != blank %}
-          <h2 class="preview-heading-serif preview-heading-lg preview-shop__heading">{{ section.settings.heading }}</h2>
+          <h2 class="theme-1-heading-serif theme-1-heading-lg shop-1__heading">{{ section.settings.heading }}</h2>
         {% endif %}
       </div>
       {% if section.settings.view_all_text != blank and section.settings.view_all_link != blank %}
-        <a href="{{ section.settings.view_all_link }}" class="preview-shop__view-all">{{ section.settings.view_all_text }}</a>
+        <a href="{{ section.settings.view_all_link }}" class="shop-1__view-all">{{ section.settings.view_all_text }}</a>
       {% endif %}
     </div>
     {% if section.settings.collection != blank %}
       {% assign products_to_show = section.settings.products_to_show | default: 4 %}
-      <div class="preview-shop__grid">
+      <div class="shop-1__grid">
         {% for product in section.settings.collection.products limit: products_to_show %}
-          <div class="preview-shop__item">
-            {% render 'product-card-preview', product: product %}
+          <div class="shop-1__item">
+            {% render 'product-card-1', product: product, section: section %}
           </div>
         {% endfor %}
       </div>
     {% else %}
-      <p class="preview-shop__empty">{{ 'sections.featured_products.no_collection' | t }}</p>
+      <p class="shop-1__empty">{{ 'sections.featured_products.no_collection' | t }}</p>
     {% endif %}
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Preview Shop",
-  "class": "section-preview-shop",
+  "name": "Shop 1",
+  "class": "section-shop-1",
   "settings": [
     { "type": "text", "id": "label", "label": "Label", "default": "The Collection" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Wearable Prayers" },
@@ -42,6 +42,9 @@
     { "type": "range", "id": "products_to_show", "min": 2, "max": 8, "step": 1, "label": "Products to show", "default": 4 },
     { "type": "checkbox", "id": "show_badges", "label": "Show badges", "default": true },
     { "type": "checkbox", "id": "show_description", "label": "Show short description", "default": true }
+  ],
+  "presets": [
+    { "name": "Shop 1" }
   ]
 }
 {% endschema %}

@@ -1,11 +1,11 @@
 /**
- * header-preview.js — Mobile menu open/close for Sacred Rebel header.
- * Targets MobileMenuPreview, data-open-mobile-menu-preview, data-close-menu-preview.
+ * header-1.js — Mobile menu open/close for Sacred Rebel header.
+ * Targets MobileMenu1, data-open-mobile-menu-1, data-close-menu-1.
  */
 (function () {
   'use strict';
 
-  var menu = document.getElementById('MobileMenuPreview');
+  var menu = document.getElementById('MobileMenu1');
   if (!menu) return;
 
   function openMenu() {
@@ -21,11 +21,11 @@
   }
 
   document.addEventListener('click', function (e) {
-    if (e.target.closest('[data-open-mobile-menu-preview]')) {
+    if (e.target.closest('[data-open-mobile-menu-1]')) {
       e.preventDefault();
       openMenu();
     }
-    if (e.target.closest('[data-close-menu-preview]')) {
+    if (e.target.closest('[data-close-menu-1]')) {
       e.preventDefault();
       closeMenu();
     }

@@ -1,24 +1,24 @@
-{% comment %} Spiritware preview ethos: dark bg, 4 value cards with icons (leaf, sparkles, flame, heart). {% endcomment %}
-<section class="preview-ethos preview-theme" id="ethos">
-  <div class="preview-ethos__deco preview-ethos__deco--1" aria-hidden="true"></div>
-  <div class="preview-ethos__deco preview-ethos__deco--2" aria-hidden="true"></div>
-  <div class="preview-section preview-ethos__inner">
-    <header class="preview-ethos__header">
+{% comment %} Spiritware ethos-1: dark bg, 4 value cards with icons (leaf, sparkles, flame, heart). {% endcomment %}
+<section class="ethos-1 theme-1" id="ethos">
+  <div class="ethos-1__deco ethos-1__deco--1" aria-hidden="true"></div>
+  <div class="ethos-1__deco ethos-1__deco--2" aria-hidden="true"></div>
+  <div class="theme-1-section ethos-1__inner">
+    <header class="ethos-1__header">
       {% if section.settings.label != blank %}
-        <span class="preview-ethos__label">{{ section.settings.label }}</span>
+        <span class="ethos-1__label">{{ section.settings.label }}</span>
       {% endif %}
       {% if section.settings.heading != blank %}
-        <h2 class="preview-ethos__heading">{{ section.settings.heading }}</h2>
+        <h2 class="ethos-1__heading">{{ section.settings.heading }}</h2>
       {% endif %}
       {% if section.settings.subheading != blank %}
-        <p class="preview-ethos__subheading">{{ section.settings.subheading }}</p>
+        <p class="ethos-1__subheading">{{ section.settings.subheading }}</p>
       {% endif %}
     </header>
-    <div class="preview-ethos__grid">
+    <div class="ethos-1__grid">
       {% for block in section.blocks %}
         {% if block.type == 'value' %}
-          <div class="preview-ethos__card" {{ block.shopify_attributes }}>
-            <div class="preview-ethos__icon-wrap">
+          <div class="ethos-1__card" {{ block.shopify_attributes }}>
+            <div class="ethos-1__icon-wrap">
               {% case block.settings.icon %}
                 {% when 'leaf' %}
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
@@ -33,10 +33,10 @@
               {% endcase %}
             </div>
             {% if block.settings.title != blank %}
-              <h3 class="preview-ethos__card-title">{{ block.settings.title }}</h3>
+              <h3 class="ethos-1__card-title">{{ block.settings.title }}</h3>
             {% endif %}
             {% if block.settings.description != blank %}
-              <p class="preview-ethos__card-desc">{{ block.settings.description }}</p>
+              <p class="ethos-1__card-desc">{{ block.settings.description }}</p>
             {% endif %}
           </div>
         {% endif %}
@@ -47,8 +47,8 @@
 
 {% schema %}
 {
-  "name": "Preview Ethos",
-  "class": "section-preview-ethos",
+  "name": "Ethos 1",
+  "class": "section-ethos-1",
   "settings": [
     { "type": "text", "id": "label", "label": "Label", "default": "What We Stand For" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Our Ethos" },
@@ -72,7 +72,7 @@
   ],
   "presets": [
     {
-      "name": "Preview Ethos",
+      "name": "Ethos 1",
       "blocks": [
         { "type": "value", "settings": { "icon": "leaf", "title": "Conscious Creation" } },
         { "type": "value", "settings": { "icon": "sparkles", "title": "Wearable Prayers" } },

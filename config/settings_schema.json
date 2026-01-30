@@ -125,7 +125,7 @@
         "label": "Header style",
         "options": [
           { "value": "default", "label": "Default header" },
-          { "value": "preview", "label": "Preview header (Sacred Rebel)" }
+          { "value": "preview", "label": "Header 1 (Sacred Rebel)" }
         ],
         "default": "default"
       },
@@ -135,7 +135,7 @@
         "label": "Footer style",
         "options": [
           { "value": "default", "label": "Default footer" },
-          { "value": "preview", "label": "Preview footer (Sacred Rebel)" }
+          { "value": "preview", "label": "Footer 1 (Sacred Rebel)" }
         ],
         "default": "default"
       }

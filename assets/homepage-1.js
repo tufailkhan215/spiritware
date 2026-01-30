@@ -1,5 +1,5 @@
 /**
- * preview-homepage.js - Spiritware preview homepage: scroll indicator, testimonial slider, Quick Add
+ * homepage-1.js - Spiritware style 1 homepage: scroll indicator, testimonial slider, Quick Add
  */
 (function () {
   'use strict';
@@ -12,10 +12,10 @@
     function hideScrollIndicator() {
       if (window.scrollY > scrollThreshold) {
         scrollIndicator.setAttribute('aria-hidden', 'true');
-        scrollIndicator.classList.add('preview-hero__scroll--hidden');
+        scrollIndicator.classList.add('hero-1__scroll--hidden');
       } else {
         scrollIndicator.setAttribute('aria-hidden', 'false');
-        scrollIndicator.classList.remove('preview-hero__scroll--hidden');
+        scrollIndicator.classList.remove('hero-1__scroll--hidden');
       }
       ticking = false;
     }
@@ -30,10 +30,10 @@
   }
 
   // ----- Testimonial slider -----
-  var slider = document.querySelector('[data-preview-testimonial-slider]');
+  var slider = document.querySelector('[data-testimonial-slider-1]');
   if (slider) {
     var slides = slider.querySelectorAll('[data-slide]');
-    var nav = slider.closest('.preview-community') && slider.closest('.preview-community').querySelector('[data-preview-testimonial-nav]');
+    var nav = slider.closest('.community-1') && slider.closest('.community-1').querySelector('[data-testimonial-nav-1]');
     var prevBtn = nav && nav.querySelector('[data-prev]');
     var nextBtn = nav && nav.querySelector('[data-next]');
     var dotsContainer = nav && nav.querySelector('[data-dots]');
@@ -47,17 +47,17 @@
       slides.forEach(function (slide, i) {
         if (i === currentIndex) {
           slide.setAttribute('data-active', '');
-          slide.classList.add('preview-community__slide--active');
+          slide.classList.add('community-1__slide--active');
         } else {
           slide.removeAttribute('data-active');
-          slide.classList.remove('preview-community__slide--active');
+          slide.classList.remove('community-1__slide--active');
         }
       });
       if (dotsContainer) {
-        var dots = dotsContainer.querySelectorAll('.preview-community__dot');
+        var dots = dotsContainer.querySelectorAll('.community-1__dot');
         dots.forEach(function (dot, i) {
           dot.setAttribute('aria-current', i === currentIndex ? 'true' : 'false');
-          dot.classList.toggle('preview-community__dot--active', i === currentIndex);
+          dot.classList.toggle('community-1__dot--active', i === currentIndex);
         });
       }
     }
@@ -76,7 +76,7 @@
       for (var i = 0; i < total; i++) {
         var dot = document.createElement('button');
         dot.type = 'button';
-        dot.className = 'preview-community__dot' + (i === 0 ? ' preview-community__dot--active' : '');
+        dot.className = 'community-1__dot' + (i === 0 ? ' community-1__dot--active' : '');
         dot.setAttribute('aria-label', 'Slide ' + (i + 1) + ' of ' + total);
         dot.setAttribute('aria-current', i === 0 ? 'true' : 'false');
         dot.dataset.index = i;

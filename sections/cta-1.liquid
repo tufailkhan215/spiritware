@@ -1,36 +1,39 @@
-{% comment %} Spiritware preview CTA: full-width image, dark overlay, heading, button. {% endcomment %}
-<section class="preview-cta preview-theme">
-  <div class="preview-cta__bg">
+{% comment %} Spiritware cta-1: full-width image, dark overlay, heading, button. {% endcomment %}
+<section class="cta-1 theme-1">
+  <div class="cta-1__bg">
     {% if section.settings.background_image != blank %}
-      <img src="{{ section.settings.background_image | image_url: width: 1920 }}" alt="" class="preview-cta__img" width="1920" loading="lazy">
+      <img src="{{ section.settings.background_image | image_url: width: 1920 }}" alt="" class="cta-1__img" width="1920" loading="lazy">
     {% else %}
-      <div class="preview-cta__placeholder"></div>
+      <div class="cta-1__placeholder"></div>
     {% endif %}
-    <div class="preview-cta__overlay"></div>
+    <div class="cta-1__overlay"></div>
   </div>
-  <div class="preview-section preview-cta__content">
+  <div class="theme-1-section cta-1__content">
     {% if section.settings.heading != blank %}
-      <h2 class="preview-cta__heading">{{ section.settings.heading }}</h2>
+      <h2 class="cta-1__heading">{{ section.settings.heading }}</h2>
     {% endif %}
     {% if section.settings.copy != blank %}
-      <p class="preview-cta__copy">{{ section.settings.copy }}</p>
+      <p class="cta-1__copy">{{ section.settings.copy }}</p>
     {% endif %}
     {% if section.settings.button_text != blank and section.settings.button_link != blank %}
-      <a href="{{ section.settings.button_link }}" class="preview-btn preview-btn--light preview-cta__btn">{{ section.settings.button_text }}</a>
+      <a href="{{ section.settings.button_link }}" class="theme-1-btn theme-1-btn--light cta-1__btn">{{ section.settings.button_text }}</a>
     {% endif %}
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Preview CTA",
-  "class": "section-preview-cta",
+  "name": "CTA 1",
+  "class": "section-cta-1",
   "settings": [
     { "type": "image_picker", "id": "background_image", "label": "Background image" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Ready to Rebel with Reverence?" },
     { "type": "textarea", "id": "copy", "label": "Copy", "default": "Join thousands of conscious warriors who wear their truth and walk in purpose." },
     { "type": "text", "id": "button_text", "label": "Button text", "default": "Shop the Collection" },
     { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [
+    { "name": "CTA 1" }
   ]
 }
 {% endschema %}
