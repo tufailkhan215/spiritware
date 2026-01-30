@@ -1,0 +1,378 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "sections": {
+      "hero-slider": {
+        "type": "hero-slider",
+        "blocks": {
+          "slide_HTgbjc": {
+            "type": "slide",
+            "settings": {
+              "image": "shopify://shop_images/photo-1463693396721-8ca0cfa2b3b5.jpg",
+              "heading": "Modern Mountain Living",
+              "subtitle": "Home decor & lifestyle goods for your mountain retreat",
+              "button_text": "Shop Now",
+              "button_link": "#"
+            }
+          },
+          "slide_p9HpY4": {
+            "type": "slide",
+            "settings": {
+              "image": "shopify://shop_images/photo-1634849662801-a00d83441092.jpg",
+              "heading": "Modern Mountain Living",
+              "subtitle": "Home decor & lifestyle goods for your mountain retreat",
+              "button_text": "Shop Now",
+              "button_link": "#"
+            }
+          }
+        },
+        "block_order": [
+          "slide_HTgbjc",
+          "slide_p9HpY4"
+        ],
+        "settings": {
+          "auto_play_delay": 5,
+          "show_dots": true,
+          "show_arrows": true
+        }
+      },
+      "feature-icons": {
+        "type": "feature-icons",
+        "blocks": {
+          "feature_iP8dJ7": {
+            "type": "feature",
+            "settings": {
+              "title": "Free Shipping",
+              "description": "On orders over $75",
+              "icon": "truck"
+            }
+          },
+          "feature_mEeJda": {
+            "type": "feature",
+            "settings": {
+              "title": "Free Shipping",
+              "description": "On orders over $75",
+              "icon": "shield"
+            }
+          },
+          "feature_tDPVLi": {
+            "type": "feature",
+            "settings": {
+              "title": "Free Shipping",
+              "description": "On orders over $75",
+              "icon": "headset"
+            }
+          },
+          "feature_73geN8": {
+            "type": "feature",
+            "settings": {
+              "title": "Free Shipping",
+              "description": "On orders over $75",
+              "icon": "leaf"
+            }
+          }
+        },
+        "block_order": [
+          "feature_iP8dJ7",
+          "feature_mEeJda",
+          "feature_tDPVLi",
+          "feature_73geN8"
+        ],
+        "settings": {}
+      },
+      "featured-products": {
+        "type": "featured-products",
+        "settings": {
+          "small_label": "Shop Our Collection",
+          "heading": "Featured Products",
+          "description": "Discover our handpicked selection of apparel and lifestyle goods, inspired by the backroads of California.",
+          "collection": "frontpage",
+          "products_to_show": 8
+        }
+      },
+      "shop-by-category": {
+        "type": "shop-by-category",
+        "blocks": {
+          "category_wMrfjX": {
+            "type": "category",
+            "settings": {
+              "title": "Apparel",
+              "description": "Everyday apparel for mountain life",
+              "image": "shopify://shop_images/photo-1533090481720-856c6e3c1fdc.jpg",
+              "link": "",
+              "large_card": true
+            }
+          },
+          "category_qr49WV": {
+            "type": "category",
+            "settings": {
+              "title": "Apparel",
+              "description": "Everyday apparel for mountain life",
+              "image": "shopify://shop_images/photo-1578952258885-6ee0651294e6.jpg",
+              "link": "",
+              "large_card": false
+            }
+          },
+          "category_fYiyqy": {
+            "type": "category",
+            "settings": {
+              "title": "Apparel",
+              "description": "Everyday apparel for mountain life",
+              "image": "shopify://shop_images/photo-1578952258885-6ee0651294e6.jpg",
+              "link": "",
+              "large_card": false
+            }
+          },
+          "category_g9Hi8j": {
+            "type": "category",
+            "settings": {
+              "title": "Apparel",
+              "description": "Everyday apparel for mountain life",
+              "image": "shopify://shop_images/photo-1578952258885-6ee0651294e6.jpg",
+              "link": "",
+              "large_card": false
+            }
+          }
+        },
+        "block_order": [
+          "category_wMrfjX",
+          "category_qr49WV",
+          "category_fYiyqy",
+          "category_g9Hi8j"
+        ],
+        "settings": {
+          "label": "Explore",
+          "heading": "Shop by Category",
+          "description": "From cozy apparel to modern home decor, find everything you need for mountain living."
+        }
+      },
+      "customer-testimonials": {
+        "type": "customer-testimonials",
+        "blocks": {
+          "testimonial_Bpa7y9": {
+            "type": "testimonial",
+            "settings": {
+              "rating": 5,
+              "text": "Great products and excellent service!",
+              "author": "John Doe",
+              "product_name": "Mountain Hoodie",
+              "verified": true
+            }
+          },
+          "testimonial_QWcDQc": {
+            "type": "testimonial",
+            "settings": {
+              "rating": 5,
+              "text": "Great products and excellent service!",
+              "author": "John Doe",
+              "product_name": "Mountain Hoodie",
+              "verified": true
+            }
+          },
+          "testimonial_UwkTDH": {
+            "type": "testimonial",
+            "settings": {
+              "rating": 5,
+              "text": "Great products and excellent service!",
+              "author": "John Doe",
+              "product_name": "Mountain Hoodie",
+              "verified": true
+            }
+          },
+          "testimonial_L4cLnm": {
+            "type": "testimonial",
+            "settings": {
+              "rating": 5,
+              "text": "Great products and excellent service!",
+              "author": "John Doe",
+              "product_name": "Mountain Hoodie",
+              "verified": true
+            }
+          }
+        },
+        "block_order": [
+          "testimonial_Bpa7y9",
+          "testimonial_QWcDQc",
+          "testimonial_UwkTDH",
+          "testimonial_L4cLnm"
+        ],
+        "settings": {
+          "label": "Testimonials",
+          "heading": "What Our Customers Say",
+          "description": "Join thousands of happy customers who love the California 89 lifestyle.",
+          "stat_1_value": "12.4K",
+          "stat_1_label": "Happy Customers",
+          "stat_2_value": "4.9",
+          "stat_2_label": "Average Rating",
+          "stat_3_value": "13+",
+          "stat_3_label": "Years in Business",
+          "stat_4_value": "3",
+          "stat_4_label": "Store Locations"
+        }
+      },
+      "blog-posts": {
+        "type": "blog-posts",
+        "settings": {
+          "blog": "news",
+          "posts_to_show": 3
+        }
+      },
+      "instagram-feed": {
+        "type": "instagram-feed",
+        "blocks": {
+          "image_B37eGi": {
+            "type": "image",
+            "settings": {
+              "image": "shopify://shop_images/75.jpg",
+              "link": ""
+            }
+          },
+          "image_z8N9zn": {
+            "type": "image",
+            "settings": {
+              "image": "shopify://shop_images/86.jpg",
+              "link": ""
+            }
+          },
+          "image_4pAw9p": {
+            "type": "image",
+            "settings": {
+              "image": "shopify://shop_images/photo-1598300042247-d088f8ab3a91.jpg",
+              "link": ""
+            }
+          },
+          "image_gJ3zqh": {
+            "type": "image",
+            "settings": {
+              "image": "shopify://shop_images/photo-1598300042247-d088f8ab3a91.jpg",
+              "link": ""
+            }
+          },
+          "image_wfEM9N": {
+            "type": "image",
+            "settings": {
+              "image": "shopify://shop_images/photo-1598300042247-d088f8ab3a91.jpg",
+              "link": ""
+            }
+          },
+          "image_C7DUWG": {
+            "type": "image",
+            "settings": {
+              "image": "shopify://shop_images/photo-1598300042247-d088f8ab3a91.jpg",
+              "link": ""
+            }
+          }
+        },
+        "block_order": [
+          "image_B37eGi",
+          "image_z8N9zn",
+          "image_4pAw9p",
+          "image_gJ3zqh",
+          "image_wfEM9N",
+          "image_C7DUWG"
+        ],
+        "settings": {
+          "heading": "Follow Us on Instagram",
+          "instagram_handle": "@cahwy89",
+          "instagram_url": ""
+        }
+      },
+      "feature-showcase": {
+        "type": "feature-showcase",
+        "blocks": {},
+        "settings": {}
+      },
+      "home-showcase": {
+        "type": "home-showcase",
+        "blocks": {},
+        "settings": {}
+      },
+      "homepage-about": {
+        "type": "homepage-about",
+        "blocks": {},
+        "settings": {}
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "promo_text": "Free shipping on orders over $75 | Shop our 3 locations in Truckee & Tahoe City",
+          "logo": "shopify://shop_images/klogo.jpg",
+          "logo_text": "",
+          "logo_subtitle": "",
+          "menu": "main-menu",
+          "sticky_header": true
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "newsletter_heading": "Join the 89 Community",
+          "newsletter_description": "Get the scoop on new arrivals, special promos and sales.",
+          "company_description": "So much more than a Sierra Highway, it's a way of life! Apparel and lifestyle goods for modern mountain living.",
+          "shop_menu": "footer",
+          "company_menu": "main-menu",
+          "instagram_url": "",
+          "facebook_url": ""
+        }
+      },
+      "about-hero": {
+        "type": "about-hero",
+        "settings": {
+          "heading": "Our Story",
+          "subtitle": "So much more than a Sierra Highway, it's a way of life!"
+        }
+      },
+      "about-story": {
+        "type": "about-story",
+        "settings": {
+          "small_heading": "SINCE 2012",
+          "heading": "Family Business, Mountain Roots",
+          "content": "<p>Founded in 2012 in Truckee, California 89 has grown from a small local shop into a family-owned business that celebrates the Sierra Nevada lifestyle. Our mission is to bring the beauty and inspiration of mountain living to homes and wardrobes everywhere.</p><p>Every product we curate tells a story of adventure, community, and the simple pleasures of life on Highway 89. From cozy apparel to handpicked home decor, we're committed to quality, authenticity, and the values that make mountain living special.</p>"
+        }
+      },
+      "about-values": {
+        "type": "about-values",
+        "settings": {
+          "heading": "What We Stand For"
+        }
+      },
+      "about-stores": {
+        "type": "about-stores",
+        "settings": {
+          "small_heading": "VISIT US",
+          "heading": "Our Stores",
+          "subtitle": "Stop by one of our three locations in Truckee and Tahoe City."
+        }
+      },
+      "about-cta": {
+        "type": "about-cta",
+        "settings": {
+          "heading": "Ready to Experience the 89 Lifestyle?",
+          "description": "Browse our collection of apparel and home decor, inspired by the backroads of California.",
+          "button_text": "Shop Now",
+          "button_link": "shopify://collections/all"
+        }
+      }
+    },
+    "content_for_index": [
+      "hero-slider",
+      "feature-icons",
+      "featured-products",
+      "shop-by-category",
+      "feature-showcase",
+      "home-showcase",
+      "homepage-about",
+      "customer-testimonials",
+      "blog-posts",
+      "instagram-feed"
+    ]
+  }
+}
