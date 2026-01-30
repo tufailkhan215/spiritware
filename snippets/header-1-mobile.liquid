@@ -1,0 +1,13 @@
+<div class="header-1-mobile-overlay" aria-hidden="true"></div>
+<div class="header-1-mobile" id="header-1-mobile" role="dialog" aria-label="Menu" aria-modal="true" aria-hidden="true" hidden>
+  <div class="header-1-mobile__inner">
+    <button type="button" class="header-1-mobile__close" aria-label="{{ 'sections.header.close_menu' | t | default: 'Close menu' }}">&times;</button>
+    <nav class="header-1-mobile__nav" aria-label="Mobile">
+      {%- if menu != blank -%}
+        {%- for link in linklists[menu].links -%}
+          <a href="{{ link.url }}" class="header-1-mobile__link">{{ link.title | escape }}</a>
+        {%- endfor -%}
+      {%- endif -%}
+    </nav>
+  </div>
+</div>

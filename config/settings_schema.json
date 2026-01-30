@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "name": "Theme",
+    "settings": [
+      {
+        "type": "select",
+        "id": "header_style",
+        "label": "Header style",
+        "options": [
+          { "value": "default", "label": "Default" },
+          { "value": "header_1", "label": "Header 1 (Sacred Rebel)" }
+        ],
+        "default": "default",
+        "info": "Header 1 matches the Sacred Rebel homepage design (fixed, transparent-to-solid on scroll)."
+      }
+    ]
+  }
+]

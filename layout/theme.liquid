@@ -221,6 +221,9 @@
     {{ 'components.css' | asset_url | stylesheet_tag }}
     {{ 'utilities.css' | asset_url | stylesheet_tag }}
     {{ 'responsive.css' | asset_url | stylesheet_tag }}
+    {% if settings.header_style == 'header_1' %}
+      {{ 'header-1.css' | asset_url | stylesheet_tag }}
+    {% endif %}
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -245,7 +248,11 @@
       {%- render 'cart-notification', color_scheme: settings.cart_notification_color_scheme, desktop_menu_type: section.settings.menu_type_desktop -%}
     {%- endif -%}
 
-    {% section 'header' %}
+    {% if settings.header_style == 'header_1' %}
+      {% section 'header-1' %}
+    {% else %}
+      {% section 'header' %}
+    {% endif %}
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}
@@ -289,6 +296,9 @@
     </script>
 
     {{ 'theme.js' | asset_url | script_tag }}
+    {% if settings.header_style == 'header_1' %}
+      {{ 'header-1.js' | asset_url | script_tag }}
+    {% endif %}
     {{ 'cart.js' | asset_url | script_tag }}
     {{ 'slider.js' | asset_url | script_tag }}
     {{ 'filters.js' | asset_url | script_tag }}

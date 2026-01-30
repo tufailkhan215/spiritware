@@ -1,0 +1,76 @@
+{% comment %}
+  Header 1 (Sacred Rebel) — Fixed, transparent-to-solid on scroll.
+  Per SACRED_REBEL_HOMEPAGE_PROMPT.md §2. Theme setting: header_style = 'header_1'.
+{% endcomment %}
+
+<header class="header-1" id="header-1" role="banner" data-scrolled-bg="{{ section.settings.header_scrolled_bg }}">
+  <div class="header-1__container">
+    <div class="header-1__inner">
+      <a href="{{ routes.root_url }}" class="header-1__logo">
+        <span class="header-1__logo-text">{{ section.settings.logo_text | default: shop.name }}</span>
+      </a>
+
+      <nav class="header-1__nav" aria-label="Main">
+        {%- if section.settings.menu != blank -%}
+          {%- for link in linklists[section.settings.menu].links -%}
+            <div class="header-1__nav-item">
+              <a href="{{ link.url }}" class="header-1__nav-link {% if link.active %}header-1__nav-link--active{% endif %}">
+                {{ link.title | escape }}
+                {%- if link.links != empty or forloop.index <= 2 -%}
+                  <span class="header-1__nav-chevron" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  </span>
+                {%- endif -%}
+              </a>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </nav>
+
+      <div class="header-1__actions">
+        <button type="button" class="header-1__cart cart-toggle" aria-label="{{ 'sections.header.open_cart' | t | default: 'Open cart' }}">
+          <span class="header-1__cart-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          </span>
+          <span class="header-1__cart-badge cart-count" data-cart-count>{{ cart.item_count }}</span>
+        </button>
+        <button type="button" class="header-1__menu-toggle" aria-label="{{ 'sections.header.open_menu' | t | default: 'Open menu' }}" aria-expanded="false" aria-controls="header-1-mobile">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16"/><path d="M4 18h16"/><path d="M4 6h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+{%- render 'header-1-mobile', menu: section.settings.menu -%}
+
+<div class="cart-drawer-overlay"></div>
+{%- render 'cart-drawer' -%}
+
+{% schema %}
+{
+  "name": "Header 1 (Sacred Rebel)",
+  "class": "section-header-1",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo / brand name",
+      "default": "Sacred Rebel"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "header_scrolled_bg",
+      "label": "Solid background on scroll",
+      "default": true,
+      "info": "When enabled, header gets a solid background after scrolling."
+    }
+  ]
+}
+{% endschema %}
