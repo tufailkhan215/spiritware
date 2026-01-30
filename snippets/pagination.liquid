@@ -1,0 +1,30 @@
+{% if paginate.pages > 1 %}
+  <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+    <ul class="pagination__list" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap; list-style: none; margin: 2rem 0; padding: 0;">
+      {% if paginate.previous %}
+        <li>
+          <a href="{{ paginate.previous.url }}" class="pagination__item pagination__prev" aria-label="{{ 'general.pagination.previous' | t }}">
+            {{ 'general.pagination.previous' | t }}
+          </a>
+        </li>
+      {% endif %}
+
+      <li class="pagination__info" style="margin: 0 1rem;">
+        {{ 'general.pagination.page' | t: current: paginate.current_page, total: paginate.pages }}
+      </li>
+
+      {% if paginate.next %}
+        <li>
+          <a href="{{ paginate.next.url }}" class="pagination__item pagination__next" aria-label="{{ 'general.pagination.next' | t }}">
+            {{ 'general.pagination.next' | t }}
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+    {% if paginate.items %}
+      <p class="pagination__showing visually-hidden">
+        {{ 'general.pagination.showing' | t: current: paginate.current_offset | plus: 1, total: paginate.items }}
+      </p>
+    {% endif %}
+  </nav>
+{% endif %}

@@ -1,0 +1,27 @@
+<div class="customer-page page-width" style="padding: 4rem 0;">
+  <h1 class="customer-page__title">{{ 'customer.addresses.title' | t }}</h1>
+  <p><a href="{{ routes.account_url }}">{{ 'customer.account.return' | t }}</a></p>
+
+  <div class="customer-addresses" style="margin-top: 2rem;">
+    {% for address in customer.addresses %}
+      <div class="customer-address" style="border: 1px solid var(--color-light-gray); padding: 1.5rem; margin-bottom: 1rem; border-radius: 1rem;">
+        {% if address == customer.default_address %}
+          <span class="badge">{{ 'customer.addresses.default' | t }}</span>
+        {% endif %}
+        {{ address | format_address }}
+        <div class="customer-address__actions" style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+          <button type="button" class="button button--outline button--small" data-edit-address="{{ address.id }}">
+            {{ 'customer.addresses.edit' | t }}
+          </button>
+          {% form 'delete_address', address, class: 'inline-form' %}
+            <button type="submit" class="button button--outline button--small" onclick="return confirm('{{ 'customer.addresses.delete_confirm' | t }}');">{{ 'customer.addresses.delete' | t }}</button>
+          {% endform %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="customer-addresses__add" style="margin-top: 2rem;">
+    <button type="button" class="button button--primary" data-add-address>{{ 'customer.addresses.add_new' | t }}</button>
+  </div>
+</div>

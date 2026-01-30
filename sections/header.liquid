@@ -1,0 +1,88 @@
+{% if section.settings.promo_text != blank %}
+  <div class="header-promo" style="background: var(--color-primary); color: var(--color-white); text-align: center; padding: 0.5rem 1rem; font-size: 0.9em;">
+    {{ section.settings.promo_text }}
+  </div>
+{% endif %}
+
+<header class="header {% if section.settings.sticky_header %}header--sticky{% endif %}" role="banner">
+  <div class="header__inner page-width" style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; gap: 1rem;">
+    <button type="button" class="header__menu-toggle" data-open-mobile-menu aria-label="{{ 'general.accessibility.menu' | t }}" aria-controls="MobileMenu">
+      <span class="header__menu-toggle-icon" aria-hidden="true">☰</span>
+    </button>
+
+    <a href="{{ routes.root_url }}" class="header__logo">
+      {% if section.settings.logo != blank %}
+        <img src="{{ section.settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" width="200" loading="eager" />
+      {% else %}
+        <span class="header__logo-text">{{ section.settings.logo_text | default: shop.name }}</span>
+        {% if section.settings.logo_subtitle != blank %}
+          <span class="header__logo-subtitle">{{ section.settings.logo_subtitle }}</span>
+        {% endif %}
+      {% endif %}
+    </a>
+
+    <nav class="header__nav header__nav--desktop" aria-label="{{ 'general.accessibility.main_nav' | t }}">
+      {% if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 %}
+        <ul class="header__nav-list" style="list-style: none; margin: 0; padding: 0; display: flex; gap: 1.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.9em;">
+          {% for link in linklists[section.settings.menu].links %}
+            <li>
+              <a href="{{ link.url }}" class="header__nav-link {% if link.active %}header__nav-link--active{% endif %}">{{ link.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </nav>
+
+    <div class="header__search">
+      {% render 'predictive-search' %}
+    </div>
+
+    <button type="button" class="header__cart" data-open-cart-drawer aria-label="{{ 'layout.cart.title' | t }}">
+      <span class="header__cart-label">{{ 'layout.cart.title' | t }}</span>
+      <span class="header__cart-count" data-cart-count>({{ cart.item_count }})</span>
+    </button>
+  </div>
+</header>
+
+{% render 'mobile-menu', menu: section.settings.menu %}
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "promo_text",
+      "label": "Promo bar text"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "California 89"
+    },
+    {
+      "type": "text",
+      "id": "logo_subtitle",
+      "label": "Logo subtitle"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_header",
+      "label": "Sticky header",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

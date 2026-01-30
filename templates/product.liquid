@@ -1,0 +1,112 @@
+<div class="product-page page-width" style="padding: 4rem 0;">
+  <div class="product-page__grid" style="display: grid; gap: 2rem; grid-template-columns: 1fr 1fr;">
+    <div class="product-page__media">
+      <div class="product-page__main-image" data-product-main-image>
+        {% if product.featured_media %}
+          <img
+            src="{{ product.featured_media | image_url: width: 800 }}"
+            alt="{{ product.featured_media.alt | default: product.title | escape }}"
+            width="800"
+            id="ProductMainImage"
+          />
+        {% else %}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+      </div>
+      {% if product.media.size > 1 %}
+        <div class="product-page__thumbnails" style="display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap;">
+          {% for media in product.media %}
+            <button
+              type="button"
+              class="product-page__thumbnail {% if media.id == product.featured_media.id %}active{% endif %}"
+              data-product-thumbnail
+              data-media-id="{{ media.id }}"
+              aria-label="{{ 'products.product.media_thumbnail' | t: index: forloop.index }}"
+            >
+              {% if media.media_type == 'image' %}
+                <img src="{{ media | image_url: width: 120 }}" alt="{{ media.alt | escape }}" width="120" loading="lazy" />
+              {% else %}
+                {{ media.preview_image | image_url: width: 120 | image_tag: loading: 'lazy', width: 120 }}
+              {% endif %}
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="product-page__info">
+      {% if product.vendor != blank %}
+        <p class="product-page__vendor">{{ product.vendor }}</p>
+      {% endif %}
+      <h1 class="product-page__title">{{ product.title }}</h1>
+      <div class="product-page__price" data-product-price>
+        <span class="price {% if product.compare_at_price > product.price %}price--sale{% endif %}">
+          {{ product.selected_or_first_available_variant.price | money }}
+        </span>
+        {% if product.compare_at_price > product.selected_or_first_available_variant.price %}
+          <span class="price__compare">{{ product.compare_at_price | money }}</span>
+          <span class="badge badge--sale">{{ 'products.product.on_sale' | t }}</span>
+        {% endif %}
+      </div>
+
+      <div class="product-page__description rte" style="margin: 1.5rem 0;">
+        {{ product.description }}
+      </div>
+
+      {% form 'product', product, id: 'product-form', class: 'product-form', data-product-form: '' %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-variant-id>
+
+        {% unless product.has_only_default_variant %}
+          <div class="product-form__variants" style="margin-bottom: 1.5rem;">
+            {% for option in product.options_with_values %}
+              <fieldset class="product-form__option">
+                <legend class="product-form__option-label">{{ option.name }}</legend>
+                <div class="product-form__option-values">
+                  {% for value in option.values %}
+                    <label class="product-form__option-value">
+                      <input
+                        type="radio"
+                        name="options[{{ option.name | escape }}]"
+                        value="{{ value | escape }}"
+                        {% if option.selected_value == value %}checked{% endif %}
+                        data-option-input
+                      />
+                      <span>{{ value }}</span>
+                    </label>
+                  {% endfor %}
+                </div>
+              </fieldset>
+            {% endfor %}
+          </div>
+        {% endunless %}
+
+        <div class="product-form__quantity" style="margin-bottom: 1.5rem;">
+          <label for="Quantity-{{ section.id }}">{{ 'products.product.quantity.label' | t }}</label>
+          <input
+            type="number"
+            id="Quantity-{{ section.id }}"
+            name="quantity"
+            value="1"
+            min="1"
+            max="99"
+            class="product-form__quantity-input"
+          />
+        </div>
+
+        <button
+          type="submit"
+          name="add"
+          class="button button--primary product-form__submit"
+          {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+          data-add-to-cart
+        >
+          {% if product.selected_or_first_available_variant.available %}
+            {{ 'products.product.add_to_cart' | t }}
+          {% else %}
+            {{ 'products.product.sold_out' | t }}
+          {% endif %}
+        </button>
+      {% endform %}
+    </div>
+  </div>
+</div>

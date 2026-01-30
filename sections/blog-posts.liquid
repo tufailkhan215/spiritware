@@ -1,0 +1,85 @@
+<div class="blog-posts section page-width" style="padding: 4rem 0;">
+  <header class="blog-posts__header" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2rem;">
+    <div>
+      {% if section.settings.label != blank %}
+        <span class="blog-posts__label" style="font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-primary);">{{ section.settings.label }}</span>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="blog-posts__heading" style="font-size: 2rem; margin: 0.25rem 0;">{{ section.settings.heading }}</h2>
+      {% endif %}
+    </div>
+    {% if section.settings.view_all_link != blank %}
+      <a href="{{ section.settings.view_all_link }}" class="button button--outline">{{ 'blogs.article.view_all' | t }}</a>
+    {% endif %}
+  </header>
+
+  {% if section.settings.blog != blank %}
+    {% assign posts_count = section.settings.posts_to_show | default: 4 %}
+    <div class="blog-posts__grid" style="display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+      {% for article in section.settings.blog.articles limit: posts_count %}
+        <article class="blog-posts__card">
+          <a href="{{ article.url }}" style="display: block;">
+            {% if article.image %}
+              <div class="blog-posts__card-image" style="position: relative; border-radius: 1rem; overflow: hidden; aspect-ratio: 4/3; background: var(--color-light-gray);">
+                <img src="{{ article.image | image_url: width: 600 }}" alt="{{ article.title | escape }}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;" />
+                <span class="blog-posts__card-date" style="position: absolute; top: 0.75rem; left: 0.75rem; background: rgba(0,0,0,0.6); color: #fff; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem;">{{ article.published_at | date: format: 'month_day' }}</span>
+              </div>
+            {% endif %}
+            <div class="blog-posts__card-content" style="padding: 1rem 0;">
+              <h3 class="blog-posts__card-title" style="font-size: 1.125rem; margin: 0 0 0.5rem;">{{ article.title }}</h3>
+              {% if article.excerpt != blank %}
+                <p class="blog-posts__card-excerpt" style="margin: 0; font-size: 0.9em; color: var(--color-dark-gray); line-clamp: 2;">{{ article.excerpt | strip_html | truncate: 100 }}</p>
+              {% endif %}
+              <span class="blog-posts__card-read-more" style="font-size: 0.875rem; color: var(--color-primary); margin-top: 0.5rem; display: inline-block;">{{ 'blogs.article.read_more' | t }}</span>
+            </div>
+          </a>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="blog-posts__empty" style="text-align: center; color: var(--color-dark-gray);">{{ 'sections.blog_posts.no_blog' | t }}</p>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Blog posts",
+  "class": "section-blog-posts",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "range",
+      "id": "posts_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Posts to show",
+      "default": 4
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog posts"
+    }
+  ]
+}
+{% endschema %}

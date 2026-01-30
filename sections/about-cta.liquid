@@ -1,0 +1,40 @@
+<div class="about-cta section page-width" style="padding: 4rem 0; text-align: center; background: var(--color-primary); color: #fff; border-radius: 1rem;">
+  {% if section.settings.heading != blank %}
+    <h2 class="about-cta__heading" style="font-size: 2rem; margin: 0 0 0.5rem;">{{ section.settings.heading }}</h2>
+  {% endif %}
+  {% if section.settings.description != blank %}
+    <p class="about-cta__description" style="margin: 0 0 1.5rem; max-width: 40rem; margin-left: auto; margin-right: auto;">{{ section.settings.description }}</p>
+  {% endif %}
+  {% if section.settings.button_text != blank and section.settings.button_link != blank %}
+    <a href="{{ section.settings.button_link }}" class="button button--primary" style="background: #fff; color: var(--color-primary);">{{ section.settings.button_text }}</a>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "About CTA",
+  "class": "section-about-cta",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ]
+}
+{% endschema %}

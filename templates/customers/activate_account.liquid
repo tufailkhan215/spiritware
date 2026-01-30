@@ -1,0 +1,27 @@
+<div class="customer-page page-width" style="padding: 4rem 0; max-width: 40rem; margin: 0 auto;">
+  <h1 class="customer-page__title">{{ 'customer.activate_account.title' | t }}</h1>
+  <p>{{ 'customer.activate_account.subtext' | t }}</p>
+
+  {% form 'activate_customer_password', class: 'customer-form' %}
+    {% if form.errors %}
+      <div class="form-message form-message--error" role="alert">
+        {{ form.errors | default_errors }}
+      </div>
+    {% endif %}
+
+    <div class="customer-form__field">
+      <label for="CustomerPassword">{{ 'customer.activate_account.password' | t }}</label>
+      <input type="password" name="customer[password]" id="CustomerPassword" autocomplete="new-password" required>
+    </div>
+
+    <div class="customer-form__field">
+      <label for="CustomerPasswordConfirmation">{{ 'customer.activate_account.password_confirm' | t }}</label>
+      <input type="password" name="customer[password_confirmation]" id="CustomerPasswordConfirmation" autocomplete="new-password" required>
+    </div>
+
+    <div class="customer-form__actions" style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+      <button type="submit" class="button button--primary">{{ 'customer.activate_account.submit' | t }}</button>
+      <button type="submit" name="decline" class="button button--outline">{{ 'customer.activate_account.cancel' | t }}</button>
+    </div>
+  {% endform %}
+</div>

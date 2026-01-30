@@ -1,0 +1,122 @@
+<div class="homepage-about section page-width" style="padding: 4rem 0; background: #fffbeb;">
+  <div class="homepage-about__grid" style="display: grid; gap: 2rem; grid-template-columns: 1fr;">
+    <div class="homepage-about__content">
+      {% if section.settings.label != blank %}
+        <span class="homepage-about__label" style="font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-primary);">{{ section.settings.label }}</span>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <div class="homepage-about__heading rte" style="font-size: 2rem; margin: 0.5rem 0 1rem;">{{ section.settings.heading }}</div>
+      {% endif %}
+      {% if section.settings.paragraph_1 != blank %}
+        <p class="homepage-about__p1" style="margin: 0 0 1rem;">{{ section.settings.paragraph_1 }}</p>
+      {% endif %}
+      {% if section.settings.paragraph_2 != blank %}
+        <p class="homepage-about__p2" style="margin: 0 0 1rem;">{{ section.settings.paragraph_2 }}</p>
+      {% endif %}
+      {% if section.settings.link_text != blank and section.settings.link_url != blank %}
+        <a href="{{ section.settings.link_url }}" class="button button--outline">{{ section.settings.link_text }}</a>
+      {% endif %}
+    </div>
+    <div class="homepage-about__stores">
+      {% if section.settings.stores_heading != blank %}
+        <h3 class="homepage-about__stores-heading" style="font-size: 1.25rem; margin: 0 0 1rem;">{{ section.settings.stores_heading }}</h3>
+      {% endif %}
+      {% for block in section.blocks %}
+        {% if block.type == 'store' %}
+          <div class="homepage-about__store" {{ block.shopify_attributes }} style="margin-bottom: 1.5rem; padding: 1rem; background: #fff; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+            {% if block.settings.name != blank %}
+              <strong class="homepage-about__store-name" style="display: block; margin-bottom: 0.5rem;">{{ block.settings.name }}</strong>
+            {% endif %}
+            {% if block.settings.address != blank %}
+              <p class="homepage-about__store-address" style="margin: 0.25rem 0; font-size: 0.9em;">{{ block.settings.address }}</p>
+            {% endif %}
+            {% if block.settings.hours != blank %}
+              <p class="homepage-about__store-hours" style="margin: 0.25rem 0; font-size: 0.9em;">{{ block.settings.hours }}</p>
+            {% endif %}
+            {% if block.settings.phone != blank %}
+              <p class="homepage-about__store-phone" style="margin: 0.25rem 0; font-size: 0.9em;">{{ block.settings.phone }}</p>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Homepage about",
+  "class": "section-homepage-about",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_1",
+      "label": "Paragraph 1"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_2",
+      "label": "Paragraph 2"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link text"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    },
+    {
+      "type": "text",
+      "id": "stores_heading",
+      "label": "Stores heading"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "store",
+      "name": "Store",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Store name"
+        },
+        {
+          "type": "textarea",
+          "id": "address",
+          "label": "Address"
+        },
+        {
+          "type": "text",
+          "id": "hours",
+          "label": "Hours"
+        },
+        {
+          "type": "text",
+          "id": "phone",
+          "label": "Phone"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Homepage about",
+      "blocks": [{ "type": "store" }]
+    }
+  ]
+}
+{% endschema %}

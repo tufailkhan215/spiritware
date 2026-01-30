@@ -1,0 +1,41 @@
+{% comment %} Filter sidebar for collection template. Filter groups by tag, vendor, price. {% endcomment %}
+<div class="filter-sidebar">
+  <form id="FilterForm" class="filter-sidebar__form" data-filter-form>
+    {% if collection.all_tags.size > 0 %}
+      <div class="filter-sidebar__group">
+        <h3 class="filter-sidebar__heading">{{ 'collections.filters.filter_by_tag' | t }}</h3>
+        <ul class="filter-sidebar__list" style="list-style: none; padding: 0;">
+          {% for tag in collection.all_tags %}
+            <li>
+              <label class="filter-sidebar__option">
+                <input type="checkbox" name="filter[]" value="{{ tag | handle }}" {% if current_tags contains tag %}checked{% endif %}>
+                {{ tag }}
+              </label>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {% if collection.products_count > 0 and collection.all_vendors.size > 0 %}
+      <div class="filter-sidebar__group">
+        <h3 class="filter-sidebar__heading">{{ 'collections.filters.filter_by_vendor' | t }}</h3>
+        <ul class="filter-sidebar__list" style="list-style: none; padding: 0;">
+          {% for vendor in collection.all_vendors %}
+            <li>
+              <label class="filter-sidebar__option">
+                <input type="checkbox" name="vendor" value="{{ vendor | handle }}">
+                {{ vendor }}
+              </label>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <div class="filter-sidebar__actions" style="margin-top: 1.5rem; display: flex; gap: 0.5rem;">
+      <button type="submit" class="button button--primary">{{ 'collections.filters.apply' | t }}</button>
+      <a href="{{ collection.url }}" class="button button--outline">{{ 'collections.filters.clear' | t }}</a>
+    </div>
+  </form>
+</div>

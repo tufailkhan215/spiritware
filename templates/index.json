@@ -1,0 +1,86 @@
+{
+  "sections": {
+    "hero-slider": {
+      "type": "hero-slider",
+      "settings": {},
+      "blocks": {},
+      "block_order": [],
+      "order": 1
+    },
+    "feature-icons": {
+      "type": "feature-icons",
+      "settings": {},
+      "blocks": {},
+      "block_order": [],
+      "order": 2
+    },
+    "featured-products": {
+      "type": "featured-products",
+      "settings": {},
+      "blocks": {},
+      "block_order": [],
+      "order": 3
+    },
+    "shop-by-category": {
+      "type": "shop-by-category",
+      "settings": {},
+      "blocks": {},
+      "block_order": [],
+      "order": 4
+    },
+    "feature-showcase": {
+      "type": "feature-showcase",
+      "settings": {},
+      "blocks": {},
+      "block_order": [],
+      "order": 5
+    },
+    "home-showcase": {
+      "type": "home-showcase",
+      "settings": {},
+      "blocks": {},
+      "block_order": [],
+      "order": 6
+    },
+    "homepage-about": {
+      "type": "homepage-about",
+      "settings": {},
+      "blocks": {},
+      "block_order": [],
+      "order": 7
+    },
+    "customer-testimonials": {
+      "type": "customer-testimonials",
+      "settings": {},
+      "blocks": {},
+      "block_order": [],
+      "order": 8
+    },
+    "blog-posts": {
+      "type": "blog-posts",
+      "settings": {},
+      "blocks": {},
+      "block_order": [],
+      "order": 9
+    },
+    "instagram-feed": {
+      "type": "instagram-feed",
+      "settings": {},
+      "blocks": {},
+      "block_order": [],
+      "order": 10
+    }
+  },
+  "order": [
+    "hero-slider",
+    "feature-icons",
+    "featured-products",
+    "shop-by-category",
+    "feature-showcase",
+    "home-showcase",
+    "homepage-about",
+    "customer-testimonials",
+    "blog-posts",
+    "instagram-feed"
+  ]
+}
