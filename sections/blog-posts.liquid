@@ -29,6 +29,16 @@
       "default": 3
     },
     {
+      "type": "range",
+      "id": "posts_per_row",
+      "label": "Posts per row (desktop)",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3,
+      "info": "Number of blog post cards in one row on tablet and desktop."
+    },
+    {
       "type": "url",
       "id": "view_all_link",
       "label": "View All Posts Link"
@@ -70,7 +80,8 @@
       {%- assign blog_articles = blogs[blog_handle].articles -%}
       
       {%- if blog_articles.size > 0 -%}
-        <div class="blog-posts-grid">
+        {%- assign cols = section.settings.posts_per_row | default: 3 -%}
+        <div class="blog-posts-grid blog-posts-grid--cols-{{ cols }}" data-columns="{{ cols }}">
           {%- for article in blog_articles limit: posts_limit -%}
             <a href="{{ article.url }}" class="blog-post-card">
               <div class="blog-post-image-wrapper">
