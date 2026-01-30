@@ -16,7 +16,7 @@
           "promo_text": "Promo bar text",
           "logo": "shopify://shop_images/klogo.jpg",
           "logo_text": "California 89",
-          "logo_subtitle": "",
+          "logo_subtitle": "Logo subtitle",
           "menu": "main-menu",
           "sticky_header": true
         }
