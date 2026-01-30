@@ -307,8 +307,25 @@ Icons (Lucide-style): chevron-down, shopping-bag, menu, arrow-down, arrow-right,
 
 ---
 
-## 14. Implementation Notes
+## 14. Local Assets (Header-1 / Sacred Rebel Layout)
 
+When **Header 1 (Sacred Rebel)** is selected in the theme editor, the layout loads these local assets (no external CDN beyond Google Fonts):
+
+| Asset | Purpose |
+|-------|--------|
+| **sacred-rebel-base.css** | Sacred Rebel base: Google Fonts (Cormorant Garamond, Inter), `:root` CSS variables (--sr-cream, --sr-charcoal-hex, --sr-accent-hex, etc.), `.font-serif` / `.font-sans` under `.sr-theme`, keyframes (float, fadeInUp, reveal), animation classes (animate-float, animate-fade-in-up, animate-reveal), scrollbar, selection, `.image-hover`, `.text-gradient`, `.grain-overlay`. |
+| **header-1.css** | Header 1 section styles (fixed header, nav, cart, mobile). |
+| **header-1.js** | Header 1 scroll background, mobile menu, cart badge. |
+
+**Body class:** When header style is Header 1, `<body>` gets class **sr-theme** so Sacred Rebel typography and utilities apply. New sections added for the Sacred Rebel homepage should use classes `.font-serif`, `.font-sans`, `.animate-fade-in-up`, `.image-hover`, `.grain-overlay`, and CSS variables (e.g. `var(--sr-cream-hex)`, `var(--sr-accent-hex)`) so they match the source.
+
+**Source head not included:** PostHog, emergent.sh scripts, debug-monitor, and Tailwind CDN are not added; the theme uses sacred-rebel-base.css and section CSS instead of Tailwind.
+
+---
+
+## 15. Implementation Notes
+
+- **Local assets:** See §14 for sacred-rebel-base.css, header-1.css, header-1.js, and body.sr-theme.
 - **No code in this repo:** This file is prompt/reference only; implementation is done in theme sections, layout, and assets.
 - **Liquid:** Header and footer variants are conditional on theme settings (e.g. `settings.header_style == 'sacred_rebel'`); default = current header/footer.
 - **Tailwind:** Source uses Tailwind; theme may use plain CSS or a different system — map classes above to your CSS (variables for colors, typography, spacing).

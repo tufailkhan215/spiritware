@@ -1,0 +1,182 @@
+/**
+ * Sacred Rebel base — from source index.css.
+ * Loaded when header-1 (Sacred Rebel) layout is active.
+ * Tailwind directives (@tailwind base/components/utilities) are not used;
+ * theme uses this file + section CSS instead.
+ * Fonts: Cormorant Garamond (serif), Inter (sans) — source used @fontsource.
+ */
+
+/* Fonts — Google Fonts (source: @fontsource/cormorant-garamond 400–700, inter 400–600) */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700&family=Inter:wght@400;500;600&display=swap');
+
+/* Smooth scroll — source index.css (this file only loads when Sacred Rebel layout is active) */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Sacred Rebel palette — from source index.css @layer base :root */
+:root {
+  --sr-background: 36 33% 97%;
+  --sr-foreground: 0 0% 10%;
+  --sr-card: 36 33% 97%;
+  --sr-card-foreground: 0 0% 10%;
+  --sr-primary: 0 0% 10%;
+  --sr-primary-foreground: 36 33% 97%;
+  --sr-secondary: 35 25% 91%;
+  --sr-secondary-foreground: 0 0% 10%;
+  --sr-muted: 35 20% 88%;
+  --sr-muted-foreground: 0 0% 40%;
+  --sr-accent: 38 35% 70%;
+  --sr-accent-foreground: 0 0% 10%;
+  --sr-border: 35 20% 85%;
+  --sr-input: 35 20% 85%;
+  --sr-ring: 38 35% 70%;
+  --sr-radius: 0.5rem;
+  /* Custom Sacred Rebel */
+  --sr-cream: 36 33% 97%;
+  --sr-sand: 35 25% 85%;
+  --sr-taupe: 38 25% 65%;
+  --sr-gold: 38 50% 55%;
+  --sr-charcoal: 0 0% 15%;
+  --sr-warm-black: 30 10% 8%;
+  /* Hex equivalents for direct use */
+  --sr-cream-hex: #FAF7F2;
+  --sr-charcoal-hex: #1A1A1A;
+  --sr-accent-hex: #C4A77D;
+  --sr-sand-hex: #EDE8E0;
+}
+
+/* Body — source index.css body + @apply bg-background text-foreground (plain CSS, no Tailwind) */
+.sr-theme {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: hsl(var(--sr-background));
+  color: hsl(var(--sr-foreground));
+}
+
+/* Code — source index.css code */
+.sr-theme code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* Typography — when body has .sr-theme */
+.sr-theme .font-serif {
+  font-family: 'Cormorant Garamond', Georgia, Cambria, 'Times New Roman', Times, serif;
+}
+
+.sr-theme .font-sans {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+/* Header-1 and sections using Sacred Rebel fonts */
+.sr-theme .header-1__logo,
+.sr-theme .header-1__logo-text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.sr-theme .header-1__nav-link {
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+/* Animations — from source index.css */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.sr-theme .animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.sr-theme .animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.sr-theme .animate-reveal {
+  animation: reveal 1.2s ease-out forwards;
+}
+
+/* Custom scrollbar — source index.css (scoped to .sr-theme to avoid global override) */
+.sr-theme ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sr-theme ::-webkit-scrollbar-track {
+  background: hsl(var(--sr-cream));
+}
+
+.sr-theme ::-webkit-scrollbar-thumb {
+  background: hsl(var(--sr-taupe));
+  border-radius: 4px;
+}
+
+.sr-theme ::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--sr-charcoal));
+}
+
+/* Selection — source index.css */
+.sr-theme ::selection {
+  background: hsl(var(--sr-taupe) / 0.3);
+  color: hsl(var(--sr-charcoal));
+}
+
+/* Image hover — source index.css */
+.sr-theme .image-hover {
+  overflow: hidden;
+}
+
+.sr-theme .image-hover img {
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sr-theme .image-hover:hover img {
+  transform: scale(1.05);
+}
+
+/* Text gradient — source index.css */
+.sr-theme .text-gradient {
+  background: linear-gradient(135deg, hsl(var(--sr-charcoal)) 0%, hsl(var(--sr-taupe)) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Grain texture overlay — source index.css */
+.sr-theme .grain-overlay {
+  position: relative;
+}
+
+.sr-theme .grain-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+}

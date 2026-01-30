@@ -28,9 +28,9 @@
       </nav>
 
       <div class="header-1__actions">
-        <button type="button" class="header-1__cart cart-toggle" aria-label="{{ 'sections.header.open_cart' | t | default: 'Open cart' }}">
+        <button type="button" class="header-1__cart cart-toggle group" aria-label="{{ 'sections.header.open_cart' | t | default: 'Open cart' }}">
           <span class="header-1__cart-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <svg class="header-1__cart-icon-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5.5h6v1H9z"/><path d="M8 8L5 19Q12 22 19 19L16 8Q12 7 8 8"/></svg>
           </span>
           <span class="header-1__cart-badge cart-count" data-cart-count>{{ cart.item_count }}</span>
         </button>

@@ -222,6 +222,7 @@
     {{ 'utilities.css' | asset_url | stylesheet_tag }}
     {{ 'responsive.css' | asset_url | stylesheet_tag }}
     {% if settings.header_style == 'header_1' %}
+      {{ 'sacred-rebel-base.css' | asset_url | stylesheet_tag }}
       {{ 'header-1.css' | asset_url | stylesheet_tag }}
     {% endif %}
 
@@ -239,7 +240,7 @@
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
   </head>
 
-  <body class="gradient">
+  <body class="gradient{% if settings.header_style == 'header_1' %} sr-theme{% endif %}">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
