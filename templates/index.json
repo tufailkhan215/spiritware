@@ -207,6 +207,42 @@
     },
     "home-showcase": {
       "type": "home-showcase",
+      "blocks": {
+        "product_WbN6Dn": {
+          "type": "product",
+          "settings": {
+            "product": "circus-pouf-small",
+            "badge_text": ""
+          }
+        },
+        "product_FanKYJ": {
+          "type": "product",
+          "settings": {
+            "product": "ace-footstool-velour",
+            "badge_text": ""
+          }
+        },
+        "product_YWHtdB": {
+          "type": "product",
+          "settings": {
+            "product": "block-table",
+            "badge_text": ""
+          }
+        },
+        "product_NknnyY": {
+          "type": "product",
+          "settings": {
+            "product": "wooden-fence",
+            "badge_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_WbN6Dn",
+        "product_FanKYJ",
+        "product_YWHtdB",
+        "product_NknnyY"
+      ],
       "settings": {
         "label": "",
         "heading": "",
@@ -228,18 +264,90 @@
     },
     "homepage-about": {
       "type": "homepage-about",
+      "blocks": {
+        "store_BzphCd": {
+          "type": "store",
+          "settings": {
+            "name": "Store name",
+            "address": "Address",
+            "hours": "Hours",
+            "phone": "Phone"
+          }
+        },
+        "store_4k9HVY": {
+          "type": "store",
+          "settings": {
+            "name": "Store name",
+            "address": "Address",
+            "hours": "Hours",
+            "phone": "Phone"
+          }
+        }
+      },
+      "block_order": [
+        "store_BzphCd",
+        "store_4k9HVY"
+      ],
       "settings": {
-        "label": "",
-        "heading": "",
-        "paragraph_1": "",
-        "paragraph_2": "",
-        "link_text": "",
-        "link_url": "",
-        "stores_heading": ""
+        "label": "Label",
+        "heading": "<p>Heading<br/><br/></p>",
+        "paragraph_1": "Paragraph 1",
+        "paragraph_2": "Paragraph 2",
+        "link_text": "Link text",
+        "link_url": "#",
+        "stores_heading": "Stores heading"
       }
     },
     "customer-testimonials": {
       "type": "customer-testimonials",
+      "blocks": {
+        "testimonial_gg4k3V": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 4,
+            "text": "Text",
+            "author": "Author",
+            "product_name": "Product name",
+            "verified": true
+          }
+        },
+        "testimonial_Dc9JfV": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 4,
+            "text": "Text",
+            "author": "Author",
+            "product_name": "Product name",
+            "verified": true
+          }
+        },
+        "testimonial_eX8ECc": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 4,
+            "text": "Text",
+            "author": "Author",
+            "product_name": "Product name",
+            "verified": true
+          }
+        },
+        "testimonial_6YwqUT": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 4,
+            "text": "Text",
+            "author": "Author",
+            "product_name": "Product name",
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_gg4k3V",
+        "testimonial_Dc9JfV",
+        "testimonial_eX8ECc",
+        "testimonial_6YwqUT"
+      ],
       "settings": {
         "label": "",
         "heading": "",
@@ -257,11 +365,11 @@
     "blog-posts": {
       "type": "blog-posts",
       "settings": {
-        "label": "",
-        "heading": "",
-        "blog": "",
+        "label": "Label",
+        "heading": "Heading",
+        "blog": "news",
         "posts_to_show": 4,
-        "view_all_link": ""
+        "view_all_link": "#"
       }
     },
     "instagram-feed": {
