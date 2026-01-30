@@ -235,14 +235,45 @@
         "testimonial_QkKVgp": {
           "type": "testimonial",
           "settings": {
-            "quote": "",
-            "author": "",
-            "location": ""
+            "image": "shopify://shop_images/58.jpg",
+            "quote": "Quote",
+            "author": "Author name",
+            "location": "Location"
+          }
+        },
+        "testimonial_7FJTCx": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/58.jpg",
+            "quote": "Quote",
+            "author": "Author name",
+            "location": "Location"
+          }
+        },
+        "testimonial_tUzD9h": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/58.jpg",
+            "quote": "Quote",
+            "author": "Author name",
+            "location": "Location"
+          }
+        },
+        "testimonial_Hr8HWp": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/58.jpg",
+            "quote": "Quote",
+            "author": "Author name",
+            "location": "Location"
           }
         }
       },
       "block_order": [
-        "testimonial_QkKVgp"
+        "testimonial_QkKVgp",
+        "testimonial_7FJTCx",
+        "testimonial_tUzD9h",
+        "testimonial_Hr8HWp"
       ],
       "name": "Preview Community",
       "settings": {
