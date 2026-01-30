@@ -1,0 +1,111 @@
+{% comment %}
+  Hero 1 — Full-height hero: tagline, title, description, two CTAs, scroll indicator.
+  Generic: works with any header. Design: bg #FAF7F2, gradient overlay, optional image, grain.
+{% endcomment %}
+
+<section class="hero-1" id="hero-1-{{ section.id }}" aria-label="Hero">
+  <div class="hero-1__bg">
+    <div class="hero-1__gradient" aria-hidden="true"></div>
+    {%- if section.settings.image != blank -%}
+      <img
+        class="hero-1__image"
+        src="{{ section.settings.image | image_url: width: 1920 }}"
+        alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+        width="1920"
+        height="1080"
+        loading="eager"
+        fetchpriority="high"
+      >
+    {%- endif -%}
+  </div>
+  <div class="hero-1__grain" aria-hidden="true"></div>
+
+  <div class="hero-1__content">
+    {%- if section.settings.tagline != blank -%}
+      <span class="hero-1__tagline">{{ section.settings.tagline | escape }}</span>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h1 class="hero-1__title">{{ section.settings.heading | escape }}</h1>
+    {%- endif -%}
+    {%- if section.settings.description != blank -%}
+      <p class="hero-1__description">{{ section.settings.description | escape }}</p>
+    {%- endif -%}
+    <div class="hero-1__buttons">
+      {%- if section.settings.primary_button_text != blank -%}
+        <a href="{{ section.settings.primary_button_link | default: '#shop' }}" class="hero-1__btn hero-1__btn--primary">
+          <span class="hero-1__btn-inner">{{ section.settings.primary_button_text | escape }}</span>
+        </a>
+      {%- endif -%}
+      {%- if section.settings.secondary_button_text != blank -%}
+        <a href="{{ section.settings.secondary_button_link | default: '#story' }}" class="hero-1__btn hero-1__btn--secondary">
+          {{ section.settings.secondary_button_text | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="hero-1__scroll" aria-hidden="true">
+    <span class="hero-1__scroll-text">Scroll</span>
+    <svg class="hero-1__scroll-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero 1",
+  "tag": "section",
+  "class": "section-hero-1",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Where Sacred Meets Savage"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Wear Your Truth"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Consciously crafted clothing for those who live with presence and move with purpose. Minimal, powerful, poetic."
+    },
+    {
+      "type": "text",
+      "id": "primary_button_text",
+      "label": "Primary button text",
+      "default": "Explore Collection"
+    },
+    {
+      "type": "url",
+      "id": "primary_button_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_button_text",
+      "label": "Secondary button text",
+      "default": "Our Story"
+    },
+    {
+      "type": "url",
+      "id": "secondary_button_link",
+      "label": "Secondary button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero 1"
+    }
+  ]
+}
+{% endschema %}
