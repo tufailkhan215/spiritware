@@ -45,15 +45,55 @@
     },
     "feature-icons": {
       "type": "feature-icons",
+      "blocks": {
+        "feature_94n4PV": {
+          "type": "feature",
+          "settings": {
+            "title": "Title",
+            "description": "Description",
+            "icon": "truck"
+          }
+        },
+        "feature_zhnYxn": {
+          "type": "feature",
+          "settings": {
+            "title": "Title",
+            "description": "Description",
+            "icon": "shield"
+          }
+        },
+        "feature_E4nEVC": {
+          "type": "feature",
+          "settings": {
+            "title": "Title",
+            "description": "Description",
+            "icon": "return"
+          }
+        },
+        "feature_gzAWWK": {
+          "type": "feature",
+          "settings": {
+            "title": "Title",
+            "description": "Description",
+            "icon": "headset"
+          }
+        }
+      },
+      "block_order": [
+        "feature_94n4PV",
+        "feature_zhnYxn",
+        "feature_E4nEVC",
+        "feature_gzAWWK"
+      ],
       "settings": {}
     },
     "featured-products": {
       "type": "featured-products",
       "settings": {
-        "small_label": "",
-        "heading": "",
-        "description": "",
-        "collection": "",
+        "small_label": "Small label",
+        "heading": "Heading",
+        "description": "Description",
+        "collection": "frontpage",
         "products_to_show": 8
       }
     },
