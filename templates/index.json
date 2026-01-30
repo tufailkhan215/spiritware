@@ -52,6 +52,122 @@
         "view_all_link": ""
       }
     },
+    "ethos_1_qxP9GD": {
+      "type": "ethos-1",
+      "blocks": {
+        "principle_YrRkGh": {
+          "type": "principle",
+          "settings": {
+            "icon": "leaf",
+            "title": "Conscious Creation",
+            "description": "Every garment is woven with organic threads, recycled fabrics, and naturally dyed materials. We honor Pacha Mama in every stitch."
+          }
+        },
+        "principle_GHrJpy": {
+          "type": "principle",
+          "settings": {
+            "icon": "sparkles",
+            "title": "Wearable Prayers",
+            "description": "Each piece is infused with intention—poems, prayers, and passages designed to spark self-awareness and embody your highest truth."
+          }
+        },
+        "principle_yxdad8": {
+          "type": "principle",
+          "settings": {
+            "icon": "flame",
+            "title": "Radical Authenticity",
+            "description": "We celebrate the full spectrum—holy and wild, raw and refined, rebellious and reverent. No suppression, only expression."
+          }
+        },
+        "principle_AGVFFH": {
+          "type": "principle",
+          "settings": {
+            "icon": "heart",
+            "title": "Ethical by Design",
+            "description": "Partnering with certified ethical manufacturers, we ensure fair wages, safe conditions, and sustainable practices throughout our supply chain."
+          }
+        }
+      },
+      "block_order": [
+        "principle_YrRkGh",
+        "principle_GHrJpy",
+        "principle_yxdad8",
+        "principle_AGVFFH"
+      ],
+      "name": "Ethos 1",
+      "settings": {
+        "section_id": "ethos",
+        "subheading": "What We Stand For",
+        "heading": "Our Ethos",
+        "intro": "Every piece we create is an embodiment of these sacred principles."
+      }
+    },
+    "manifesto_1_CefdrK": {
+      "type": "manifesto-1",
+      "name": "Manifesto 1",
+      "settings": {
+        "section_id": "manifesto",
+        "subheading": "Our Words",
+        "heading": "The Sacred Rebel Manifesto",
+        "body": "We dress to reclaim our softness as strength.\nOur beauty as boundary.\nOur bodies as altar.\nPower doesn't have to shout.\nIt drips in velvet, walks in gold, and speaks in sacred tongues.\nWe wear our truth like armor.\nWe rebel by remembering.",
+        "closing": "You don't wear this to be seen—you wear it to be remembered."
+      }
+    },
+    "community_testimonials_1_dHiC44": {
+      "type": "community-testimonials-1",
+      "blocks": {
+        "testimonial_agVXEF": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-31545589.jpg",
+            "quote": "\"The quality is unmatched and the messages hit different. Every time I wear my hoodie, strangers stop me to ask about it.\"",
+            "name": "Jordan K.",
+            "location": "Austin, TX"
+          }
+        },
+        "testimonial_EjMtH8": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-6697737.jpg",
+            "quote": "\"Sacred Rebel isn't just clothing—it's a reminder to show up as yourself.\"",
+            "name": "Alex M.",
+            "location": "Portland, OR"
+          }
+        },
+        "testimonial_4LXtFU": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-33648329_65.jpg",
+            "quote": "\"The pieces feel intentional. I get compliments every time I wear them.\"",
+            "name": "Sam R.",
+            "location": "Brooklyn, NY"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_agVXEF",
+        "testimonial_EjMtH8",
+        "testimonial_4LXtFU"
+      ],
+      "name": "Community Testimonials 1",
+      "settings": {
+        "section_id": "community",
+        "subheading": "The Tribe Speaks",
+        "heading": "Community Voices"
+      }
+    },
+    "cta_1_E9LEbP": {
+      "type": "cta-1",
+      "name": "CTA 1",
+      "settings": {
+        "section_id": "cta",
+        "image": "shopify://shop_images/pexels-photo-6944915.jpg",
+        "heading": "Ready to Rebel with Reverence?",
+        "text": "Join thousands of conscious warriors who wear their truth and walk in purpose.",
+        "button_text": "Shop the Collection",
+        "button_link": ""
+      }
+    },
     "hero-slider": {
       "type": "hero-slider",
       "blocks": {
@@ -80,7 +196,6 @@
         "slide_DQYzbp",
         "slide_7A7AEW"
       ],
-      "disabled": true,
       "settings": {
         "auto_play_delay": 5,
         "show_dots": true,
@@ -491,6 +606,10 @@
     "hero_1_AHTeLw",
     "story_1_ENFzzD",
     "shop_homepage_9nEXF6",
+    "ethos_1_qxP9GD",
+    "manifesto_1_CefdrK",
+    "community_testimonials_1_dHiC44",
+    "cta_1_E9LEbP",
     "hero-slider",
     "feature-icons",
     "featured-products",
