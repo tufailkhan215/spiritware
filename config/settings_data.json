@@ -43,24 +43,24 @@
         "type": "header-preview",
         "settings": {
           "logo_text": "Sacred Rebel",
-          "menu": ""
+          "menu": "main-menu"
         }
       },
       "footer-preview": {
         "type": "footer-preview",
         "settings": {
           "newsletter_heading": "Join the Rebellion",
-          "newsletter_description": "",
+          "newsletter_description": "Newsletter description",
           "newsletter_placeholder": "Enter your email",
           "brand_title": "Sacred Rebel",
-          "brand_tagline": "",
+          "brand_tagline": "Brand tagline",
           "instagram_url": "",
           "tiktok_url": "",
-          "shop_menu": "",
+          "shop_menu": "main-menu",
           "shop_heading": "Shop",
-          "company_menu": "",
+          "company_menu": "footer",
           "company_heading": "Company",
-          "support_menu": "",
+          "support_menu": "main-menu",
           "support_heading": "Support",
           "copyright": ""
         }
