@@ -46,22 +46,31 @@
 {%- assign page_size = section.settings.posts_per_page | default: 12 -%}
 {%- assign section_heading = section.settings.heading | default: 'All Articles' -%}
 {%- if section.settings.blog != blank -%}
-  {%- assign selected_blog = blogs[section.settings.blog] -%}
+  {%- assign blog_handle = section.settings.blog -%}
+{%- elsif blog != blank -%}
+  {%- assign blog_handle = blog.handle -%}
 {%- else -%}
-  {%- assign selected_blog = blog -%}
+  {%- assign blog_handle = '' -%}
+{%- endif -%}
+{%- if blog_handle != '' -%}
+  {%- assign selected_blog = blogs[blog_handle] -%}
+  {%- assign blog_articles = selected_blog.articles -%}
+{%- else -%}
+  {%- assign selected_blog = nil -%}
+  {%- assign blog_articles = nil -%}
 {%- endif -%}
 
 <section class="blog-listing-section pb-24 px-6 lg:px-12" aria-label="{{ section_heading }}">
   <div class="blog-listing-section__inner max-w-7xl mx-auto">
     <h2 class="blog-listing-section__title font-serif text-2xl text-[#1A1A1A] mb-12">{{ section_heading }}</h2>
 
-    {% if selected_blog == blank %}
+    {% if blog_articles == blank %}
       <p class="blog-listing-section__empty text-[#1A1A1A]/60">Select a blog in the section settings, or assign the "blog" template to a blog page.</p>
+    {% elsif blog_articles.size == 0 %}
+      <p class="blog-listing-section__empty text-[#1A1A1A]/60">No articles in this blog yet.</p>
     {% else %}
-    {% paginate selected_blog.articles by page_size %}
-      {% if paginate.articles.size > 0 %}
         <div class="blog-listing-section__grid grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {% for article in paginate.articles %}
+          {% for article in blog_articles limit: page_size %}
             <article class="blog-listing-card">
               <a href="{{ article.url }}" class="blog-listing-card__link group block" data-discover="true">
                 <div class="blog-listing-card__image-wrap relative overflow-hidden mb-5 bg-[#EDE8E0]">
@@ -107,23 +116,11 @@
           {% endfor %}
         </div>
 
-        {% if paginate.pages > 1 %}
+        {% if blog_articles.size > page_size %}
           <nav class="blog-listing-section__pagination mt-12 flex justify-center items-center gap-4" aria-label="Blog pagination">
-            {% if paginate.previous %}
-              <a href="{{ paginate.previous.url }}" class="blog-listing-section__pagination-link">Previous</a>
-            {% endif %}
-            <span class="blog-listing-section__pagination-info text-sm text-[#1A1A1A]/60">
-              Page {{ paginate.current_page }} of {{ paginate.pages }}
-            </span>
-            {% if paginate.next %}
-              <a href="{{ paginate.next.url }}" class="blog-listing-section__pagination-link">Next</a>
-            {% endif %}
+            <a href="{{ selected_blog.url }}" class="blog-listing-section__pagination-link">View all {{ selected_blog.articles_count }} articles</a>
           </nav>
         {% endif %}
-      {% else %}
-        <p class="blog-listing-section__empty text-[#1A1A1A]/60">No articles in this blog yet.</p>
-      {% endif %}
-    {% endpaginate %}
     {% endif %}
   </div>
 </section>

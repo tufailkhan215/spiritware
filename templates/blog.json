@@ -3,6 +3,7 @@
     "blog-listing": {
       "type": "blog-listing",
       "settings": {
+        "blog": "news",
         "heading": "All Articles",
         "posts_per_page": 12
       }
