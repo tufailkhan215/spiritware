@@ -2302,13 +2302,15 @@
 
 /* Blog listing (All Articles / Journal) */
 .blog-listing-section__inner {
-  max-width: 1280px;
+  max-width: 124rem;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 3rem;
+  padding-right: 3rem;
 }
 
 .blog-listing-section.pb-24 { padding-bottom: 6rem; }
-.blog-listing-section.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+.blog-listing-section.px-6 { padding-left: 6rem; padding-right: 6rem; }
 @media (min-width: 990px) {
   .blog-listing-section.lg\\:px-12 { padding-left: 3rem; padding-right: 3rem; }
 }
@@ -2463,7 +2465,7 @@
 }
 
 .article-single__header-inner.max-w-4xl {
-  max-width: 56rem;
+  max-width: 80rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -2523,7 +2525,7 @@
   .article-single__featured.lg\\:px-12 { padding-left: 3rem; padding-right: 3rem; }
 }
 .article-single__featured-inner.max-w-5xl {
-  max-width: 64rem;
+  max-width: 80rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -2541,7 +2543,7 @@
   .article-single__body.lg\\:px-12 { padding-left: 3rem; padding-right: 3rem; }
 }
 .article-single__body-inner.max-w-3xl {
-  max-width: 48rem;
+  max-width: 80rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -2609,7 +2611,7 @@
   .article-single__share.lg\\:px-12 { padding-left: 3rem; padding-right: 3rem; }
 }
 .article-single__share-inner.max-w-3xl {
-  max-width: 48rem;
+  max-width: 80rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -2637,7 +2639,7 @@
   background-color: #EDE8E0;
 }
 .article-single__related-inner {
-  max-width: 1280px;
+  max-width: 124rem;
   margin-left: auto;
   margin-right: auto;
   padding-top: 5rem;
