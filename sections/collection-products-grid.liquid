@@ -1,10 +1,22 @@
 {% comment %}
-  Collection / Shop page template.
-  Matches Shop page design: header (label, title, count), toolbar (category links, sort), product grid.
+  Collection products grid section. Used by collection.json.
+  Renders header, nav (all collections), sort, product grid.
+  Fetchable via ?sections=collection-grid for JS tab switching.
 {% endcomment %}
 
-<div class="shop-page min-h-screen bg-[#FAF7F2]">
-  {% comment %} Section 1: Header {% endcomment %}
+{% schema %}
+{
+  "name": "Collection products grid",
+  "tag": "section",
+  "class": "shop-page-section",
+  "settings": [],
+  "presets": [
+    { "name": "Collection products grid" }
+  ]
+}
+{% endschema %}
+
+<div id="shop-page-content" class="shop-page min-h-screen bg-[#FAF7F2]" data-collection-handle="{{ collection.handle }}" data-section-id="{{ section.id }}">
   <section class="shop-page__header pt-32 pb-12 px-6 lg:px-12">
     <div class="shop-page__header-inner max-w-7xl mx-auto">
       <span class="shop-page__label font-sans text-xs tracking-[0.3em] uppercase text-[#C4A77D] mb-4 block">The Collection</span>
@@ -13,23 +25,25 @@
     </div>
   </section>
 
-  {% comment %} Section 2: Toolbar + Product grid {% endcomment %}
   <section class="shop-page__products pb-24 px-6 lg:px-12">
     <div class="shop-page__products-inner max-w-7xl mx-auto">
       <div class="shop-page__toolbar flex flex-wrap items-center justify-between gap-4 mb-12 pb-6 border-b border-[#EDE8E0]">
         <nav class="shop-page__nav hidden md:flex items-center gap-6" aria-label="Collection categories">
-          <a href="{{ collection.url }}" class="shop-page__nav-link font-sans text-sm transition-colors duration-300 text-[#1A1A1A] font-medium">All Products</a>
+          <a href="/collections/all" class="shop-page__nav-link font-sans text-sm transition-colors duration-300{% if collection.handle == 'all' %} text-[#1A1A1A] font-medium{% else %} text-[#1A1A1A]/60 hover:text-[#1A1A1A]{% endif %}">All Products</a>
           {%- if linklists['shop'] != blank -%}
             {%- for link in linklists['shop'].links -%}
-              <a href="{{ link.url }}" class="shop-page__nav-link font-sans text-sm transition-colors duration-300 text-[#1A1A1A]/60 hover:text-[#1A1A1A]{% if link.active %} text-[#1A1A1A] font-medium{% endif %}">{{ link.title }}</a>
+              <a href="{{ link.url }}" class="shop-page__nav-link font-sans text-sm transition-colors duration-300{% if link.active %} text-[#1A1A1A] font-medium{% else %} text-[#1A1A1A]/60 hover:text-[#1A1A1A]{% endif %}">{{ link.title }}</a>
             {%- endfor -%}
           {%- elsif linklists['main-menu'] != blank -%}
             {%- for link in linklists['main-menu'].links -%}
-              {%- if link.links != blank and link.title == 'Shop' or link.title == 'CATALOG' or link.title == 'Catalog' -%}
-                {%- for child in link.links -%}
-                  <a href="{{ child.url }}" class="shop-page__nav-link font-sans text-sm transition-colors duration-300 text-[#1A1A1A]/60 hover:text-[#1A1A1A]{% if child.active %} text-[#1A1A1A] font-medium{% endif %}">{{ child.title }}</a>
-                {%- endfor -%}
-                {%- break -%}
+              {%- if link.links != blank -%}
+                {%- assign link_title_down = link.title | downcase -%}
+                {%- if link_title_down == 'shop' or link_title_down == 'catalog' -%}
+                  {%- for child in link.links -%}
+                    <a href="{{ child.url }}" class="shop-page__nav-link font-sans text-sm transition-colors duration-300{% if child.active %} text-[#1A1A1A] font-medium{% else %} text-[#1A1A1A]/60 hover:text-[#1A1A1A]{% endif %}">{{ child.title }}</a>
+                  {%- endfor -%}
+                  {%- break -%}
+                {%- endif -%}
               {%- endif -%}
             {%- endfor -%}
           {%- endif -%}
@@ -39,12 +53,12 @@
           Filters
         </button>
         <div class="shop-page__sort">
-          <label for="SortBy-{{ section.id }}" class="visually-hidden">Sort by</label>
-          <select id="SortBy-{{ section.id }}" class="shop-page__sort-select font-sans text-sm bg-transparent border border-[#EDE8E0] px-4 py-2 focus:outline-none focus:border-[#C4A77D]" aria-label="Sort collection">
-            <option value="manual"{% if collection.sort_by == 'manual' %} selected{% endif %}>Featured</option>
-            <option value="created-descending"{% if collection.sort_by == 'created-descending' %} selected{% endif %}>Newest</option>
-            <option value="price-ascending"{% if collection.sort_by == 'price-ascending' %} selected{% endif %}>Price: Low to High</option>
-            <option value="price-descending"{% if collection.sort_by == 'price-descending' %} selected{% endif %}>Price: High to Low</option>
+          <label for="ShopSortBy" class="visually-hidden">Sort by</label>
+          <select id="ShopSortBy" class="shop-page__sort-select font-sans text-sm bg-transparent border border-[#EDE8E0] px-4 py-2 focus:outline-none focus:border-[#C4A77D]" aria-label="Sort collection">
+            <option value="manual">Featured</option>
+            <option value="created-descending">Newest</option>
+            <option value="price-ascending">Price: Low to High</option>
+            <option value="price-descending">Price: High to Low</option>
           </select>
         </div>
       </div>
@@ -76,20 +90,4 @@
   </section>
 </div>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var sortSelect = document.getElementById('ShopSortBy');
-    if (sortSelect) {
-      var params = new URLSearchParams(window.location.search);
-      var sortBy = params.get('sort_by');
-      if (sortBy && sortSelect.querySelector('option[value="' + sortBy + '"]')) {
-        sortSelect.value = sortBy;
-      }
-      sortSelect.addEventListener('change', function() {
-        var url = new URL(window.location.href);
-        url.searchParams.set('sort_by', this.value);
-        window.location.href = url.toString();
-      });
-    }
-  });
-</script>
+{{ 'collection-shop.js' | asset_url | script_tag }}
