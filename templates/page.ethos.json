@@ -11,10 +11,131 @@
   "sections": {
     "page-content": {
       "type": "page-content",
+      "disabled": true,
       "settings": {}
+    },
+    "about_title_1_6AEaDz": {
+      "type": "about-title-1",
+      "name": "About Title 1",
+      "settings": {
+        "subheading": "The Story",
+        "heading": "More Than Fashion. A Movement.",
+        "description": "Sacred Rebel was born from a simple truth: spirituality doesn't have to be soft, and rebellion doesn't have to be reckless."
+      }
+    },
+    "values_1_jjVYWc": {
+      "type": "values-1",
+      "blocks": {
+        "value_wVa6DL": {
+          "type": "value",
+          "settings": {
+            "title": "Organic Materials",
+            "description": "We use GOTS-certified organic cotton, which uses 91% less water and zero toxic chemicals compared to conventional cotton. Our fabrics are soft on your skin and gentle on the planet."
+          }
+        },
+        "value_Xzm3E8": {
+          "type": "value",
+          "settings": {
+            "title": "Recycled Fabrics",
+            "description": "Many of our pieces incorporate recycled polyester made from post-consumer plastic bottles. Each hoodie diverts approximately 12 bottles from landfills."
+          }
+        },
+        "value_jmFabg": {
+          "type": "value",
+          "settings": {
+            "title": "Natural Dyes",
+            "description": "We partner with artisans who use plant-based, low-impact dyes that don't pollute waterways or harm ecosystems."
+          }
+        },
+        "value_p6aHai": {
+          "type": "value",
+          "settings": {
+            "title": "Minimal Waste",
+            "description": "Our small-batch production model means we create only what's needed, reducing overproduction and textile waste."
+          }
+        }
+      },
+      "block_order": [
+        "value_wVa6DL",
+        "value_Xzm3E8",
+        "value_jmFabg",
+        "value_p6aHai"
+      ],
+      "name": "Values 1 (Sustainability)",
+      "settings": {
+        "layout": "extended",
+        "header_alignment": "center",
+        "icon": "leaf",
+        "background_type": "color",
+        "background_color": "#faf7f2",
+        "background_opacity": 60,
+        "overlay_color": "#1A1A1A",
+        "overlay_opacity": 50,
+        "subheading": "Honoring Pacha Mama",
+        "heading": "Sustainability",
+        "description": "We believe fashion should nurture the earth, not deplete it. Our commitment to sustainability isn't a marketing angle—it's a sacred responsibility.",
+        "card_color": "#ede8e0"
+      }
+    },
+    "values_1_RicVrz": {
+      "type": "values-1",
+      "blocks": {
+        "value_BygMWG": {
+          "type": "value",
+          "settings": {
+            "title": "Fair Wages",
+            "description": "All our manufacturing partners pay living wages—not just minimum wages. Workers can support their families with dignity."
+          }
+        },
+        "value_YBNeQw": {
+          "type": "value",
+          "settings": {
+            "title": "Safe Conditions",
+            "description": "Our facilities are regularly audited for safety standards, proper ventilation, and reasonable working hours."
+          }
+        },
+        "value_4mJTAH": {
+          "type": "value",
+          "settings": {
+            "title": "No Child Labor",
+            "description": "We have zero tolerance for child labor. Every partner is vetted and verified."
+          }
+        },
+        "value_Q6TKez": {
+          "type": "value",
+          "settings": {
+            "title": "Artisan Partnerships",
+            "description": "We work with skilled artisans, preserving traditional craftsmanship while providing stable income."
+          }
+        }
+      },
+      "block_order": [
+        "value_BygMWG",
+        "value_YBNeQw",
+        "value_4mJTAH",
+        "value_Q6TKez"
+      ],
+      "name": "Values 1 (Ethical Manufacturing)",
+      "settings": {
+        "layout": "extended",
+        "header_alignment": "left",
+        "icon": "heart",
+        "background_type": "color",
+        "background_color": "#ede8e0",
+        "background_opacity": 60,
+        "overlay_color": "#1A1A1A",
+        "overlay_opacity": 50,
+        "subheading": "People Over Profit",
+        "heading": "Ethical Manufacturing",
+        "description": "Behind every garment is a human being. We partner exclusively with manufacturers who share our values of dignity, safety, and fair compensation.",
+        "card_color": "#faf7f2"
+      }
     }
   },
   "order": [
-    "page-content"
+    "page-content",
+    "about_title_1_6AEaDz",
+    "values_1_jjVYWc",
+    "values_1_RicVrz"
   ]
 }
