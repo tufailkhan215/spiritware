@@ -1,119 +1,95 @@
 {% comment %}
-  Collection Template
+  Collection / Shop page template.
+  Matches Shop page design: header (label, title, count), toolbar (category links, sort), product grid.
 {% endcomment %}
 
-{% section 'collection-banner' %}
-{% section 'collection-filters' %}
+<div class="shop-page min-h-screen bg-[#FAF7F2]">
+  {% comment %} Section 1: Header {% endcomment %}
+  <section class="shop-page__header pt-32 pb-12 px-6 lg:px-12">
+    <div class="shop-page__header-inner max-w-7xl mx-auto">
+      <span class="shop-page__label font-sans text-xs tracking-[0.3em] uppercase text-[#C4A77D] mb-4 block">The Collection</span>
+      <h1 class="shop-page__title font-serif text-5xl md:text-6xl text-[#1A1A1A] mb-4">{{ collection.title | default: 'All Products' }}</h1>
+      <p class="shop-page__count font-sans text-lg text-[#1A1A1A]/70">{{ collection.products_count }} {% if collection.products_count == 1 %}product{% else %}products{% endif %}</p>
+    </div>
+  </section>
 
-<div class="container">
-  <div class="collection-content">
-    <aside class="filter-sidebar">
-      {%- render 'filter-sidebar' -%}
-    </aside>
-
-    <main class="collection-products">
-      <div class="collection-toolbar">
-        <div class="collection-toolbar-left">
-          <button class="filter-toggle btn btn-outline">
-            Filters
-            <span class="product-count">{{ collection.products_count }} products</span>
-          </button>
-        </div>
-        <div class="collection-toolbar-right">
-          <select class="sort-select">
-            <option value="manual">Featured</option>
-            <option value="price-ascending">Price: Low to High</option>
-            <option value="price-descending">Price: High to Low</option>
-            <option value="title-ascending">Alphabetically: A-Z</option>
-            <option value="title-descending">Alphabetically: Z-A</option>
-            <option value="created-descending">Newest</option>
-            <option value="best-selling">Best Selling</option>
+  {% comment %} Section 2: Toolbar + Product grid {% endcomment %}
+  <section class="shop-page__products pb-24 px-6 lg:px-12">
+    <div class="shop-page__products-inner max-w-7xl mx-auto">
+      <div class="shop-page__toolbar flex flex-wrap items-center justify-between gap-4 mb-12 pb-6 border-b border-[#EDE8E0]">
+        <nav class="shop-page__nav hidden md:flex items-center gap-6" aria-label="Collection categories">
+          <a href="{{ collection.url }}" class="shop-page__nav-link font-sans text-sm transition-colors duration-300 text-[#1A1A1A] font-medium">All Products</a>
+          {%- if linklists['shop'] != blank -%}
+            {%- for link in linklists['shop'].links -%}
+              <a href="{{ link.url }}" class="shop-page__nav-link font-sans text-sm transition-colors duration-300 text-[#1A1A1A]/60 hover:text-[#1A1A1A]{% if link.active %} text-[#1A1A1A] font-medium{% endif %}">{{ link.title }}</a>
+            {%- endfor -%}
+          {%- elsif linklists['main-menu'] != blank -%}
+            {%- for link in linklists['main-menu'].links -%}
+              {%- if link.links != blank and link.title == 'Shop' or link.title == 'CATALOG' or link.title == 'Catalog' -%}
+                {%- for child in link.links -%}
+                  <a href="{{ child.url }}" class="shop-page__nav-link font-sans text-sm transition-colors duration-300 text-[#1A1A1A]/60 hover:text-[#1A1A1A]{% if child.active %} text-[#1A1A1A] font-medium{% endif %}">{{ child.title }}</a>
+                {%- endfor -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </nav>
+        <button type="button" class="shop-page__filter-btn md:hidden flex items-center gap-2 font-sans text-sm text-[#1A1A1A]" aria-label="Filters">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shop-page__filter-icon w-4 h-4" aria-hidden="true"><path d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z"></path></svg>
+          Filters
+        </button>
+        <div class="shop-page__sort">
+          <label for="SortBy-{{ section.id }}" class="visually-hidden">Sort by</label>
+          <select id="SortBy-{{ section.id }}" class="shop-page__sort-select font-sans text-sm bg-transparent border border-[#EDE8E0] px-4 py-2 focus:outline-none focus:border-[#C4A77D]" aria-label="Sort collection">
+            <option value="manual"{% if collection.sort_by == 'manual' %} selected{% endif %}>Featured</option>
+            <option value="created-descending"{% if collection.sort_by == 'created-descending' %} selected{% endif %}>Newest</option>
+            <option value="price-ascending"{% if collection.sort_by == 'price-ascending' %} selected{% endif %}>Price: Low to High</option>
+            <option value="price-descending"{% if collection.sort_by == 'price-descending' %} selected{% endif %}>Price: High to Low</option>
           </select>
-          <div class="view-toggle-group">
-            <button class="view-toggle active" data-view="grid" aria-label="Grid view">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="3" width="7" height="7"></rect>
-                <rect x="14" y="3" width="7" height="7"></rect>
-                <rect x="14" y="14" width="7" height="7"></rect>
-                <rect x="3" y="14" width="7" height="7"></rect>
-              </svg>
-            </button>
-            <button class="view-toggle" data-view="list" aria-label="List view">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="8" y1="6" x2="21" y2="6"></line>
-                <line x1="8" y1="12" x2="21" y2="12"></line>
-                <line x1="8" y1="18" x2="21" y2="18"></line>
-                <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                <line x1="3" y1="18" x2="3.01" y2="18"></line>
-              </svg>
-            </button>
-          </div>
         </div>
       </div>
 
-      <div class="product-grid">
-        {%- for product in collection.products -%}
-          {%- render 'product-card', product: product -%}
-        {%- else -%}
-          <p>No products found in this collection.</p>
-        {%- endfor -%}
-      </div>
+      {% paginate collection.products by 24 %}
+        {% if collection.products.size > 0 %}
+          <div class="shop-page__grid grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+            {% for product in collection.products %}
+              {% render 'product-card-shop', product: product %}
+            {% endfor %}
+          </div>
 
-      {%- if paginate.pages > 1 -%}
-        {%- render 'pagination', paginate: paginate -%}
-      {%- endif -%}
-    </main>
-  </div>
+          {% if paginate.pages > 1 %}
+            <nav class="shop-page__pagination mt-12 flex justify-center items-center gap-4" aria-label="Collection pagination">
+              {% if paginate.previous %}
+                <a href="{{ paginate.previous.url }}" class="shop-page__pagination-link">Previous</a>
+              {% endif %}
+              <span class="shop-page__pagination-info text-sm text-[#1A1A1A]/60">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+              {% if paginate.next %}
+                <a href="{{ paginate.next.url }}" class="shop-page__pagination-link">Next</a>
+              {% endif %}
+            </nav>
+          {% endif %}
+        {% else %}
+          <p class="shop-page__empty text-[#1A1A1A]/60 text-center py-12">No products in this collection.</p>
+        {% endif %}
+      {% endpaginate %}
+    </div>
+  </section>
 </div>
 
-{% paginate collection.products by 12 %}
-  {%- comment -%} Pagination handled above {%- endcomment -%}
-{% endpaginate %}
-
-<style>
-.collection-content {
-  display: grid;
-  grid-template-columns: 250px 1fr;
-  gap: 3rem;
-  padding: 3rem 0;
-}
-
-.collection-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 3rem;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.view-toggle-group {
-  display: flex;
-  gap: 0.5rem;
-  margin-left: 2rem;
-}
-
-.view-toggle {
-  background: transparent;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 0.8rem;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.view-toggle.active {
-  background: var(--color-dark-gray);
-  color: var(--color-white);
-}
-
-@media (max-width: 768px) {
-  .collection-content {
-    grid-template-columns: 1fr;
-  }
-  
-  .filter-sidebar {
-    display: none;
-  }
-}
-</style>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var sortSelect = document.getElementById('ShopSortBy');
+    if (sortSelect) {
+      var params = new URLSearchParams(window.location.search);
+      var sortBy = params.get('sort_by');
+      if (sortBy && sortSelect.querySelector('option[value="' + sortBy + '"]')) {
+        sortSelect.value = sortBy;
+      }
+      sortSelect.addEventListener('change', function() {
+        var url = new URL(window.location.href);
+        url.searchParams.set('sort_by', this.value);
+        window.location.href = url.toString();
+      });
+    }
+  });
+</script>
