@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "blog-listing": {
+      "type": "blog-listing",
+      "settings": {
+        "heading": "All Articles",
+        "posts_per_page": 12
+      }
+    }
+  },
+  "order": ["blog-listing"]
+}

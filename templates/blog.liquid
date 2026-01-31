@@ -1,103 +1,80 @@
 {% comment %}
-  Blog Listing Template
-  Shows blog posts in a grid layout
+  Blog listing template (liquid fallback).
+  Matches "All Articles" design: grid of cards with category, title, excerpt, author, read time.
+  For section-based blog page, use the "blog" template (blog.json) in Theme settings.
 {% endcomment %}
 
 {% paginate blog.articles by 12 %}
-<div class="blog-listing-page">
-  <div class="blog-listing-container">
-    {%- if blog.title != blank -%}
-      <header class="blog-header">
-        <h1 class="blog-title">{{ blog.title }}</h1>
-        {%- if blog.description != blank -%}
-          <p class="blog-description">{{ blog.description }}</p>
-        {%- endif -%}
-      </header>
-    {%- endif -%}
+<section class="blog-listing-section pb-24 px-6 lg:px-12" aria-label="{{ blog.title }}">
+  <div class="blog-listing-section__inner max-w-7xl mx-auto">
+    <h2 class="blog-listing-section__title font-serif text-2xl text-[#1A1A1A] mb-12">
+      {{ blog.title | default: 'All Articles' }}
+    </h2>
 
-    {%- if paginate.articles.size > 0 -%}
-      <div class="blog-posts-grid">
-        {%- for article in paginate.articles -%}
-          <article class="blog-post-card">
-            {%- if article.image != blank -%}
-              <div class="blog-post-image-wrapper">
-                <a href="{{ article.url }}">
-                  <img 
-                    src="{{ article.image | image_url: width: 800 }}" 
-                    alt="{{ article.image.alt | escape }}"
-                    class="blog-post-image"
-                    loading="lazy"
-                  >
-                </a>
-                <div class="blog-post-date-overlay">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="blog-post-calendar-icon">
-                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                  </svg>
-                  <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
-                    {{ article.published_at | date: '%b %d, %Y' }}
-                  </time>
+    {% if paginate.articles.size > 0 %}
+      <div class="blog-listing-section__grid grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for article in paginate.articles %}
+          <article class="blog-listing-card">
+            <a href="{{ article.url }}" class="blog-listing-card__link group block">
+              <div class="blog-listing-card__image-wrap relative overflow-hidden mb-5 bg-[#EDE8E0]">
+                <div class="blog-listing-card__aspect">
+                  {% if article.image != blank %}
+                    <img
+                      alt="{{ article.image.alt | default: article.title | escape }}"
+                      class="blog-listing-card__img w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      src="{{ article.image | image_url: width: 800 }}"
+                      width="800"
+                      height="533"
+                      loading="lazy"
+                    >
+                  {% else %}
+                    <div class="blog-listing-card__placeholder w-full h-full flex items-center justify-center text-[#1A1A1A]/40">
+                      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                  {% endif %}
                 </div>
               </div>
-            {%- endif -%}
-            
-            <div class="blog-post-content">
-              {%- if article.tags.size > 0 -%}
-                <div class="blog-post-tags">
-                  {%- for tag in article.tags limit: 3 -%}
-                    <span class="blog-post-tag">{{ tag }}</span>
-                  {%- endfor -%}
-                </div>
-              {%- endif -%}
-              
-              <h2 class="blog-post-title">
-                <a href="{{ article.url }}">{{ article.title }}</a>
-              </h2>
-              
-              {%- if article.excerpt != blank -%}
-                <p class="blog-post-excerpt">{{ article.excerpt | strip_html | truncatewords: 30 }}</p>
-              {%- elsif article.content != blank -%}
-                <p class="blog-post-excerpt">{{ article.content | strip_html | truncatewords: 30 }}</p>
-              {%- endif -%}
-              
-              <a href="{{ article.url }}" class="blog-post-read-more">
-                Read More
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="blog-post-read-more-arrow">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </a>
-            </div>
+              {% if article.tags.size > 0 %}
+                <span class="blog-listing-card__category font-sans text-xs tracking-[0.2em] uppercase text-[#C4A77D] mb-2 block">{{ article.tags.first }}</span>
+              {% endif %}
+              <h3 class="blog-listing-card__title font-serif text-xl text-[#1A1A1A] mb-3 group-hover:text-[#C4A77D] transition-colors">{{ article.title }}</h3>
+              <p class="blog-listing-card__excerpt font-sans text-sm text-[#1A1A1A]/60 mb-4 line-clamp-2">
+                {% if article.excerpt != blank %}
+                  {{ article.excerpt | strip_html | truncatewords: 25 }}
+                {% else %}
+                  {{ article.content | strip_html | truncatewords: 25 }}
+                {% endif %}
+              </p>
+              <div class="blog-listing-card__meta flex items-center gap-3 text-xs text-[#1A1A1A]/50">
+                <span class="font-sans">{{ article.author | default: 'Sacred Rebel Team' }}</span>
+                <span aria-hidden="true">•</span>
+                <span class="font-sans">
+                  {% assign words = article.content | strip_html | split: ' ' | size %}
+                  {% assign mins = words | divided_by: 180 %}
+                  {% if mins < 1 %}1 min read{% else %}{{ mins }} min read{% endif %}
+                </span>
+              </div>
+            </a>
           </article>
-        {%- endfor -%}
+        {% endfor %}
       </div>
 
-      {%- if paginate.pages > 1 -%}
-        <div class="blog-pagination">
-          {%- if paginate.previous -%}
-            <a href="{{ paginate.previous.url }}" class="pagination-link pagination-prev">
-              ← Previous
-            </a>
-          {%- endif -%}
-          
-          <span class="pagination-info">
+      {% if paginate.pages > 1 %}
+        <nav class="blog-listing-section__pagination mt-12 flex justify-center items-center gap-4" aria-label="Blog pagination">
+          {% if paginate.previous %}
+            <a href="{{ paginate.previous.url }}" class="blog-listing-section__pagination-link">Previous</a>
+          {% endif %}
+          <span class="blog-listing-section__pagination-info text-sm text-[#1A1A1A]/60">
             Page {{ paginate.current_page }} of {{ paginate.pages }}
           </span>
-          
-          {%- if paginate.next -%}
-            <a href="{{ paginate.next.url }}" class="pagination-link pagination-next">
-              Next →
-            </a>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
-    {%- else -%}
-      <div class="blog-empty">
-        <p>No articles found in this blog.</p>
-      </div>
-    {%- endif -%}
+          {% if paginate.next %}
+            <a href="{{ paginate.next.url }}" class="blog-listing-section__pagination-link">Next</a>
+          {% endif %}
+        </nav>
+      {% endif %}
+    {% else %}
+      <p class="blog-listing-section__empty text-[#1A1A1A]/60">No articles in this blog yet.</p>
+    {% endif %}
   </div>
-</div>
+</section>
 {% endpaginate %}
