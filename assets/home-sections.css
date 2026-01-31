@@ -2730,9 +2730,11 @@
   .shop-page__header.lg\\:px-12 { padding-left: 3rem; padding-right: 3rem; }
 }
 .shop-page__header-inner.max-w-7xl {
-  max-width: 1280px;
+  max-width: 124rem;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 3rem;
+  padding-right: 3rem;
 }
 .shop-page__label {
   font-family: var(--font-body-family), sans-serif;
@@ -2766,9 +2768,11 @@
   .shop-page__products.lg\\:px-12 { padding-left: 3rem; padding-right: 3rem; }
 }
 .shop-page__products-inner.max-w-7xl {
-  max-width: 1280px;
+  max-width: 124rem;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 3rem;
+  padding-right: 3rem;
 }
 .shop-page__toolbar {
   display: flex;
