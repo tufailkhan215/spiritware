@@ -47,7 +47,7 @@
       "settings": {
         "blog": "news",
         "heading": "All Articles",
-        "posts_per_page": 6
+        "posts_per_page": 3
       }
     },
     "title_text_1_4XdwDR": {
@@ -58,7 +58,7 @@
         "background_type": "color",
         "background_color": "#1a1a1a",
         "background_opacity": 60,
-        "overlay_color": "#1A1A1A",
+        "overlay_color": "#1a1a1a",
         "overlay_opacity": 70,
         "heading_color": "#faf7f2",
         "body_color": "#faf7f2",
