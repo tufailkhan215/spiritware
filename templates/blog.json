@@ -47,7 +47,7 @@
       "settings": {
         "blog": "news",
         "heading": "All Articles",
-        "posts_per_page": 12
+        "posts_per_page": 6
       }
     }
   },
