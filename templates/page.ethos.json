@@ -130,12 +130,246 @@
         "description": "Behind every garment is a human being. We partner exclusively with manufacturers who share our values of dignity, safety, and fair compensation.",
         "card_color": "#faf7f2"
       }
+    },
+    "values_1_cyJPzb": {
+      "type": "values-1",
+      "blocks": {
+        "value_pV7Lzy": {
+          "type": "value",
+          "settings": {
+            "title": "Organic Materials",
+            "description": "We use GOTS-certified organic cotton, which uses 91% less water and zero toxic chemicals compared to conventional cotton. Our fabrics are soft on your skin and gentle on the planet."
+          }
+        },
+        "value_bG9QnU": {
+          "type": "value",
+          "settings": {
+            "title": "Recycled Fabrics",
+            "description": "Many of our pieces incorporate recycled polyester made from post-consumer plastic bottles. Each hoodie diverts approximately 12 bottles from landfills."
+          }
+        },
+        "value_fdcT6d": {
+          "type": "value",
+          "settings": {
+            "title": "Natural Dyes",
+            "description": "We partner with artisans who use plant-based, low-impact dyes that don't pollute waterways or harm ecosystems."
+          }
+        },
+        "value_iDH744": {
+          "type": "value",
+          "settings": {
+            "title": "Minimal Waste",
+            "description": "Our small-batch production model means we create only what's needed, reducing overproduction and textile waste."
+          }
+        }
+      },
+      "block_order": [
+        "value_pV7Lzy",
+        "value_bG9QnU",
+        "value_fdcT6d",
+        "value_iDH744"
+      ],
+      "name": "Values 1 (Sustainability)",
+      "settings": {
+        "layout": "extended",
+        "header_alignment": "left",
+        "icon": "leaf",
+        "background_type": "color",
+        "background_color": "#faf7f2",
+        "background_opacity": 60,
+        "overlay_color": "#1A1A1A",
+        "overlay_opacity": 50,
+        "subheading": "Honoring Pacha Mama",
+        "heading": "Sustainability",
+        "description": "We believe fashion should nurture the earth, not deplete it. Our commitment to sustainability isn't a marketing angle—it's a sacred responsibility.",
+        "card_color": "#ede8e0"
+      }
+    },
+    "values_1_Gte8Ax": {
+      "type": "values-1",
+      "blocks": {
+        "value_qjy6cC": {
+          "type": "value",
+          "settings": {
+            "title": "Fair Wages",
+            "description": "All our manufacturing partners pay living wages—not just minimum wages. Workers can support their families with dignity."
+          }
+        },
+        "value_r347PT": {
+          "type": "value",
+          "settings": {
+            "title": "Safe Conditions",
+            "description": "Our facilities are regularly audited for safety standards, proper ventilation, and reasonable working hours."
+          }
+        },
+        "value_VBBGMy": {
+          "type": "value",
+          "settings": {
+            "title": "No Child Labor",
+            "description": "We have zero tolerance for child labor. Every partner is vetted and verified."
+          }
+        },
+        "value_fBmGKU": {
+          "type": "value",
+          "settings": {
+            "title": "Artisan Partnerships",
+            "description": "We work with skilled artisans, preserving traditional craftsmanship while providing stable income."
+          }
+        }
+      },
+      "block_order": [
+        "value_qjy6cC",
+        "value_r347PT",
+        "value_VBBGMy",
+        "value_fBmGKU"
+      ],
+      "name": "Values 1 (Ethical Manufacturing)",
+      "settings": {
+        "layout": "extended",
+        "header_alignment": "left",
+        "icon": "heart",
+        "background_type": "color",
+        "background_color": "#ede8e0",
+        "background_opacity": 60,
+        "overlay_color": "#1A1A1A",
+        "overlay_opacity": 50,
+        "subheading": "People Over Profit",
+        "heading": "Ethical Manufacturing",
+        "description": "Behind every garment is a human being. We partner exclusively with manufacturers who share our values of dignity, safety, and fair compensation.",
+        "card_color": "#faf7f2"
+      }
+    },
+    "box_section_1_C86hXm": {
+      "type": "box-section-1",
+      "blocks": {
+        "box_Y3n8ka": {
+          "type": "box",
+          "settings": {
+            "icon": "leaf",
+            "title": "GOTS Certified Organic",
+            "description": "Global Organic Textile Standard"
+          }
+        },
+        "box_Xcjmbz": {
+          "type": "box",
+          "settings": {
+            "icon": "eye",
+            "title": "Fair Trade",
+            "description": "Certified fair labor practices"
+          }
+        },
+        "box_PyEGLx": {
+          "type": "box",
+          "settings": {
+            "icon": "check",
+            "title": "OEKO-TEX",
+            "description": "Tested for harmful substances"
+          }
+        },
+        "box_fyhkK7": {
+          "type": "box",
+          "settings": {
+            "icon": "heart",
+            "title": "Carbon Neutral",
+            "description": "100% shipping emissions offset"
+          }
+        }
+      },
+      "block_order": [
+        "box_Y3n8ka",
+        "box_Xcjmbz",
+        "box_PyEGLx",
+        "box_fyhkK7"
+      ],
+      "name": "Box Section 1",
+      "settings": {
+        "background_type": "color",
+        "background_color": "#1A1A1A",
+        "background_opacity": 60,
+        "overlay_color": "#1A1A1A",
+        "overlay_opacity": 50,
+        "subheading": "Our Standards",
+        "heading": "Certifications & Commitments"
+      }
+    },
+    "title_text_1_tzzQJU": {
+      "type": "title-text-1",
+      "name": "Title Text 1 (Contact CTA)",
+      "settings": {
+        "layout": "cta",
+        "background_type": "color",
+        "background_color": "#faf7f2",
+        "background_opacity": 60,
+        "overlay_color": "#1A1A1A",
+        "overlay_opacity": 70,
+        "heading_color": "#1a1a1a",
+        "body_color": "#1a1a1a",
+        "body_opacity": 70,
+        "subheading": "Our Purpose",
+        "heading": "Want to Know More?",
+        "body": "We're an open book. If you have questions about our practices, materials, or impact, we'd love to hear from you.",
+        "button_label": "Contact Us",
+        "button_link": "/contact",
+        "button_background_color": "#1a1a1a",
+        "button_text_color": "#faf7f2",
+        "button_hover_background_color": "#c4a77d",
+        "newsletter_placeholder": "Your email",
+        "newsletter_button_label": "Subscribe"
+      }
+    },
+    "title_text_1_VQ89P9": {
+      "type": "title-text-1",
+      "name": "Title Text 1 (CTA)",
+      "settings": {
+        "layout": "cta",
+        "background_type": "color",
+        "background_color": "#1A1A1A",
+        "background_opacity": 60,
+        "overlay_color": "#1A1A1A",
+        "overlay_opacity": 70,
+        "subheading": "Our Purpose",
+        "heading": "Ready to Join the Movement?",
+        "body": "Explore our collections and find pieces that speak to your soul.",
+        "button_label": "Shop Now",
+        "button_link": "/shop"
+      }
+    },
+    "title_text_1_D47fUP": {
+      "type": "title-text-1",
+      "name": "Title Text 1 (Newsletter)",
+      "settings": {
+        "layout": "newsletter",
+        "background_type": "color",
+        "background_color": "#1a1a1a",
+        "background_opacity": 60,
+        "overlay_color": "#1A1A1A",
+        "overlay_opacity": 70,
+        "heading_color": "#faf7f2",
+        "body_color": "#faf7f2",
+        "body_opacity": 70,
+        "subheading": "Our Purpose",
+        "heading": "Never Miss a Story",
+        "body": "Subscribe to our journal for insights on conscious living, exclusive drops, and community updates.",
+        "button_label": "Shop Now",
+        "button_link": "",
+        "button_background_color": "#faf7f2",
+        "button_text_color": "#1a1a1a",
+        "button_hover_background_color": "#c4a77d",
+        "newsletter_placeholder": "Your email",
+        "newsletter_button_label": "Subscribe"
+      }
     }
   },
   "order": [
     "page-content",
     "about_title_1_6AEaDz",
     "values_1_jjVYWc",
-    "values_1_RicVrz"
+    "values_1_RicVrz",
+    "values_1_cyJPzb",
+    "values_1_Gte8Ax",
+    "box_section_1_C86hXm",
+    "title_text_1_tzzQJU",
+    "title_text_1_VQ89P9",
+    "title_text_1_D47fUP"
   ]
 }
