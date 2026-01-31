@@ -34,18 +34,6 @@
             {%- for link in linklists['shop'].links -%}
               <a href="{{ link.url }}" class="shop-page__nav-link font-sans text-sm transition-colors duration-300{% if link.active %} text-[#1A1A1A] font-medium{% else %} text-[#1A1A1A]/60 hover:text-[#1A1A1A]{% endif %}">{{ link.title }}</a>
             {%- endfor -%}
-          {%- elsif linklists['main-menu'] != blank -%}
-            {%- for link in linklists['main-menu'].links -%}
-              {%- if link.links != blank -%}
-                {%- assign link_title_down = link.title | downcase -%}
-                {%- if link_title_down == 'shop' or link_title_down == 'catalog' -%}
-                  {%- for child in link.links -%}
-                    <a href="{{ child.url }}" class="shop-page__nav-link font-sans text-sm transition-colors duration-300{% if child.active %} text-[#1A1A1A] font-medium{% else %} text-[#1A1A1A]/60 hover:text-[#1A1A1A]{% endif %}">{{ child.title }}</a>
-                  {%- endfor -%}
-                  {%- break -%}
-                {%- endif -%}
-              {%- endif -%}
-            {%- endfor -%}
           {%- endif -%}
         </nav>
         <button type="button" class="shop-page__filter-btn md:hidden flex items-center gap-2 font-sans text-sm text-[#1A1A1A]" aria-label="Filters">
