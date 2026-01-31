@@ -41,10 +41,19 @@
       <div class="values-1__bg-overlay" aria-hidden="true" style="background-color: {{ overlay_color }}; opacity: {{ overlay_opacity }};"></div>
     </div>
   {%- endif -%}
+{%- if layout == 'extended' -%}
+  {%- if icon_name != 'none' or section.settings.subheading != blank -%}
+    {%- assign show_header_row = true -%}
+  {%- else -%}
+    {%- assign show_header_row = false -%}
+  {%- endif -%}
+{%- else -%}
+  {%- assign show_header_row = false -%}
+{%- endif -%}
 
   <div class="values-1__container">
     <div class="values-1__header">
-      {%- if layout == 'extended' and (icon_name != 'none' or section.settings.subheading != blank) -%}
+      {%- if show_header_row -%}
         <div class="values-1__header-row">
           {%- if icon_name != 'none' -%}
             <div class="values-1__icon-wrap" aria-hidden="true">
