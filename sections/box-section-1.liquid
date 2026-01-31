@@ -1,0 +1,205 @@
+{% comment %}
+  Box Section 1 — "Certifications & Commitments": centered subheading + heading, grid of boxes with icon, title, description. Dark theme.
+  Dynamic section background (color or image). Per-block icon selection (check, leaf, heart, eye, users).
+  Generic: works with any header. Design: #1A1A1A bg, #FAF7F2, #C4A77D.
+{% endcomment %}
+
+{%- assign bg_type = section.settings.background_type | default: 'color' -%}
+{%- assign bg_color = section.settings.background_color | default: '#1A1A1A' -%}
+{%- assign bg_opacity = section.settings.background_opacity | default: 60 | divided_by: 100.0 -%}
+{%- assign overlay_color = section.settings.overlay_color | default: '#1A1A1A' -%}
+{%- assign overlay_opacity = section.settings.overlay_opacity | default: 50 | divided_by: 100.0 -%}
+{%- if bg_type == 'color' -%}
+  {%- assign use_bg_color = true -%}
+{%- elsif bg_type == 'image' and section.settings.background_image == blank -%}
+  {%- assign use_bg_color = true -%}
+{%- else -%}
+  {%- assign use_bg_color = false -%}
+{%- endif -%}
+
+<section
+  class="box-section-1 {% if bg_type == 'image' and section.settings.background_image != blank %}box-section-1--bg-image{% endif %}"
+  aria-label="Certifications and commitments"
+  style="{% if use_bg_color %}background-color: {{ bg_color }};{% endif %}"
+>
+  {%- if bg_type == 'image' and section.settings.background_image != blank -%}
+    <div class="box-section-1__bg" aria-hidden="true">
+      <img
+        class="box-section-1__bg-image"
+        src="{{ section.settings.background_image | image_url: width: 1920 }}"
+        alt=""
+        width="1920"
+        height="1080"
+        loading="lazy"
+        fetchpriority="low"
+        style="opacity: {{ bg_opacity }};"
+      >
+      <div class="box-section-1__bg-overlay" aria-hidden="true" style="background-color: {{ overlay_color }}; opacity: {{ overlay_opacity }};"></div>
+    </div>
+  {%- endif -%}
+
+  <div class="box-section-1__container">
+    <div class="box-section-1__header">
+      {%- if section.settings.subheading != blank -%}
+        <span class="box-section-1__subheading">{{ section.settings.subheading | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="box-section-1__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="box-section-1__grid">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'box' -%}
+              <div class="box-section-1__card" {{ block.shopify_attributes }}>
+                <div class="box-section-1__icon-wrap" aria-hidden="true">
+                  {%- assign icon_name = block.settings.icon | default: 'check' -%}
+                  {%- if icon_name == 'check' -%}
+                    <svg class="box-section-1__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                  {%- elsif icon_name == 'leaf' -%}
+                    <svg class="box-section-1__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+                  {%- elsif icon_name == 'heart' -%}
+                    <svg class="box-section-1__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                  {%- elsif icon_name == 'eye' -%}
+                    <svg class="box-section-1__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
+                  {%- elsif icon_name == 'users' -%}
+                    <svg class="box-section-1__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+                  {%- endif -%}
+                </div>
+                {%- if block.settings.title != blank -%}
+                  <h3 class="box-section-1__card-title">{{ block.settings.title | escape }}</h3>
+                {%- endif -%}
+                {%- if block.settings.description != blank -%}
+                  <p class="box-section-1__card-desc">{{ block.settings.description }}</p>
+                {%- endif -%}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Box Section 1",
+  "tag": "section",
+  "class": "section-box-section-1",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section background"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background",
+      "options": [
+        { "value": "color", "label": "Solid color" },
+        { "value": "image", "label": "Image" }
+      ],
+      "default": "color"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "info": "Used when Background is Image."
+    },
+    {
+      "type": "range",
+      "id": "background_opacity",
+      "label": "Background image opacity",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 60
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Our Standards"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Certifications & Commitments"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "box",
+      "name": "Box",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "check", "label": "Check" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "eye", "label": "Eye" },
+            { "value": "users", "label": "Users" }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Certification title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Short description."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Box Section 1",
+      "blocks": [
+        { "type": "box", "settings": { "icon": "check", "title": "GOTS Certified Organic", "description": "Global Organic Textile Standard" }},
+        { "type": "box", "settings": { "icon": "check", "title": "Fair Trade", "description": "Certified fair labor practices" }},
+        { "type": "box", "settings": { "icon": "check", "title": "OEKO-TEX", "description": "Tested for harmful substances" }},
+        { "type": "box", "settings": { "icon": "check", "title": "Carbon Neutral", "description": "100% shipping emissions offset" }}
+      ]
+    }
+  ]
+}
+{% endschema %}
