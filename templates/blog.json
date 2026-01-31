@@ -47,13 +47,39 @@
       "settings": {
         "blog": "news",
         "heading": "All Articles",
-        "posts_per_page": 12
+        "posts_per_page": 6
+      }
+    },
+    "title_text_1_4XdwDR": {
+      "type": "title-text-1",
+      "name": "Title Text 1 (Newsletter)",
+      "settings": {
+        "layout": "newsletter",
+        "background_type": "color",
+        "background_color": "#1a1a1a",
+        "background_opacity": 60,
+        "overlay_color": "#1A1A1A",
+        "overlay_opacity": 70,
+        "heading_color": "#faf7f2",
+        "body_color": "#faf7f2",
+        "body_opacity": 70,
+        "subheading": "Our Purpose",
+        "heading": "Never Miss a Story",
+        "body": "Subscribe to our journal for insights on conscious living, exclusive drops, and community updates.",
+        "button_label": "Shop Now",
+        "button_link": "",
+        "button_background_color": "#faf7f2",
+        "button_text_color": "#1a1a1a",
+        "button_hover_background_color": "#c4a77d",
+        "newsletter_placeholder": "Your email",
+        "newsletter_button_label": "Subscribe"
       }
     }
   },
   "order": [
     "about_title_1_HUypwk",
     "about_image_text_1_VPWHrc",
-    "blog-listing"
+    "blog-listing",
+    "title_text_1_4XdwDR"
   ]
 }
