@@ -1,5 +1,47 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
+    "about_title_1_HUypwk": {
+      "type": "about-title-1",
+      "name": "About Title 1",
+      "settings": {
+        "subheading": "The Story",
+        "heading": "More Than Fashion. A Movement.",
+        "description": "Sacred Rebel was born from a simple truth: spirituality doesn't have to be soft, and rebellion doesn't have to be reckless."
+      }
+    },
+    "about_image_text_1_VPWHrc": {
+      "type": "about-image-text-1",
+      "name": "About Image Text 1",
+      "settings": {
+        "design": "simple",
+        "image_position": "right",
+        "background_type": "color",
+        "background_color": "#ede8e0",
+        "background_opacity": 60,
+        "overlay_color": "#1a1a1a",
+        "overlay_opacity": 50,
+        "heading": "Where It All Began",
+        "paragraph_1": "Sacred Rebel emerged from the space between—the sacred and the savage, the divine and the dichotomy. We saw a world where spirituality was being boxed into rigid definitions, where \"holy\" meant quiet and \"rebellious\" meant lost.",
+        "paragraph_2": "We disagreed.",
+        "paragraph_3": "We believe God is limitless, and so are we. True spirituality isn't about confinement—it's about expansion, embodiment, and liberation. Our fire, sensuality, and unfiltered expression aren't meant to be suppressed. They're meant to be celebrated.",
+        "subheading": "The Founder",
+        "subtitle": "Founder & Creative Director",
+        "blockquote": "\"I created Sacred Rebel for the ones who feel too wild for the temple and too sacred for the streets. This is for us.\"",
+        "body": "Kateri is an entrepreneur, fashion designer, and spiritual seeker with a passion for sustainability and authentic self-expression. After years of feeling like she didn't fit into conventional spiritual or fashion spaces, she created Sacred Rebel as a home for conscious warriors everywhere.",
+        "image": "shopify://shop_images/pexels-photo-6944915.jpg",
+        "image_accent": "none",
+        "image_accent_color": "#ede8e0"
+      }
+    },
     "blog-listing": {
       "type": "blog-listing",
       "settings": {
@@ -9,5 +51,9 @@
       }
     }
   },
-  "order": ["blog-listing"]
+  "order": [
+    "about_title_1_HUypwk",
+    "about_image_text_1_VPWHrc",
+    "blog-listing"
+  ]
 }
