@@ -9,8 +9,15 @@
 {%- assign bg_opacity = section.settings.background_opacity | default: 60 | divided_by: 100.0 -%}
 {%- assign overlay_color = section.settings.overlay_color | default: '#1A1A1A' -%}
 {%- assign overlay_opacity = section.settings.overlay_opacity | default: 70 | divided_by: 100.0 -%}
+{%- if bg_type == 'color' -%}
+  {%- assign use_bg_color = true -%}
+{%- elsif bg_type == 'image' and section.settings.background_image == blank -%}
+  {%- assign use_bg_color = true -%}
+{%- else -%}
+  {%- assign use_bg_color = false -%}
+{%- endif -%}
 
-<section class="title-text-1 {% if layout == 'cta' %}title-text-1--cta{% endif %} {% if bg_type == 'image' and section.settings.background_image != blank %}title-text-1--bg-image{% endif %}" aria-label="Title and text" style="{% if bg_type == 'color' or (bg_type == 'image' and section.settings.background_image == blank) %}background-color: {{ bg_color }};{% endif %}">
+<section class="title-text-1 {% if layout == 'cta' %}title-text-1--cta{% endif %} {% if bg_type == 'image' and section.settings.background_image != blank %}title-text-1--bg-image{% endif %}" aria-label="Title and text" style="{% if use_bg_color %}background-color: {{ bg_color }};{% endif %}">
   {%- if bg_type == 'image' and section.settings.background_image != blank -%}
     <div class="title-text-1__bg" aria-hidden="true">
       <img

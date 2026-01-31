@@ -13,6 +13,13 @@
 {%- assign image_position = section.settings.image_position | default: 'right' -%}
 {%- assign image_accent = section.settings.image_accent | default: 'none' -%}
 {%- assign image_accent_color = section.settings.image_accent_color | default: '#EDE8E0' -%}
+{%- if bg_type == 'color' -%}
+  {%- assign use_bg_color = true -%}
+{%- elsif bg_type == 'image' and section.settings.background_image == blank -%}
+  {%- assign use_bg_color = true -%}
+{%- else -%}
+  {%- assign use_bg_color = false -%}
+{%- endif -%}
 
 <section
   class="about-image-text-1
@@ -21,7 +28,7 @@
     about-image-text-1--image-{{ image_position }}
     {% if image_accent != 'none' %}about-image-text-1--image-accent{% endif %}"
   aria-label="About image and text"
-  style="{% if bg_type == 'color' or (bg_type == 'image' and section.settings.background_image == blank) %}background-color: {{ bg_color }};{% endif %}"
+  style="{% if use_bg_color %}background-color: {{ bg_color }};{% endif %}"
 >
   {%- if bg_type == 'image' and section.settings.background_image != blank -%}
     <div class="about-image-text-1__bg" aria-hidden="true">

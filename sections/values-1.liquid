@@ -13,11 +13,18 @@
 {%- assign header_align = section.settings.header_alignment | default: 'center' -%}
 {%- assign icon_name = section.settings.icon | default: 'none' -%}
 {%- assign card_color = section.settings.card_color | default: '#FAF7F2' -%}
+{%- if bg_type == 'color' -%}
+  {%- assign use_bg_color = true -%}
+{%- elsif bg_type == 'image' and section.settings.background_image == blank -%}
+  {%- assign use_bg_color = true -%}
+{%- else -%}
+  {%- assign use_bg_color = false -%}
+{%- endif -%}
 
 <section
   class="values-1 values-1--{{ layout }} values-1--header-{{ header_align }} {% if bg_type == 'image' and section.settings.background_image != blank %}values-1--bg-image{% endif %}"
   aria-label="Our values"
-  style="{% if bg_type == 'color' or (bg_type == 'image' and section.settings.background_image == blank) %}background-color: {{ bg_color }};{% endif %}"
+  style="{% if use_bg_color %}background-color: {{ bg_color }};{% endif %}"
 >
   {%- if bg_type == 'image' and section.settings.background_image != blank -%}
     <div class="values-1__bg" aria-hidden="true">
