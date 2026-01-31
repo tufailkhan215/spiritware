@@ -1333,9 +1333,11 @@
 }
 
 .about-title-1__container {
-  max-width: 80rem;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 124rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 3rem;
+    padding-right: 3rem;
 }
 
 .about-title-1__inner {
@@ -1776,7 +1778,7 @@
 }
 
 .values-1__container {
-  max-width: 80rem;
+  max-width: 124rem;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1.5rem;
