@@ -1,0 +1,309 @@
+{% comment %}
+  Values 1 — "Our Values" or ethos blocks: Simple (centered subheading + heading) or Extended (icon + subheading, heading, intro, cards).
+  Dynamic section background (color or image). Dynamic card color. Header alignment (left, center, right). Optional SVG icon (leaf, heart).
+  Generic: works with any header. Design: #EDE8E0, #FAF7F2, #1A1A1A, #C4A77D.
+{% endcomment %}
+
+{%- assign layout = section.settings.layout | default: 'simple' -%}
+{%- assign bg_type = section.settings.background_type | default: 'color' -%}
+{%- assign bg_color = section.settings.background_color | default: '#EDE8E0' -%}
+{%- assign bg_opacity = section.settings.background_opacity | default: 60 | divided_by: 100.0 -%}
+{%- assign overlay_color = section.settings.overlay_color | default: '#1A1A1A' -%}
+{%- assign overlay_opacity = section.settings.overlay_opacity | default: 50 | divided_by: 100.0 -%}
+{%- assign header_align = section.settings.header_alignment | default: 'center' -%}
+{%- assign icon_name = section.settings.icon | default: 'none' -%}
+{%- assign card_color = section.settings.card_color | default: '#FAF7F2' -%}
+
+<section
+  class="values-1 values-1--{{ layout }} values-1--header-{{ header_align }} {% if bg_type == 'image' and section.settings.background_image != blank %}values-1--bg-image{% endif %}"
+  aria-label="Our values"
+  style="{% if bg_type == 'color' or (bg_type == 'image' and section.settings.background_image == blank) %}background-color: {{ bg_color }};{% endif %}"
+>
+  {%- if bg_type == 'image' and section.settings.background_image != blank -%}
+    <div class="values-1__bg" aria-hidden="true">
+      <img
+        class="values-1__bg-image"
+        src="{{ section.settings.background_image | image_url: width: 1920 }}"
+        alt=""
+        width="1920"
+        height="1080"
+        loading="lazy"
+        fetchpriority="low"
+        style="opacity: {{ bg_opacity }};"
+      >
+      <div class="values-1__bg-overlay" aria-hidden="true" style="background-color: {{ overlay_color }}; opacity: {{ overlay_opacity }};"></div>
+    </div>
+  {%- endif -%}
+
+  <div class="values-1__container">
+    <div class="values-1__header">
+      {%- if layout == 'extended' and (icon_name != 'none' or section.settings.subheading != blank) -%}
+        <div class="values-1__header-row">
+          {%- if icon_name != 'none' -%}
+            <div class="values-1__icon-wrap" aria-hidden="true">
+              {%- if icon_name == 'leaf' -%}
+                <svg class="values-1__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+              {%- elsif icon_name == 'heart' -%}
+                <svg class="values-1__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+          {%- if section.settings.subheading != blank -%}
+            <span class="values-1__subheading">{{ section.settings.subheading | escape }}</span>
+          {%- endif -%}
+        </div>
+      {%- elsif layout == 'simple' and section.settings.subheading != blank -%}
+        <span class="values-1__subheading">{{ section.settings.subheading | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="values-1__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if layout == 'extended' and section.settings.description != blank -%}
+        <p class="values-1__intro">{{ section.settings.description }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="values-1__grid">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'value' -%}
+              <div class="values-1__card" style="background-color: {{ card_color }};" {{ block.shopify_attributes }}>
+                {%- if block.settings.title != blank -%}
+                  <h3 class="values-1__card-title">{{ block.settings.title | escape }}</h3>
+                {%- endif -%}
+                {%- if block.settings.description != blank -%}
+                  <p class="values-1__card-desc">{{ block.settings.description }}</p>
+                {%- endif -%}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Values 1",
+  "tag": "section",
+  "class": "section-values-1",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "simple", "label": "Simple (centered subheading + heading)" },
+        { "value": "extended", "label": "Extended (icon + subheading, heading, intro paragraph)" }
+      ],
+      "default": "simple",
+      "info": "Extended shows an icon next to the subheading and an intro paragraph below the heading."
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Header alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center",
+      "info": "Applies to Extended layout; Simple is always centered."
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "Icon (Extended layout)",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "heart", "label": "Heart" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Section background"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background",
+      "options": [
+        { "value": "color", "label": "Solid color" },
+        { "value": "image", "label": "Image" }
+      ],
+      "default": "color"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#EDE8E0"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "info": "Used when Background is Image."
+    },
+    {
+      "type": "range",
+      "id": "background_opacity",
+      "label": "Background image opacity",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 60
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "What Guides Us"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Values"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Intro paragraph (Extended layout)",
+      "default": "We believe fashion should nurture the earth, not deplete it. Our commitment to sustainability isn't a marketing angle—it's a sacred responsibility."
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card background color",
+      "default": "#FAF7F2"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Value title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Value description."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Values 1",
+      "blocks": [
+        {
+          "type": "value",
+          "settings": {
+            "title": "Radical Authenticity",
+            "description": "We celebrate the full spectrum—holy and wild, raw and refined, rebellious and reverent."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "Conscious Creation",
+            "description": "Every piece is crafted with intention, from sustainable materials to meaningful messages."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "Sacred Rebellion",
+            "description": "We challenge norms while honoring the divine. Rebellion with reverence."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "Community Over Competition",
+            "description": "We're building a tribe of conscious warriors who uplift each other."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Values 1 (Sustainability)",
+      "settings": {
+        "layout": "extended",
+        "header_alignment": "left",
+        "icon": "leaf",
+        "subheading": "Honoring Pacha Mama",
+        "heading": "Sustainability",
+        "description": "We believe fashion should nurture the earth, not deplete it. Our commitment to sustainability isn't a marketing angle—it's a sacred responsibility.",
+        "background_color": "#FAF7F2",
+        "card_color": "#EDE8E0"
+      },
+      "blocks": [
+        { "type": "value", "settings": { "title": "Organic Materials", "description": "We use GOTS-certified organic cotton, which uses 91% less water and zero toxic chemicals compared to conventional cotton. Our fabrics are soft on your skin and gentle on the planet." }},
+        { "type": "value", "settings": { "title": "Recycled Fabrics", "description": "Many of our pieces incorporate recycled polyester made from post-consumer plastic bottles. Each hoodie diverts approximately 12 bottles from landfills." }},
+        { "type": "value", "settings": { "title": "Natural Dyes", "description": "We partner with artisans who use plant-based, low-impact dyes that don't pollute waterways or harm ecosystems." }},
+        { "type": "value", "settings": { "title": "Minimal Waste", "description": "Our small-batch production model means we create only what's needed, reducing overproduction and textile waste." }}
+      ]
+    },
+    {
+      "name": "Values 1 (Ethical Manufacturing)",
+      "settings": {
+        "layout": "extended",
+        "header_alignment": "left",
+        "icon": "heart",
+        "subheading": "People Over Profit",
+        "heading": "Ethical Manufacturing",
+        "description": "Behind every garment is a human being. We partner exclusively with manufacturers who share our values of dignity, safety, and fair compensation.",
+        "background_color": "#EDE8E0",
+        "card_color": "#FAF7F2"
+      },
+      "blocks": [
+        { "type": "value", "settings": { "title": "Fair Wages", "description": "All our manufacturing partners pay living wages—not just minimum wages. Workers can support their families with dignity." }},
+        { "type": "value", "settings": { "title": "Safe Conditions", "description": "Our facilities are regularly audited for safety standards, proper ventilation, and reasonable working hours." }},
+        { "type": "value", "settings": { "title": "No Child Labor", "description": "We have zero tolerance for child labor. Every partner is vetted and verified." }},
+        { "type": "value", "settings": { "title": "Artisan Partnerships", "description": "We work with skilled artisans, preserving traditional craftsmanship while providing stable income." }}
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,53 @@
+{% comment %}
+  About Title 1 — Page title block: subheading, H1, description. Left-aligned, narrow max-width.
+  Generic: works with any header. Design: #FAF7F2 bg, #1A1A1A, #C4A77D.
+{% endcomment %}
+
+<section class="about-title-1" aria-label="About title">
+  <div class="about-title-1__container">
+    <div class="about-title-1__inner">
+      {%- if section.settings.subheading != blank -%}
+        <span class="about-title-1__subheading">{{ section.settings.subheading | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h1 class="about-title-1__heading">{{ section.settings.heading | escape }}</h1>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <p class="about-title-1__description">{{ section.settings.description | escape }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About Title 1",
+  "tag": "section",
+  "class": "section-about-title-1",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "The Story"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "More Than Fashion. A Movement."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Sacred Rebel was born from a simple truth: spirituality doesn't have to be soft, and rebellion doesn't have to be reckless."
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Title 1"
+    }
+  ]
+}
+{% endschema %}

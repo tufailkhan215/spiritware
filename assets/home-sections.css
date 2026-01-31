@@ -1,6 +1,6 @@
 /**
- * Home sections — Hero 1, Story 1, Shop Homepage, Ethos 1, Manifesto 1, Community Testimonials 1, CTA 1.
- * Single file for hero, story, shop, ethos, manifesto, testimonials, cta. Generic: works with any header.
+ * Home sections — Hero 1, Story 1, Shop Homepage, Ethos 1, Manifesto 1, Community Testimonials 1, CTA 1, About Title 1, About Image Text 1, Title Text 1, Values 1, Timeline 1.
+ * Single file for hero, story, shop, ethos, manifesto, testimonials, cta, about title, about image text, title text, values, timeline. Generic: works with any header.
  * Design: #FAF7F2, #1A1A1A, #C4A77D, #EDE8E0.
  */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700&family=Inter:wght@400;500;600&display=swap');
@@ -1312,4 +1312,686 @@
 
 .cta-1__btn:hover .cta-1__btn-icon {
   transform: translateX(0.5rem);
+}
+
+/* ==========================================================================
+   About Title 1 — Page title: subheading, H1, description. Left-aligned.
+   ========================================================================== */
+.about-title-1 {
+  padding-top: 8rem;
+  padding-bottom: 5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  background-color: #FAF7F2;
+}
+
+@media (min-width: 1024px) {
+  .about-title-1 {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.about-title-1__container {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-title-1__inner {
+  max-width: 56rem;
+}
+
+.about-title-1__subheading {
+  display: block;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C4A77D;
+  margin-bottom: 1rem;
+}
+
+.about-title-1__heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 3rem;
+  font-weight: 400;
+  color: #1A1A1A;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .about-title-1__heading {
+    font-size: 3.6rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-title-1__heading {
+    font-size: 4.8rem;
+  }
+}
+
+.about-title-1__description {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 2rem;
+  line-height: 1.6;
+  color: rgba(26, 26, 26, 0.7);
+  margin: 0;
+}
+
+/* ==========================================================================
+   About Image Text 1 — Two-column: heading + paragraphs (left), image (right). Dynamic background (color or image).
+   ========================================================================== */
+.about-image-text-1 {
+  position: relative;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .about-image-text-1 {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+.about-image-text-1--bg-image .about-image-text-1__container {
+  position: relative;
+  z-index: 1;
+}
+
+.about-image-text-1__bg {
+  position: absolute;
+  inset: 0;
+}
+
+.about-image-text-1__bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-image-text-1__bg-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.about-image-text-1__container {
+  max-width: 124rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .about-image-text-1__container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.about-image-text-1__grid {
+  display: grid;
+  gap: 4rem;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .about-image-text-1__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
+.about-image-text-1__content {
+  order: 1;
+}
+
+.about-image-text-1--image-right .about-image-text-1__content {
+  order: 1;
+}
+
+.about-image-text-1--image-right .about-image-text-1__media {
+  order: 2;
+}
+
+.about-image-text-1--image-left .about-image-text-1__content {
+  order: 2;
+}
+
+.about-image-text-1--image-left .about-image-text-1__media {
+  order: 1;
+}
+
+.about-image-text-1__label {
+  display: block;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C4A77D;
+  margin-bottom: 1rem;
+}
+
+.about-image-text-1__heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.25rem;
+  font-weight: 400;
+  color: #1A1A1A;
+  margin: 0 0 2rem 0;
+  line-height: 1.2;
+}
+
+.about-image-text-1--founder .about-image-text-1__heading {
+  margin-bottom: 0.5rem;
+}
+
+.about-image-text-1__subtitle {
+  margin: 0 0 1.5rem 0;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #C4A77D;
+}
+
+.about-image-text-1__quote {
+  margin: 0 0 2rem 0;
+  padding-left: 2rem;
+  border-left: 2px solid #C4A77D;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: #1A1A1A;
+}
+
+@media (min-width: 768px) {
+  .about-image-text-1__heading {
+    font-size: 3rem;
+  }
+  .about-image-text-1__quote {
+    font-size: 2.2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-image-text-1__heading {
+    font-size: 3.75rem;
+  }
+}
+
+.about-image-text-1__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.about-image-text-1__paragraph {
+  margin: 0;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.6;
+  color: rgba(26, 26, 26, 0.7);
+}
+
+.about-image-text-1__media {
+  position: relative;
+  order: 2;
+}
+
+.about-image-text-1__media-wrap {
+  position: relative;
+}
+
+.about-image-text-1__image-accent {
+  position: absolute;
+  inset: -1rem;
+  z-index: -1;
+}
+
+.about-image-text-1__image {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+}
+
+.about-image-text-1--founder .about-image-text-1__image {
+  aspect-ratio: 3 / 4;
+}
+
+.about-image-text-1__image-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background-color: #EDE8E0;
+}
+
+.about-image-text-1--founder .about-image-text-1__image-placeholder {
+  aspect-ratio: 3 / 4;
+}
+
+/* ==========================================================================
+   Title Text 1 — Centered block: subheading, heading, body. Dark theme. Dynamic background (color or image) + overlay.
+   ========================================================================== */
+.title-text-1 {
+  position: relative;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  color: #FAF7F2;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .title-text-1 {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.title-text-1--bg-image .title-text-1__container {
+  position: relative;
+  z-index: 1;
+}
+
+.title-text-1__bg {
+  position: absolute;
+  inset: 0;
+}
+
+.title-text-1__bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.title-text-1__bg-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.title-text-1__container {
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.title-text-1__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title-text-1__subheading {
+  display: block;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C4A77D;
+  margin-bottom: 1rem;
+}
+
+.title-text-1__heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.25rem;
+  font-weight: 400;
+  color: #FAF7F2;
+  margin: 0 0 2rem 0;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .title-text-1__heading {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .title-text-1__heading {
+    font-size: 3.75rem;
+  }
+}
+
+.title-text-1__body {
+  margin: 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2rem;
+  line-height: 1.6;
+  color: rgba(250, 247, 242, 0.9);
+}
+
+@media (min-width: 768px) {
+  .title-text-1__body {
+    font-size: 2.4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .title-text-1__body {
+    font-size: 3rem;
+  }
+}
+
+/* CTA layout: smaller paragraph, max-width, then button */
+.title-text-1--cta .title-text-1__body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.8rem;
+  line-height: 1.6;
+  color: rgba(250, 247, 242, 0.7);
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .title-text-1--cta .title-text-1__body {
+    font-size: 1.8rem;
+  }
+}
+
+.title-text-1--cta .title-text-1__heading {
+  margin-bottom: 1.5rem;
+}
+
+/* Button */
+.title-text-1__btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 1.2rem 2.5rem;
+  background-color: #FAF7F2;
+  color: #1A1A1A;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-top: 2.5rem;
+}
+
+.title-text-1__btn:hover {
+  background-color: #C4A77D;
+  color: #FAF7F2;
+}
+
+.title-text-1__btn-icon {
+  margin-left: 0.5rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  flex-shrink: 0;
+}
+
+.title-text-1__btn-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ==========================================================================
+   Values 1 — "Our Values": centered subheading + heading, 2x2 grid of value cards. Dynamic background.
+   ========================================================================== */
+.values-1 {
+  position: relative;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+  overflow: hidden;
+}
+
+.values-1--bg-image .values-1__container {
+  position: relative;
+  z-index: 1;
+}
+
+.values-1__bg {
+  position: absolute;
+  inset: 0;
+}
+
+.values-1__bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.values-1__bg-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.values-1__container {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .values-1__container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.values-1__header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.values-1__subheading {
+  display: block;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C4A77D;
+  margin-bottom: 1rem;
+}
+
+.values-1__heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.25rem;
+  font-weight: 400;
+  color: #1A1A1A;
+  margin: 0;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .values-1__heading {
+    font-size: 3.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .values-1__heading {
+    font-size: 4.8rem;
+  }
+}
+
+.values-1__grid {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .values-1__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+.values-1__card {
+  padding: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .values-1__card {
+    padding: 3.2rem;
+  }
+}
+
+.values-1__card-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #1A1A1A;
+  margin: 0 0 1rem 0;
+  line-height: 1.3;
+}
+
+.values-1__card-desc {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.6;
+  color: rgba(26, 26, 26, 0.7);
+  margin: 0;
+}
+
+/* ==========================================================================
+   Timeline 1 — "The Timeline": centered subheading + heading, vertical timeline entries. Dynamic background.
+   ========================================================================== */
+.timeline-1 {
+  position: relative;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+  overflow: hidden;
+}
+
+.timeline-1--bg-image .timeline-1__container {
+  position: relative;
+  z-index: 1;
+}
+
+.timeline-1__bg {
+  position: absolute;
+  inset: 0;
+}
+
+.timeline-1__bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.timeline-1__bg-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.timeline-1__container {
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .timeline-1__container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.timeline-1__header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.timeline-1__subheading {
+  display: block;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C4A77D;
+  margin-bottom: 1rem;
+}
+
+.timeline-1__heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.25rem;
+  font-weight: 400;
+  color: #1A1A1A;
+  margin: 0;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .timeline-1__heading {
+    font-size: 3.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .timeline-1__heading {
+    font-size: 4.8rem;
+  }
+}
+
+.timeline-1__entries {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.timeline-1__entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.timeline-1__year-wrap {
+  flex-shrink: 0;
+  width: 5rem;
+}
+
+.timeline-1__year {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #C4A77D;
+}
+
+.timeline-1__content {
+  flex-grow: 1;
+  padding-left: 2rem;
+  border-left: 1px solid #EDE8E0;
+}
+
+.timeline-1__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #1A1A1A;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
+}
+
+.timeline-1__desc {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.6;
+  color: rgba(26, 26, 26, 0.7);
+  margin: 0;
 }

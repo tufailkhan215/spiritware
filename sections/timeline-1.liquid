@@ -1,0 +1,211 @@
+{% comment %}
+  Timeline 1 — "The Timeline": centered subheading + heading, vertical timeline entries (year | title + description). Dynamic background (color or image).
+  Generic: works with any header. Design: #FAF7F2, #EDE8E0, #1A1A1A, #C4A77D.
+{% endcomment %}
+
+{%- assign bg_type = section.settings.background_type | default: 'color' -%}
+{%- assign bg_color = section.settings.background_color | default: '#FAF7F2' -%}
+{%- assign bg_opacity = section.settings.background_opacity | default: 60 | divided_by: 100.0 -%}
+{%- assign overlay_color = section.settings.overlay_color | default: '#1A1A1A' -%}
+{%- assign overlay_opacity = section.settings.overlay_opacity | default: 50 | divided_by: 100.0 -%}
+
+<section
+  class="timeline-1 {% if bg_type == 'image' and section.settings.background_image != blank %}timeline-1--bg-image{% endif %}"
+  aria-label="Timeline"
+  style="{% if bg_type == 'color' or (bg_type == 'image' and section.settings.background_image == blank) %}background-color: {{ bg_color }};{% endif %}"
+>
+  {%- if bg_type == 'image' and section.settings.background_image != blank -%}
+    <div class="timeline-1__bg" aria-hidden="true">
+      <img
+        class="timeline-1__bg-image"
+        src="{{ section.settings.background_image | image_url: width: 1920 }}"
+        alt=""
+        width="1920"
+        height="1080"
+        loading="lazy"
+        fetchpriority="low"
+        style="opacity: {{ bg_opacity }};"
+      >
+      <div class="timeline-1__bg-overlay" aria-hidden="true" style="background-color: {{ overlay_color }}; opacity: {{ overlay_opacity }};"></div>
+    </div>
+  {%- endif -%}
+
+  <div class="timeline-1__container">
+    <div class="timeline-1__header">
+      {%- if section.settings.subheading != blank -%}
+        <span class="timeline-1__subheading">{{ section.settings.subheading | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="timeline-1__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="timeline-1__entries">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'entry' -%}
+              <div class="timeline-1__entry" {{ block.shopify_attributes }}>
+                <div class="timeline-1__year-wrap">
+                  {%- if block.settings.year != blank -%}
+                    <span class="timeline-1__year">{{ block.settings.year | escape }}</span>
+                  {%- endif -%}
+                </div>
+                <div class="timeline-1__content">
+                  {%- if block.settings.title != blank -%}
+                    <h3 class="timeline-1__title">{{ block.settings.title | escape }}</h3>
+                  {%- endif -%}
+                  {%- if block.settings.description != blank -%}
+                    <p class="timeline-1__desc">{{ block.settings.description }}</p>
+                  {%- endif -%}
+                </div>
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Timeline 1",
+  "tag": "section",
+  "class": "section-timeline-1",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section background"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background",
+      "options": [
+        { "value": "color", "label": "Solid color" },
+        { "value": "image", "label": "Image" }
+      ],
+      "default": "color"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FAF7F2"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "info": "Used when Background is Image."
+    },
+    {
+      "type": "range",
+      "id": "background_opacity",
+      "label": "Background image opacity",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 60
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Our Journey"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Timeline"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "entry",
+      "name": "Timeline entry",
+      "settings": [
+        {
+          "type": "text",
+          "id": "year",
+          "label": "Year",
+          "default": "2023"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Event title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Event description."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Timeline 1",
+      "blocks": [
+        {
+          "type": "entry",
+          "settings": {
+            "year": "2023",
+            "title": "Sacred Rebel concept born",
+            "description": "The vision for wearable prayers takes shape"
+          }
+        },
+        {
+          "type": "entry",
+          "settings": {
+            "year": "2024",
+            "title": "First collection launches",
+            "description": "God Squad and Milk & Honey debut"
+          }
+        },
+        {
+          "type": "entry",
+          "settings": {
+            "year": "2024",
+            "title": "Sustainability certification",
+            "description": "Partnered with certified ethical manufacturers"
+          }
+        },
+        {
+          "type": "entry",
+          "settings": {
+            "year": "2025",
+            "title": "Community reaches 50K",
+            "description": "The rebellion grows worldwide"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

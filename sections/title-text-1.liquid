@@ -1,0 +1,184 @@
+{% comment %}
+  Title Text 1 — Centered block: Mission (subheading, heading, quote) or CTA (heading, paragraph, button). Dark theme. Dynamic background. Optional button.
+  Generic: works with any header. Design: #1A1A1A bg, #FAF7F2, #C4A77D.
+{% endcomment %}
+
+{%- assign layout = section.settings.layout | default: 'mission' -%}
+{%- assign bg_type = section.settings.background_type | default: 'color' -%}
+{%- assign bg_color = section.settings.background_color | default: '#1A1A1A' -%}
+{%- assign bg_opacity = section.settings.background_opacity | default: 60 | divided_by: 100.0 -%}
+{%- assign overlay_color = section.settings.overlay_color | default: '#1A1A1A' -%}
+{%- assign overlay_opacity = section.settings.overlay_opacity | default: 70 | divided_by: 100.0 -%}
+
+<section class="title-text-1 {% if layout == 'cta' %}title-text-1--cta{% endif %} {% if bg_type == 'image' and section.settings.background_image != blank %}title-text-1--bg-image{% endif %}" aria-label="Title and text" style="{% if bg_type == 'color' or (bg_type == 'image' and section.settings.background_image == blank) %}background-color: {{ bg_color }};{% endif %}">
+  {%- if bg_type == 'image' and section.settings.background_image != blank -%}
+    <div class="title-text-1__bg" aria-hidden="true">
+      <img
+        class="title-text-1__bg-image"
+        src="{{ section.settings.background_image | image_url: width: 1920 }}"
+        alt=""
+        width="1920"
+        height="1080"
+        loading="lazy"
+        fetchpriority="low"
+        style="opacity: {{ bg_opacity }};"
+      >
+      <div class="title-text-1__bg-overlay" aria-hidden="true" style="background-color: {{ overlay_color }}; opacity: {{ overlay_opacity }};"></div>
+    </div>
+  {%- endif -%}
+
+  <div class="title-text-1__container">
+    <div class="title-text-1__inner">
+      {%- if layout == 'mission' and section.settings.subheading != blank -%}
+        <span class="title-text-1__subheading">{{ section.settings.subheading | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="title-text-1__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <p class="title-text-1__body">{{ section.settings.body }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+        <a href="{{ section.settings.button_link }}" class="title-text-1__btn">
+          {{ section.settings.button_label | escape }}
+          <span class="title-text-1__btn-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Title Text 1",
+  "tag": "section",
+  "class": "section-title-text-1",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "mission", "label": "Mission (subheading, heading, quote)" },
+        { "value": "cta", "label": "CTA (heading, paragraph, button)" }
+      ],
+      "default": "mission",
+      "info": "Mission: subheading + heading + quote. CTA: heading + paragraph + button."
+    },
+    {
+      "type": "header",
+      "content": "Section background"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background",
+      "options": [
+        { "value": "color", "label": "Solid color" },
+        { "value": "image", "label": "Image" }
+      ],
+      "default": "color",
+      "info": "Solid color or full-bleed image. When Image is selected, use the options below to control image opacity and overlay."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "info": "Used when Background is set to Image."
+    },
+    {
+      "type": "range",
+      "id": "background_opacity",
+      "label": "Background image opacity",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 60,
+      "info": "How visible the background image is (before overlay)."
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#1A1A1A",
+      "info": "Color layer on top of the background image. Use with Overlay opacity to keep text readable."
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 70,
+      "info": "Opacity of the overlay color on top of the image."
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading (Mission layout)",
+      "default": "Our Purpose"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Mission"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body / Quote (Mission) or Paragraph (CTA)",
+      "default": "\"To craft sustainable, stylish clothing that empowers individuals to embody their authentic selves and wear their truth with reverence. Through poems, prayers, and passages, we offer the opportunity to be about it—not just talk about it.\""
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Title Text 1"
+    },
+    {
+      "name": "Title Text 1 (CTA)",
+      "settings": {
+        "layout": "cta",
+        "heading": "Ready to Join the Movement?",
+        "body": "Explore our collections and find pieces that speak to your soul.",
+        "button_label": "Shop Now",
+        "button_link": "/shop"
+      }
+    }
+  ]
+}
+{% endschema %}
