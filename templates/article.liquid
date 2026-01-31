@@ -1,74 +1,112 @@
 {% comment %}
-  Blog Article Detail Template
-  Shows individual blog article with full content
+  Single blog article (Journal post) template.
+  Matches Journal post design: back link, category, title, meta, featured image,
+  prose body, share prompt, Keep Reading related articles.
 {% endcomment %}
 
-<article class="article-page">
-  <div class="article-container">
-    {%- if article.image != blank -%}
-      <div class="article-image-wrapper">
-        <img 
-          src="{{ article.image | image_url: width: 1200 }}" 
-          alt="{{ article.image.alt | escape }}"
-          class="article-featured-image"
-          loading="eager"
-        >
-      </div>
-    {%- endif -%}
+{% assign words = article.content | strip_html | split: ' ' | size %}
+{% assign read_mins = words | divided_by: 180 %}
+{% if read_mins < 1 %}{% assign read_mins = 1 %}{% endif %}
 
-    <header class="article-header">
-      {%- if article.tags.size > 0 -%}
-        <div class="article-tags">
-          {%- for tag in article.tags -%}
-            <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article-tag">{{ tag }}</a>
-          {%- endfor -%}
-        </div>
-      {%- endif -%}
-      
-      <h1 class="article-title">{{ article.title }}</h1>
-      
-      <div class="article-meta">
-        <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}" class="article-date">
-          {{ article.published_at | date: '%B %d, %Y' }}
-        </time>
-        {%- if article.author != blank -%}
-          <span class="article-author">by {{ article.author }}</span>
-        {%- endif -%}
-      </div>
-    </header>
-
-    <div class="article-content">
-      {{ article.content }}
-    </div>
-
-    {%- if article.tags.size > 0 -%}
-      <footer class="article-footer">
-        <div class="article-tags-section">
-          <span class="article-tags-label">Tags:</span>
-          {%- for tag in article.tags -%}
-            <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article-tag-link">{{ tag }}</a>
-            {%- unless forloop.last -%}, {%- endunless -%}
-          {%- endfor -%}
-        </div>
-      </footer>
-    {%- endif -%}
-
-    <nav class="article-navigation">
-      {%- if blog.previous_article -%}
-        <a href="{{ blog.previous_article.url }}" class="article-nav-link article-nav-prev">
-          ← Previous Article
-        </a>
-      {%- endif -%}
-      
-      <a href="{{ blog.url }}" class="article-nav-link article-nav-back">
-        Back to Blog
+<div class="article-single min-h-screen bg-[#FAF7F2]">
+  {% comment %} Section 1: Back link, category, title, meta {% endcomment %}
+  <section class="article-single__header pt-28 pb-12 px-6 lg:px-12">
+    <div class="article-single__header-inner max-w-4xl mx-auto">
+      <a href="{{ blog.url }}" class="article-single__back inline-flex items-center font-sans text-sm text-[#1A1A1A]/60 hover:text-[#1A1A1A] mb-8 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="article-single__back-icon w-4 h-4 mr-2" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
+        Back to Journal
       </a>
-      
-      {%- if blog.next_article -%}
-        <a href="{{ blog.next_article.url }}" class="article-nav-link article-nav-next">
-          Next Article →
-        </a>
-      {%- endif -%}
-    </nav>
-  </div>
-</article>
+
+      {% if article.tags.size > 0 %}
+        <span class="article-single__category font-sans text-xs tracking-[0.3em] uppercase text-[#C4A77D] mb-4 block">{{ article.tags.first }}</span>
+      {% endif %}
+
+      <h1 class="article-single__title font-serif text-4xl md:text-5xl lg:text-6xl text-[#1A1A1A] mb-6 leading-tight">{{ article.title }}</h1>
+
+      <div class="article-single__meta flex flex-wrap items-center gap-6 text-sm text-[#1A1A1A]/60">
+        <span class="font-sans">By {{ article.author | default: 'Sacred Rebel Team' }}</span>
+        <span class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="article-single__meta-icon w-4 h-4" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>
+          <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%B %d, %Y' }}</time>
+        </span>
+        <span class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="article-single__meta-icon w-4 h-4" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          {{ read_mins }} min read
+        </span>
+      </div>
+    </div>
+  </section>
+
+  {% comment %} Section 2: Featured image {% endcomment %}
+  {% if article.image != blank %}
+  <section class="article-single__featured pb-12 px-6 lg:px-12">
+    <div class="article-single__featured-inner max-w-5xl mx-auto">
+      <img
+        alt="{{ article.image.alt | default: article.title | escape }}"
+        class="article-single__featured-img w-full aspect-[2/1] object-cover"
+        src="{{ article.image | image_url: width: 1200 }}"
+        width="1200"
+        height="600"
+        loading="eager"
+      >
+    </div>
+  </section>
+  {% endif %}
+
+  {% comment %} Section 3: Article body (prose) {% endcomment %}
+  <section class="article-single__body pb-20 px-6 lg:px-12">
+    <div class="article-single__body-inner max-w-3xl mx-auto">
+      <article class="article-single__prose prose prose-lg max-w-none">
+        {{ article.content }}
+      </article>
+    </div>
+  </section>
+
+  {% comment %} Section 4: Share prompt {% endcomment %}
+  <section class="article-single__share pb-20 px-6 lg:px-12">
+    <div class="article-single__share-inner max-w-3xl mx-auto">
+      <div class="article-single__share-box border-t border-b border-[#EDE8E0] py-8">
+        <p class="article-single__share-text font-sans text-sm text-[#1A1A1A]/60 text-center">Enjoyed this article? Share it with someone who needs to read it.</p>
+      </div>
+    </div>
+  </section>
+
+  {% comment %} Section 5: Keep Reading (related articles) {% endcomment %}
+  <section class="article-single__related pb-24 px-6 lg:px-12 bg-[#EDE8E0]">
+    <div class="article-single__related-inner max-w-7xl mx-auto py-20">
+      <h2 class="article-single__related-title font-serif text-3xl text-[#1A1A1A] mb-12 text-center">Keep Reading</h2>
+      <div class="article-single__related-grid grid md:grid-cols-3 gap-8">
+        {% assign shown = 0 %}
+        {% for art in blog.articles %}
+          {% if art.id != article.id and shown < 3 %}
+            {% assign shown = shown | plus: 1 %}
+            <a href="{{ art.url }}" class="article-single__related-card group block">
+              <div class="article-single__related-image-wrap relative overflow-hidden mb-4 bg-[#FAF7F2]">
+                <div class="article-single__related-aspect aspect-[3/2]">
+                  {% if art.image != blank %}
+                    <img
+                      alt="{{ art.image.alt | default: art.title | escape }}"
+                      class="article-single__related-img w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      src="{{ art.image | image_url: width: 600 }}"
+                      width="600"
+                      height="400"
+                      loading="lazy"
+                    >
+                  {% else %}
+                    <div class="article-single__related-placeholder w-full h-full flex items-center justify-center text-[#1A1A1A]/40">
+                      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+              {% if art.tags.size > 0 %}
+                <span class="article-single__related-category font-sans text-xs tracking-[0.2em] uppercase text-[#C4A77D] mb-2 block">{{ art.tags.first }}</span>
+              {% endif %}
+              <h3 class="article-single__related-card-title font-serif text-lg text-[#1A1A1A] group-hover:text-[#C4A77D] transition-colors">{{ art.title }}</h3>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</div>

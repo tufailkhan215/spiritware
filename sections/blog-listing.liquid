@@ -10,6 +10,12 @@
   "class": "blog-listing-section",
   "settings": [
     {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog to display",
+      "info": "Choose which blog's posts to show. Leave blank on a blog page to show the current blog (e.g. News)."
+    },
+    {
       "type": "text",
       "id": "heading",
       "label": "Heading",
@@ -39,15 +45,20 @@
 
 {%- assign page_size = section.settings.posts_per_page | default: 12 -%}
 {%- assign section_heading = section.settings.heading | default: 'All Articles' -%}
+{%- if section.settings.blog != blank -%}
+  {%- assign selected_blog = blogs[section.settings.blog] -%}
+{%- else -%}
+  {%- assign selected_blog = blog -%}
+{%- endif -%}
 
 <section class="blog-listing-section pb-24 px-6 lg:px-12" aria-label="{{ section_heading }}">
   <div class="blog-listing-section__inner max-w-7xl mx-auto">
     <h2 class="blog-listing-section__title font-serif text-2xl text-[#1A1A1A] mb-12">{{ section_heading }}</h2>
 
-    {% if blog == blank %}
-      <p class="blog-listing-section__empty text-[#1A1A1A]/60">This section is for the blog template. Assign the "blog" template to your blog in Theme settings.</p>
+    {% if selected_blog == blank %}
+      <p class="blog-listing-section__empty text-[#1A1A1A]/60">Select a blog in the section settings, or assign the "blog" template to a blog page.</p>
     {% else %}
-    {% paginate blog.articles by page_size %}
+    {% paginate selected_blog.articles by page_size %}
       {% if paginate.articles.size > 0 %}
         <div class="blog-listing-section__grid grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {% for article in paginate.articles %}
@@ -99,18 +110,18 @@
         {% if paginate.pages > 1 %}
           <nav class="blog-listing-section__pagination mt-12 flex justify-center items-center gap-4" aria-label="Blog pagination">
             {% if paginate.previous %}
-              <a href="{{ paginate.previous.url }}" class="blog-listing-section__pagination-link">{{ 'general.pagination.previous' | t | default: 'Previous' }}</a>
+              <a href="{{ paginate.previous.url }}" class="blog-listing-section__pagination-link">Previous</a>
             {% endif %}
             <span class="blog-listing-section__pagination-info text-sm text-[#1A1A1A]/60">
-              {{ 'general.pagination.page' | t: current: paginate.current_page, total: paginate.pages | default: 'Page' }} {{ paginate.current_page }} {{ 'general.pagination.of' | t | default: 'of' }} {{ paginate.pages }}
+              Page {{ paginate.current_page }} of {{ paginate.pages }}
             </span>
             {% if paginate.next %}
-              <a href="{{ paginate.next.url }}" class="blog-listing-section__pagination-link">{{ 'general.pagination.next' | t | default: 'Next' }}</a>
+              <a href="{{ paginate.next.url }}" class="blog-listing-section__pagination-link">Next</a>
             {% endif %}
           </nav>
         {% endif %}
       {% else %}
-        <p class="blog-listing-section__empty text-[#1A1A1A]/60">{{ 'blogs.article.no_articles' | t | default: 'No articles in this blog yet.' }}</p>
+        <p class="blog-listing-section__empty text-[#1A1A1A]/60">No articles in this blog yet.</p>
       {% endif %}
     {% endpaginate %}
     {% endif %}
