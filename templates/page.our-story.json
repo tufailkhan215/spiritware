@@ -11,10 +11,21 @@
   "sections": {
     "page-content": {
       "type": "page-content",
+      "disabled": true,
       "settings": {}
+    },
+    "about_title_1_XmxH3k": {
+      "type": "about-title-1",
+      "name": "About Title 1",
+      "settings": {
+        "subheading": "The Story",
+        "heading": "More Than Fashion. A Movement.",
+        "description": "Sacred Rebel was born from a simple truth: spirituality doesn't have to be soft, and rebellion doesn't have to be reckless."
+      }
     }
   },
   "order": [
-    "page-content"
+    "page-content",
+    "about_title_1_XmxH3k"
   ]
 }
