@@ -187,13 +187,14 @@
         </div>
       </div>
     </div>
+  </div>
 
   {%- assign has_description = product.description | strip_html | strip | size -%}
   {%- assign has_features = product.metafields.custom.features -%}
   {%- assign has_care = product.metafields.custom.care -%}
   {%- if has_description > 0 or has_features != blank or has_care != blank -%}
-    <div class="product-additional-info">
-      <div class="product-tabs">
+  <div class="product-additional-info">
+    <div class="product-tabs">
         {%- if has_description > 0 -%}
           <button class="product-tab active" data-tab="description" type="button">Description</button>
         {%- endif -%}
@@ -220,9 +221,8 @@
           <div class="product-tab-body rte">{{ product.metafields.custom.care }}</div>
         </div>
       {%- endif -%}
-    </div>
-  {%- endif -%}
   </div>
+  {%- endif -%}
 </div>
 
 <script>

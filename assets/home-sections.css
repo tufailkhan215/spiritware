@@ -3358,14 +3358,14 @@
   color: rgba(26, 26, 26, 0.6);
 }
 
-/* Tabs section: bg-[#EDE8E0], max-w-4xl = 896px */
+/* Tabs section: full-width background #EDE8E0; inner content max-w-4xl */
 .product-additional-info {
   background-color: #EDE8E0;
   padding: 4rem 1.5rem;
-  margin: 0 -1.5rem;
+  width: 100%;
 }
 @media (min-width: 750px) {
-  .product-additional-info { margin: 0 -3rem; padding-left: 3rem; padding-right: 3rem; }
+  .product-additional-info { padding-left: 3rem; padding-right: 3rem; }
 }
 .product-additional-info .product-tabs {
   display: flex;
