@@ -398,6 +398,56 @@
           "support_menu": "main-menu",
           "copyright": "Sacred Rebel. All rights reserved."
         }
+      },
+      "product-main": {
+        "type": "product-main",
+        "blocks": {
+          "swatch_GJKtCD": {
+            "type": "swatch",
+            "settings": {
+              "option_value": "blue",
+              "color": "#005BD3"
+            }
+          },
+          "swatch_QyJePJ": {
+            "type": "swatch",
+            "settings": {
+              "option_value": "white",
+              "color": "#fff"
+            }
+          },
+          "swatch_L6etDQ": {
+            "type": "swatch",
+            "settings": {
+              "option_value": "black",
+              "color": "#000000"
+            }
+          },
+          "swatch_6MRWTM": {
+            "type": "swatch",
+            "settings": {
+              "option_value": "",
+              "color": ""
+            }
+          },
+          "swatch_qmWaMA": {
+            "type": "swatch",
+            "settings": {
+              "option_value": "",
+              "color": ""
+            }
+          }
+        },
+        "block_order": [
+          "swatch_GJKtCD",
+          "swatch_QyJePJ",
+          "swatch_L6etDQ",
+          "swatch_6MRWTM",
+          "swatch_qmWaMA"
+        ],
+        "settings": {
+          "show_color_swatches": true
+        }
       }
     },
     "content_for_index": [
