@@ -31,16 +31,6 @@
   <div class="contact-section__inner">
     <div class="contact-section__grid">
       <div class="contact-section__form-wrap">
-        {%- if section.settings.label != blank -%}
-          <p class="contact-section__label">{{ section.settings.label }}</p>
-        {%- endif -%}
-        {%- if section.settings.heading != blank -%}
-          <h2 class="contact-section__heading">{{ section.settings.heading }}</h2>
-        {%- endif -%}
-        {%- if section.settings.subtitle != blank -%}
-          <p class="contact-section__subtitle">{{ section.settings.subtitle }}</p>
-        {%- endif -%}
-
         {% form 'contact', class: 'contact-section__form' %}
           {%- if form.posted_successfully? -%}
             <p class="contact-section__success" role="status">Thanks for reaching out. We'll get back to you soon.</p>
@@ -189,28 +179,6 @@
       "id": "background_image",
       "label": "Background image",
       "info": "Used when Background type is Image. Optional overlay improves text readability."
-    },
-    {
-      "type": "header",
-      "content": "Form (left column)"
-    },
-    {
-      "type": "text",
-      "id": "label",
-      "label": "Label",
-      "default": "GET IN TOUCH"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "We'd Love to Hear From You"
-    },
-    {
-      "type": "textarea",
-      "id": "subtitle",
-      "label": "Subtitle",
-      "default": "Questions, feedback, wholesale inquiries, or just want to say hi? We're here for it."
     },
     {
       "type": "header",
