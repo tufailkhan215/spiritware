@@ -1,0 +1,74 @@
+{% comment %}
+  Related products section for product page.
+  Shows products from the same collection (product's first collection).
+  Settings: heading, products per row, max products to show.
+{% endcomment %}
+
+{%- assign related_collection = product.collections.first -%}
+{%- assign products_per_row = section.settings.products_per_row | default: 4 -%}
+{%- assign max_products = section.settings.max_products | default: 4 -%}
+
+{%- if related_collection != blank and related_collection.products.size > 1 -%}
+  {%- capture grid_content -%}
+    {%- assign shown = 0 -%}
+    {%- for p in related_collection.products -%}
+      {%- if p.id != product.id and shown < max_products -%}
+        {%- assign shown = shown | plus: 1 -%}
+        {%- render 'product-card-shop', product: p -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- if grid_content != blank -%}
+<section class="related-products" data-section-id="{{ section.id }}">
+  <div class="related-products__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="related-products__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    <div class="related-products__grid" style="--related-cols: {{ products_per_row }};">
+      {{ grid_content }}
+    </div>
+  </div>
+</section>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Related products",
+  "tag": "section",
+  "class": "related-products-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "You may also like"
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products per row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4,
+      "info": "Number of products shown in each row on desktop."
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Maximum products to show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "info": "Related products come from the same collection as the current product."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Related products"
+    }
+  ]
+}
+{% endschema %}
