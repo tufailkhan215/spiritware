@@ -402,6 +402,20 @@
       "product-main": {
         "type": "product-main",
         "blocks": {
+          "swatch_rFnhgr": {
+            "type": "swatch",
+            "settings": {
+              "option_value": "Grey",
+              "color": "#f5f5f5"
+            }
+          },
+          "swatch_kKpizr": {
+            "type": "swatch",
+            "settings": {
+              "option_value": "Red",
+              "color": "#dd1d1d"
+            }
+          },
           "swatch_GJKtCD": {
             "type": "swatch",
             "settings": {
@@ -433,12 +447,14 @@
           "swatch_qmWaMA": {
             "type": "swatch",
             "settings": {
-              "option_value": "",
-              "color": ""
+              "option_value": "Blue",
+              "color": "#005BD3"
             }
           }
         },
         "block_order": [
+          "swatch_rFnhgr",
+          "swatch_kKpizr",
           "swatch_GJKtCD",
           "swatch_QyJePJ",
           "swatch_L6etDQ",
