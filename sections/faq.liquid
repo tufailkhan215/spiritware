@@ -1,0 +1,152 @@
+{% comment %}
+  FAQ section: grouped accordion (category heading + questions). Section background: color or image.
+{% endcomment %}
+
+{%- assign bg_type = section.settings.background_type | default: 'color' -%}
+{%- assign bg_color = section.settings.background_color | default: '#faf7f2' -%}
+{%- assign bg_image = section.settings.background_image -%}
+
+{%- assign faq_blocks = section.blocks | where: 'type', 'faq_item' -%}
+{%- if faq_blocks.size > 0 -%}
+
+<section
+  class="faq-section"
+  data-section-id="{{ section.id }}"
+  style="
+    {%- if bg_type == 'color' -%}
+      background-color: {{ bg_color }};
+    {%- elsif bg_type == 'image' and bg_image != blank -%}
+      background-image: url({{ bg_image | image_url: width: 1920 }});
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {%- else -%}
+      background-color: {{ bg_color }};
+    {%- endif -%}
+  "
+>
+  {%- if bg_type == 'image' and bg_image != blank -%}
+    <div class="faq-section__overlay" aria-hidden="true"></div>
+  {%- endif -%}
+
+  <div class="faq-section__inner">
+    {%- assign current_heading = '' -%}
+    {%- for block in faq_blocks -%}
+      {%- assign group_heading = block.settings.group_heading | default: 'General' -%}
+      {%- if group_heading != current_heading -%}
+        {%- if current_heading != '' -%}</div></div>{%- endif -%}
+        <div class="faq-section__group">
+          <h2 class="faq-section__group-title">{{ group_heading }}</h2>
+          <div class="faq-section__list">
+        {%- assign current_heading = group_heading -%}
+      {%- endif -%}
+      <div class="faq-section__item" {{ block.shopify_attributes }}>
+        <details class="faq-section__details">
+          <summary class="faq-section__question">
+            <span class="faq-section__question-text">{{ block.settings.question | default: 'Question' }}</span>
+            <svg class="faq-section__chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+          </summary>
+          <div class="faq-section__answer rte">
+            {{ block.settings.answer }}
+          </div>
+        </details>
+      </div>
+    {%- endfor -%}
+    {%- if faq_blocks.size > 0 -%}</div></div>{%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "class": "faq-section-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section background"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background type",
+      "default": "color",
+      "options": [
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#faf7f2"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "info": "Used when Background type is Image."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "group_heading",
+          "label": "Category heading",
+          "default": "Orders & Shipping",
+          "info": "Group items with the same heading (e.g. Orders & Shipping, Returns & Exchanges)."
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How long does shipping take?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>We typically ship within 1–2 business days. Domestic orders arrive in 3–7 business days.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Orders & Shipping",
+            "question": "How long does shipping take?",
+            "answer": "<p>We typically ship within 1–2 business days. Domestic orders arrive in 3–7 business days.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Orders & Shipping",
+            "question": "Do you ship internationally?",
+            "answer": "<p>Yes. We ship to many countries. Delivery times vary by destination.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Returns & Exchanges",
+            "question": "What is your return policy?",
+            "answer": "<p>We offer 30-day returns on unused items in original condition.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,151 @@
+{
+  "sections": {
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "background_type": "color",
+        "background_color": "#faf7f2"
+      },
+      "blocks": {
+        "orders_1": {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Orders & Shipping",
+            "question": "How long does shipping take?",
+            "answer": "<p>We typically ship within 1–2 business days. Domestic orders arrive in 3–7 business days.</p>"
+          }
+        },
+        "orders_2": {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Orders & Shipping",
+            "question": "Do you ship internationally?",
+            "answer": "<p>Yes. We ship to many countries. Delivery times vary by destination.</p>"
+          }
+        },
+        "orders_3": {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Orders & Shipping",
+            "question": "How can I track my order?",
+            "answer": "<p>Once your order ships, you'll receive an email with a tracking link.</p>"
+          }
+        },
+        "orders_4": {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Orders & Shipping",
+            "question": "Can I change or cancel my order?",
+            "answer": "<p>Contact us as soon as possible. We can modify or cancel orders that haven't shipped yet.</p>"
+          }
+        },
+        "returns_1": {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Returns & Exchanges",
+            "question": "What is your return policy?",
+            "answer": "<p>We offer 30-day returns on unused items in original condition.</p>"
+          }
+        },
+        "returns_2": {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Returns & Exchanges",
+            "question": "How do I start a return?",
+            "answer": "<p>Visit our returns page or contact us. We'll send you a prepaid label if eligible.</p>"
+          }
+        },
+        "returns_3": {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Returns & Exchanges",
+            "question": "Can I exchange for a different size?",
+            "answer": "<p>Yes. Start a return and place a new order for the size you need, or contact us for an exchange.</p>"
+          }
+        },
+        "returns_4": {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Returns & Exchanges",
+            "question": "When will I receive my refund?",
+            "answer": "<p>Refunds are processed within 5–7 business days after we receive your return.</p>"
+          }
+        },
+        "products_1": {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Products & Sizing",
+            "question": "How do your sizes run?",
+            "answer": "<p>Our sizes run true to standard. Check the size guide on each product page.</p>"
+          }
+        },
+        "products_2": {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Products & Sizing",
+            "question": "Are your products unisex?",
+            "answer": "<p>Many of our styles are unisex. See the product description for fit details.</p>"
+          }
+        },
+        "products_3": {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Products & Sizing",
+            "question": "How should I care for my items?",
+            "answer": "<p>Follow the care instructions on the label. Most items can be machine washed cold and tumble dried low.</p>"
+          }
+        },
+        "products_4": {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Products & Sizing",
+            "question": "Will the prints crack or fade?",
+            "answer": "<p>With proper care, our prints hold up well. Wash inside out and avoid high heat.</p>"
+          }
+        },
+        "sustainability_1": {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Sustainability",
+            "question": "What makes your clothing sustainable?",
+            "answer": "<p>We use organic and recycled materials, ethical manufacturing, and reduce waste where we can.</p>"
+          }
+        },
+        "sustainability_2": {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Sustainability",
+            "question": "Is your packaging eco-friendly?",
+            "answer": "<p>We use recycled and recyclable packaging and avoid single-use plastic where possible.</p>"
+          }
+        },
+        "sustainability_3": {
+          "type": "faq_item",
+          "settings": {
+            "group_heading": "Sustainability",
+            "question": "Do you offset carbon emissions?",
+            "answer": "<p>We're working on carbon-neutral shipping options. Details are on our Sustainability page.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "orders_1",
+        "orders_2",
+        "orders_3",
+        "orders_4",
+        "returns_1",
+        "returns_2",
+        "returns_3",
+        "returns_4",
+        "products_1",
+        "products_2",
+        "products_3",
+        "products_4",
+        "sustainability_1",
+        "sustainability_2",
+        "sustainability_3"
+      ]
+    }
+  },
+  "order": ["faq"]
+}
