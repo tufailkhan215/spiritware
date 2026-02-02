@@ -402,6 +402,27 @@
       "product-main": {
         "type": "product-main",
         "blocks": {
+          "trust_item_gHqJ8J": {
+            "type": "trust_item",
+            "settings": {
+              "text": "Free Shipping $100+",
+              "icon": "shipping"
+            }
+          },
+          "trust_item_tK4Y44": {
+            "type": "trust_item",
+            "settings": {
+              "text": "30-Day Returns",
+              "icon": "returns"
+            }
+          },
+          "trust_item_PQ6qNU": {
+            "type": "trust_item",
+            "settings": {
+              "text": "Ethically Made",
+              "icon": "shield"
+            }
+          },
           "swatch_rFnhgr": {
             "type": "swatch",
             "settings": {
@@ -420,14 +441,14 @@
             "type": "swatch",
             "settings": {
               "option_value": "blue",
-              "color": "#005BD3"
+              "color": "#005bd3"
             }
           },
           "swatch_QyJePJ": {
             "type": "swatch",
             "settings": {
               "option_value": "white",
-              "color": "#fff"
+              "color": "#ffffff"
             }
           },
           "swatch_L6etDQ": {
@@ -448,11 +469,14 @@
             "type": "swatch",
             "settings": {
               "option_value": "Blue",
-              "color": "#005BD3"
+              "color": "#005bd3"
             }
           }
         },
         "block_order": [
+          "trust_item_gHqJ8J",
+          "trust_item_tK4Y44",
+          "trust_item_PQ6qNU",
           "swatch_rFnhgr",
           "swatch_kKpizr",
           "swatch_GJKtCD",
@@ -462,7 +486,8 @@
           "swatch_qmWaMA"
         ],
         "settings": {
-          "show_color_swatches": true
+          "show_color_swatches": true,
+          "show_trust_strip": true
         }
       }
     },
