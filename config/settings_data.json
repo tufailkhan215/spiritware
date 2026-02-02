@@ -11,7 +11,8 @@
   "current": {
     "header_style": "header_1",
     "footer_style": "footer_1",
-    "show_color_swatches": false,
+    "show_color_swatches": true,
+    "swatch_color_map": "Vintage Black|||#1A1A1A\nSand|||#C4A77D\nCream|||#FAF7F2\nBlack|||#000000\nWhite|||#000000",
     "sections": {
       "hero-slider": {
         "type": "hero-slider",
