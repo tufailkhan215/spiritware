@@ -149,8 +149,8 @@
       {%- if has_care != blank -%}<button class="product-tab{% if has_description == 0 and has_features == blank %} active{% endif %}" data-tab="care" type="button">Care</button>{%- endif -%}
     </div>
     {%- if has_description > 0 -%}<div class="product-tab-content active" id="tab-description"><div class="product-tab-body rte">{{ product.description }}</div></div>{%- endif -%}
-    {%- if has_features != blank -%}<div class="product-tab-content{% if has_description == 0 %} active{% endif %}" id="tab-features"><div class="product-tab-body rte">{{ product.metafields.custom.features | richtext }}</div></div>{%- endif -%}
-    {%- if has_care != blank -%}<div class="product-tab-content{% if has_description == 0 and has_features == blank %} active{% endif %}" id="tab-care"><div class="product-tab-body rte">{{ product.metafields.custom.care | richtext }}</div></div>{%- endif -%}
+    {%- if has_features != blank -%}<div class="product-tab-content{% if has_description == 0 %} active{% endif %}" id="tab-features"><div class="product-tab-body rte">{{ product.metafields.custom.features | metafield_tag }}</div></div>{%- endif -%}
+    {%- if has_care != blank -%}<div class="product-tab-content{% if has_description == 0 and has_features == blank %} active{% endif %}" id="tab-care"><div class="product-tab-body rte">{{ product.metafields.custom.care | metafield_tag }}</div></div>{%- endif -%}
   </div>
   {%- endif -%}
 </div>
