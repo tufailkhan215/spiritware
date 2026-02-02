@@ -11,7 +11,7 @@
   --color-light-gray: #f5f5f5;
   --color-white: #ffffff;
   --color-text: #2a2a2a;
-  --color-text-light: #666666;
+  --color-text-light: #666666; 
   --spacing-unit: 1.6rem;
   --border-radius: 4px;
   --transition: all 0.3s ease;
@@ -1341,9 +1341,8 @@ a:hover {
 }
 
 /* Product Page */
-.product-page {
+/*.product-page {
   padding: 4.8rem 0;
-  background-color: var(--color-white);
 }
 
 .product-container {
@@ -1407,9 +1406,9 @@ a:hover {
   flex-direction: column;
   gap: 2.4rem;
 }
-
+*/
 /* Product Page Specific Styles - Scoped to .product-page */
-.product-page .product-vendor {
+/*.product-page .product-vendor {
   font-size: 1.4rem;
   color: var(--color-text-light);
   text-transform: uppercase;
@@ -1434,9 +1433,9 @@ a:hover {
   font-weight: 700;
   color: var(--color-text);
 }
-
+*/
 /* Product Page Specific Styles - Scoped to .product-page */
-.product-page .product-compare-price {
+/*.product-page .product-compare-price {
   font-size: 2rem;
   color: var(--color-text-light);
   text-decoration: line-through;
@@ -1492,7 +1491,7 @@ a:hover {
 }
 
 /* Product Page Specific Styles - Scoped to .product-page */
-.product-page .quantity-selector {
+/*.product-page .quantity-selector {
   display: flex;
   align-items: center;
   gap: 0;
@@ -1585,7 +1584,7 @@ a:hover {
 .product-tab-content.active {
   display: block;
 }
-
+*/
 /* Customer Pages */
 .customer-login-page,
 .customer-register-page,
