@@ -58,12 +58,6 @@
         {%- endif -%}
       </div>
 
-      {%- if product.description != blank -%}
-        <div class="product-description">
-          {{ product.description }}
-        </div>
-      {%- endif -%}
-
       <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" id="ProductForm">
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="ProductVariantId">
         
@@ -120,42 +114,40 @@
         </button>
       </form>
 
-      {%- if product.metafields.custom.product_details != blank -%}
-        <div class="product-metafields">
-          {{ product.metafields.custom.product_details }}
-        </div>
-      {%- endif -%}
     </div>
   </div>
 
-  {%- if product.images.size > 0 or product.description != blank -%}
+  {%- assign has_description = product.description | strip_html | strip | size -%}
+  {%- assign has_features = product.metafields.custom.features -%}
+  {%- assign has_care = product.metafields.custom.care -%}
+  {%- if has_description > 0 or has_features != blank or has_care != blank -%}
     <div class="product-additional-info">
-      {%- if product.description != blank -%}
-        <div class="product-tabs">
-          <button class="product-tab active" data-tab="description">Description</button>
-          {%- if product.metafields.custom.shipping_info != blank -%}
-            <button class="product-tab" data-tab="shipping">Shipping</button>
-          {%- endif -%}
-          {%- if product.metafields.custom.care_instructions != blank -%}
-            <button class="product-tab" data-tab="care">Care</button>
-          {%- endif -%}
-        </div>
-        
+      <div class="product-tabs">
+        {%- if has_description > 0 -%}
+          <button class="product-tab active" data-tab="description" type="button">Description</button>
+        {%- endif -%}
+        {%- if has_features != blank -%}
+          <button class="product-tab{% if has_description == 0 %} active{% endif %}" data-tab="features" type="button">Features</button>
+        {%- endif -%}
+        {%- if has_care != blank -%}
+          <button class="product-tab{% if has_description == 0 and has_features == blank %} active{% endif %}" data-tab="care" type="button">Care</button>
+        {%- endif -%}
+      </div>
+
+      {%- if has_description > 0 -%}
         <div class="product-tab-content active" id="tab-description">
-          {{ product.description }}
+          <div class="product-tab-body rte">{{ product.description }}</div>
         </div>
-        
-        {%- if product.metafields.custom.shipping_info != blank -%}
-          <div class="product-tab-content" id="tab-shipping">
-            {{ product.metafields.custom.shipping_info }}
-          </div>
-        {%- endif -%}
-        
-        {%- if product.metafields.custom.care_instructions != blank -%}
-          <div class="product-tab-content" id="tab-care">
-            {{ product.metafields.custom.care_instructions }}
-          </div>
-        {%- endif -%}
+      {%- endif -%}
+      {%- if has_features != blank -%}
+        <div class="product-tab-content{% if has_description == 0 %} active{% endif %}" id="tab-features">
+          <div class="product-tab-body rte">{{ product.metafields.custom.features }}</div>
+        </div>
+      {%- endif -%}
+      {%- if has_care != blank -%}
+        <div class="product-tab-content{% if has_description == 0 and has_features == blank %} active{% endif %}" id="tab-care">
+          <div class="product-tab-body rte">{{ product.metafields.custom.care }}</div>
+        </div>
       {%- endif -%}
     </div>
   {%- endif -%}
