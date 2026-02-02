@@ -19,7 +19,7 @@
     {%- endfor -%}
   {%- endcapture -%}
   {%- if grid_content != blank -%}
-<section class="related-products" data-section-id="{{ section.id }}">
+<section class="related-products" data-section-id="{{ section.id }}" style="background-color: {{ section.settings.background_color | default: '#faf7f2' }};">
   <div class="related-products__inner">
     {%- if section.settings.heading != blank -%}
       <h2 class="related-products__heading">{{ section.settings.heading }}</h2>
@@ -43,6 +43,12 @@
       "id": "heading",
       "label": "Heading",
       "default": "You may also like"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#faf7f2"
     },
     {
       "type": "range",

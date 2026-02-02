@@ -1,0 +1,282 @@
+{% comment %}
+  Contact section: two columns – form (left), Other Ways to Reach Us (right).
+  Section background: color or image (theme setting). Right box background: theme setting.
+{% endcomment %}
+
+{%- assign bg_type = section.settings.background_type | default: 'color' -%}
+{%- assign bg_color = section.settings.background_color | default: '#faf7f2' -%}
+{%- assign bg_image = section.settings.background_image -%}
+{%- assign right_box_bg = section.settings.right_box_background_color | default: '#EDE8E0' -%}
+
+<section
+  class="contact-section"
+  data-section-id="{{ section.id }}"
+  style="
+    {%- if bg_type == 'color' -%}
+      background-color: {{ bg_color }};
+    {%- elsif bg_type == 'image' and bg_image != blank -%}
+      background-image: url({{ bg_image | image_url: width: 1920 }});
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {%- else -%}
+      background-color: {{ bg_color }};
+    {%- endif -%}
+  "
+>
+  {%- if bg_type == 'image' and bg_image != blank -%}
+    <div class="contact-section__overlay" aria-hidden="true"></div>
+  {%- endif -%}
+
+  <div class="contact-section__inner">
+    <div class="contact-section__grid">
+      <div class="contact-section__form-wrap">
+        {%- if section.settings.label != blank -%}
+          <p class="contact-section__label">{{ section.settings.label }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="contact-section__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="contact-section__subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+
+        {% form 'contact', class: 'contact-section__form' %}
+          {%- if form.posted_successfully? -%}
+            <p class="contact-section__success" role="status">Thanks for reaching out. We'll get back to you soon.</p>
+          {%- endif -%}
+          {%- if form.errors -%}
+            <div class="contact-section__errors" role="alert">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          <div class="contact-section__field">
+            <label class="contact-section__field-label" for="ContactName-{{ section.id }}">Name</label>
+            <input
+              type="text"
+              id="ContactName-{{ section.id }}"
+              name="contact[first_name]"
+              class="contact-section__input"
+              placeholder="Your name"
+              required
+              autocomplete="name"
+              value="{{ form.first_name }}"
+            >
+          </div>
+          <div class="contact-section__field">
+            <label class="contact-section__field-label" for="ContactEmail-{{ section.id }}">Email</label>
+            <input
+              type="email"
+              id="ContactEmail-{{ section.id }}"
+              name="contact[email]"
+              class="contact-section__input"
+              placeholder="your@email.com"
+              required
+              autocomplete="email"
+              value="{{ form.email }}"
+            >
+          </div>
+          <div class="contact-section__field">
+            <label class="contact-section__field-label" for="ContactTopic-{{ section.id }}">What can we help with?</label>
+            <select
+              id="ContactTopic-{{ section.id }}"
+              name="contact[topic]"
+              class="contact-section__input contact-section__select"
+              required
+            >
+              <option value="">Select a topic</option>
+              <option value="General Inquiry"{% if form.topic == 'General Inquiry' %} selected{% endif %}>General Inquiry</option>
+              <option value="Order Support"{% if form.topic == 'Order Support' %} selected{% endif %}>Order Support</option>
+              <option value="Returns & Exchanges"{% if form.topic == 'Returns & Exchanges' %} selected{% endif %}>Returns & Exchanges</option>
+              <option value="Wholesale"{% if form.topic == 'Wholesale' %} selected{% endif %}>Wholesale</option>
+              <option value="Press"{% if form.topic == 'Press' %} selected{% endif %}>Press</option>
+              <option value="Collaborations"{% if form.topic == 'Collaborations' %} selected{% endif %}>Collaborations</option>
+              <option value="Other"{% if form.topic == 'Other' %} selected{% endif %}>Other</option>
+            </select>
+          </div>
+          <div class="contact-section__field">
+            <label class="contact-section__field-label" for="ContactMessage-{{ section.id }}">Message</label>
+            <textarea
+              id="ContactMessage-{{ section.id }}"
+              name="contact[body]"
+              class="contact-section__input contact-section__textarea"
+              rows="6"
+              placeholder="Tell us what's on your mind..."
+              required
+            >{{ form.body }}</textarea>
+          </div>
+          <button type="submit" class="contact-section__submit"{% if form.posted_successfully? %} disabled{% endif %}>
+            Send Message
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-section__submit-icon" aria-hidden="true"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path><path d="m21.854 2.147-10.94 10.939"></path></svg>
+          </button>
+        {% endform %}
+      </div>
+
+      <div class="contact-section__aside">
+        <div class="contact-section__box" style="background-color: {{ right_box_bg }};">
+          <h3 class="contact-section__box-heading">{{ section.settings.box_heading | default: 'Other Ways to Reach Us' }}</h3>
+          <div class="contact-section__box-list">
+            {%- if section.settings.contact_email != blank -%}
+              <div class="contact-section__box-item">
+                <div class="contact-section__box-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
+                </div>
+                <div>
+                  <h4 class="contact-section__box-label">Email</h4>
+                  <a href="mailto:{{ section.settings.contact_email | escape }}" class="contact-section__box-link">{{ section.settings.contact_email }}</a>
+                </div>
+              </div>
+            {%- endif -%}
+            {%- if section.settings.instagram_handle != blank or section.settings.instagram_url != blank -%}
+              <div class="contact-section__box-item">
+                <div class="contact-section__box-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+                </div>
+                <div>
+                  <h4 class="contact-section__box-label">Instagram</h4>
+                  <a href="{{ section.settings.instagram_url | default: '#' }}" class="contact-section__box-link" rel="noopener noreferrer" target="_blank">{{ section.settings.instagram_handle | default: section.settings.instagram_url }}</a>
+                </div>
+              </div>
+            {%- endif -%}
+          </div>
+          {%- if section.settings.response_text != blank -%}
+            <div class="contact-section__box-footer">
+              <p class="contact-section__box-response">{{ section.settings.response_text }}</p>
+            </div>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.faq_text != blank and section.settings.faq_url != blank -%}
+          <div class="contact-section__faq">
+            <p class="contact-section__faq-text">{{ section.settings.faq_text }}</p>
+            <a href="{{ section.settings.faq_url }}" class="contact-section__faq-link">{{ section.settings.faq_link_text | default: 'Visit our FAQ' }}</a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact",
+  "tag": "section",
+  "class": "contact-section-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section background"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background type",
+      "default": "color",
+      "options": [
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#faf7f2",
+      "info": "Used when Background type is Color, or as fallback when Image is not set."
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "info": "Used when Background type is Image. Optional overlay improves text readability."
+    },
+    {
+      "type": "header",
+      "content": "Form (left column)"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "GET IN TOUCH"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "We'd Love to Hear From You"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Questions, feedback, wholesale inquiries, or just want to say hi? We're here for it."
+    },
+    {
+      "type": "header",
+      "content": "Other Ways box (right column)"
+    },
+    {
+      "type": "color",
+      "id": "right_box_background_color",
+      "label": "Right box background color",
+      "default": "#EDE8E0"
+    },
+    {
+      "type": "text",
+      "id": "box_heading",
+      "label": "Box heading",
+      "default": "Other Ways to Reach Us"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Email",
+      "default": "hello@example.com"
+    },
+    {
+      "type": "text",
+      "id": "instagram_handle",
+      "label": "Instagram handle",
+      "default": "@yourstore"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "text",
+      "id": "response_text",
+      "label": "Response time text",
+      "default": "We typically respond within 24-48 hours."
+    },
+    {
+      "type": "header",
+      "content": "FAQ link"
+    },
+    {
+      "type": "text",
+      "id": "faq_text",
+      "label": "FAQ prompt text",
+      "default": "Looking for quick answers?"
+    },
+    {
+      "type": "url",
+      "id": "faq_url",
+      "label": "FAQ page URL"
+    },
+    {
+      "type": "text",
+      "id": "faq_link_text",
+      "label": "FAQ link text",
+      "default": "Visit our FAQ"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact"
+    }
+  ]
+}
+{% endschema %}
