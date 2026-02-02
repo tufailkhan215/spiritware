@@ -3,13 +3,11 @@
   Section background: color or image. How to Measure box: configurable background.
 {% endcomment %}
 
-{%- capture newline -%}
-{%- endcapture -%}
 {%- assign bg_type = section.settings.background_type | default: 'color' -%}
 {%- assign bg_color = section.settings.background_color | default: '#faf7f2' -%}
 {%- assign bg_image = section.settings.background_image -%}
 {%- assign how_to_bg = section.settings.how_to_measure_bg_color | default: '#EDE8E0' -%}
-
+{%- if section.blocks.size > 0 -%}
 <section
   class="size-guide-section"
   data-section-id="{{ section.id }}"
@@ -36,8 +34,8 @@
         {%- when 'size_chart' -%}
           {%- assign heading = block.settings.heading | default: 'Size chart' -%}
           {%- assign header_labels = block.settings.header_labels | split: ',' -%}
-          {%- assign rows_text = block.settings.rows_text | strip -%}
-          {%- assign rows = rows_text | split: newline -%}
+          {%- assign rows_text = block.settings.rows_text | strip | replace: '\n', '<br />' | newline_to_br -%}
+          {%- assign rows = rows_text | split: '<br />' -%}
           <div class="size-guide-section__chart" {{ block.shopify_attributes }}>
             <h2 class="size-guide-section__chart-title">{{ heading }}</h2>
             <div class="size-guide-section__table-wrap">
@@ -53,7 +51,7 @@
                   {%- for row in rows -%}
                     {%- assign row = row | strip -%}
                     {%- if row != blank -%}
-                      {%- assign cells = row | split: '|' | map: 'strip' -%}
+                      {%- assign cells = row | split: '|' -%}
                       <tr class="size-guide-section__tr">
                         {%- for cell in cells -%}
                           {%- assign cell_stripped = cell | strip -%}
@@ -73,8 +71,8 @@
 
         {%- when 'how_to_measure' -%}
           {%- assign how_heading = block.settings.heading | default: 'How to Measure' -%}
-          {%- assign items_text = block.settings.items_text | strip -%}
-          {%- assign items = items_text | split: newline -%}
+          {%- assign items_text = block.settings.items_text | strip | replace: '\n', '<br />' | newline_to_br -%}
+          {%- assign items = items_text | split: '<br />' -%}
           <div class="size-guide-section__how-to" style="background-color: {{ how_to_bg }};" {{ block.shopify_attributes }}>
             <h2 class="size-guide-section__how-to-title">{{ how_heading }}</h2>
             <ul class="size-guide-section__how-to-list">
@@ -95,6 +93,7 @@
     {%- endfor -%}
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {
