@@ -68,7 +68,8 @@
                           {%- assign swatch_hex = '' -%}
                           {%- assign swatch_image_src = '' -%}
                           {%- for block in section.blocks -%}
-                            {%- if block.type == 'swatch' and block.settings.option_value | strip == value_stripped -%}
+                            {%- assign block_option_stripped = block.settings.option_value | strip -%}
+                            {%- if block.type == 'swatch' and block_option_stripped == value_stripped -%}
                               {%- if block.settings.image != blank -%}
                                 {%- assign swatch_image_src = block.settings.image | image_url: width: 80 -%}
                               {%- elsif block.settings.color != blank -%}
