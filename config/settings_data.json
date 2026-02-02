@@ -11,6 +11,7 @@
   "current": {
     "header_style": "header_1",
     "footer_style": "footer_1",
+    "show_color_swatches": false,
     "sections": {
       "hero-slider": {
         "type": "hero-slider",
