@@ -91,27 +91,48 @@
               {%- for option in product.options_with_values -%}
                 {%- assign option_name_lower = option.name | downcase -%}
                 {%- if option_name_lower == 'color' or option_name_lower == 'colour' -%}
-                  <div class="product-option product-option--swatch">
-                    <label class="product-option-label">Color: <span class="product-option-selected" data-option-label="{{ forloop.index0 }}">{{ option.selected_value }}</span></label>
-                    <div class="product-swatches" data-option-index="{{ forloop.index0 }}">
-                      {%- for value in option.values -%}
-                        {%- assign value_handle = value | handle -%}
-                        <button
-                          type="button"
-                          class="product-swatch{% if option.selected_value == value %} active{% endif %}"
-                          data-option-value="{{ value | escape }}"
-                          title="{{ value }}"
-                          aria-label="{{ value }}"
-                          style="{% if value_handle == 'black' or value_handle == 'vintage-black' %}background:#1A1A1A{% elsif value_handle == 'cream' or value_handle == 'off-white' %}background:#FAF7F2;border:1px solid #EDE8E0{% elsif value_handle == 'sand' %}background:#C4A77D{% endif %}"
-                        ></button>
-                      {%- endfor -%}
+                  {%- if settings.show_color_swatches -%}
+                    {% capture newline %}
+                    {% endcapture %}
+                    {%- assign swatch_lines = settings.swatch_color_map | default: '' | split: newline -%}
+                    <div class="product-option product-option--swatch">
+                      <label class="product-option-label">Color: <span class="product-option-selected" data-option-label="{{ forloop.index0 }}">{{ option.selected_value }}</span></label>
+                      <div class="product-swatches" data-option-index="{{ forloop.index0 }}">
+                        {%- for value in option.values -%}
+                          {%- assign swatch_hex = '' -%}
+                          {%- for line in swatch_lines -%}
+                            {%- assign line_parts = line | split: '|||' -%}
+                            {%- if line_parts.size >= 2 and line_parts[0] | strip == value -%}
+                              {%- assign swatch_hex = line_parts[1] | strip -%}
+                              {%- break -%}
+                            {%- endif -%}
+                          {%- endfor -%}
+                          <button
+                            type="button"
+                            class="product-swatch{% if option.selected_value == value %} active{% endif %}{% if swatch_hex == blank %} product-swatch--placeholder{% endif %}"
+                            data-option-value="{{ value | escape }}"
+                            title="{{ value }}"
+                            aria-label="{{ value }}"
+                            {% if swatch_hex != blank %}style="background-color: {{ swatch_hex }};"{% endif %}
+                          ></button>
+                        {%- endfor -%}
+                      </div>
+                      <select name="options[{{ option.name | escape }}]" id="Option{{ forloop.index }}" class="product-option-select product-option-select--hidden" data-option-index="{{ forloop.index0 }}" aria-hidden="true">
+                        {%- for value in option.values -%}
+                          <option value="{{ value | escape }}"{% if option.selected_value == value %} selected{% endif %}>{{ value }}</option>
+                        {%- endfor -%}
+                      </select>
                     </div>
-                    <select name="options[{{ option.name | escape }}]" id="Option{{ forloop.index }}" class="product-option-select product-option-select--hidden" data-option-index="{{ forloop.index0 }}" aria-hidden="true">
-                      {%- for value in option.values -%}
-                        <option value="{{ value | escape }}"{% if option.selected_value == value %} selected{% endif %}>{{ value }}</option>
-                      {%- endfor -%}
-                    </select>
-                  </div>
+                  {%- else -%}
+                    <div class="product-option product-option--dropdown">
+                      <label for="Option{{ forloop.index }}" class="product-option-label">{{ option.name }}</label>
+                      <select name="options[{{ option.name | escape }}]" id="Option{{ forloop.index }}" class="product-option-select product-option-select--dropdown" data-option-index="{{ forloop.index0 }}">
+                        {%- for value in option.values -%}
+                          <option value="{{ value | escape }}"{% if option.selected_value == value %} selected{% endif %}>{{ value }}</option>
+                        {%- endfor -%}
+                      </select>
+                    </div>
+                  {%- endif -%}
                 {%- else -%}
                   <div class="product-option product-option--buttons">
                     <div class="product-option-header">

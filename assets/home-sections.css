@@ -3227,6 +3227,30 @@
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+.product-option--dropdown {
+  margin-bottom: 2rem;
+}
+.product-option-select--dropdown {
+  display: block;
+  width: 100%;
+  max-width: 20rem;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-body-family), sans-serif;
+  font-size: 0.875rem;
+  border: 1px solid #EDE8E0;
+  background-color: #FAF7F2;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+.product-option-select--dropdown:hover,
+.product-option-select--dropdown:focus {
+  border-color: #1A1A1A;
+  outline: none;
+}
+.product-swatch--placeholder {
+  background-color: transparent;
+  border: 2px solid #EDE8E0;
+}
 .product-option-header {
   display: flex;
   align-items: center;

@@ -25,5 +25,24 @@
         "info": "Footer 1 matches the Sacred Rebel design (dark charcoal, newsletter, brand + link columns)."
       }
     ]
+  },
+  {
+    "name": "Product page",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_color_swatches",
+        "label": "Show color swatches",
+        "default": true,
+        "info": "When on, Color option shows as swatches. When off, Color shows as a dropdown."
+      },
+      {
+        "type": "textarea",
+        "id": "swatch_color_map",
+        "label": "Swatch color map (optional)",
+        "default": "Vintage Black|||#1A1A1A\nSand|||#C4A77D\nCream|||#FAF7F2",
+        "info": "One line per color: Option value|||Hex (e.g. Vintage Black|||#1A1A1A). Option value must match your product Color option exactly. Leave empty for neutral placeholders."
+      }
+    ]
   }
 ]
