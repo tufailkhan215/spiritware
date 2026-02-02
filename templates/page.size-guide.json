@@ -1,0 +1,39 @@
+{
+  "sections": {
+    "size-guide": {
+      "type": "size-guide",
+      "settings": {
+        "background_type": "color",
+        "background_color": "#faf7f2",
+        "how_to_measure_bg_color": "#EDE8E0"
+      },
+      "blocks": {
+        "tops": {
+          "type": "size_chart",
+          "settings": {
+            "heading": "Tops, Hoodies & Outerwear",
+            "header_labels": "Size, Chest (in), Length (in), Sleeve (in)",
+            "rows_text": "XS|38-40|26|32\nS|40-42|27|33\nM|42-44|28|34\nL|44-46|29|35\nXL|46-48|30|36\n2XL|48-50|31|37"
+          }
+        },
+        "bottoms": {
+          "type": "size_chart",
+          "settings": {
+            "heading": "Bottoms & Joggers",
+            "header_labels": "Size, Waist (in), Hip (in), Inseam (in)",
+            "rows_text": "XS|26-28|36-38|29\nS|28-30|38-40|29\nM|30-32|40-42|30\nL|32-34|42-44|30\nXL|34-36|44-46|31\n2XL|36-38|46-48|31"
+          }
+        },
+        "how-to": {
+          "type": "how_to_measure",
+          "settings": {
+            "heading": "How to Measure",
+            "items_text": "Measure yourself over undergarments\nUse a soft measuring tape\nFor chest: measure around the fullest part\nFor waist: measure at your natural waistline\nFor hip: measure around the fullest part of your hips\nWhen between sizes, size up for oversized fit, down for fitted"
+          }
+        }
+      },
+      "block_order": ["tops", "bottoms", "how-to"]
+    }
+  },
+  "order": ["size-guide"]
+}
