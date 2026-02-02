@@ -1,11 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "faq": {
       "type": "faq",
-      "settings": {
-        "background_type": "color",
-        "background_color": "#faf7f2"
-      },
       "blocks": {
         "orders_1": {
           "type": "faq_item",
@@ -144,8 +149,24 @@
         "sustainability_1",
         "sustainability_2",
         "sustainability_3"
-      ]
+      ],
+      "settings": {
+        "background_type": "color",
+        "background_color": "#faf7f2"
+      }
+    },
+    "about_title_1_x63H6G": {
+      "type": "about-title-1",
+      "name": "About Title 1",
+      "settings": {
+        "subheading": "The Story",
+        "heading": "More Than Fashion. A Movement.",
+        "description": "Sacred Rebel was born from a simple truth: spirituality doesn't have to be soft, and rebellion doesn't have to be reckless."
+      }
     }
   },
-  "order": ["faq"]
+  "order": [
+    "about_title_1_x63H6G",
+    "faq"
+  ]
 }
