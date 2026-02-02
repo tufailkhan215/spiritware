@@ -426,8 +426,8 @@
           "swatch_6MRWTM": {
             "type": "swatch",
             "settings": {
-              "option_value": "",
-              "color": ""
+              "option_value": "green",
+              "color": "#23b11f"
             }
           },
           "swatch_qmWaMA": {
