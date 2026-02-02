@@ -94,17 +94,27 @@
                   {%- if settings.show_color_swatches -%}
                     {% capture newline %}
                     {% endcapture %}
-                    {%- assign swatch_lines = settings.swatch_color_map | default: '' | split: newline -%}
                     <div class="product-option product-option--swatch">
                       <label class="product-option-label">Color: <span class="product-option-selected" data-option-label="{{ forloop.index0 }}">{{ option.selected_value }}</span></label>
                       <div class="product-swatches" data-option-index="{{ forloop.index0 }}">
                         {%- for value in option.values -%}
+                          {%- assign value_stripped = value | strip -%}
                           {%- assign swatch_hex = '' -%}
-                          {%- for line in swatch_lines -%}
-                            {%- assign line_parts = line | split: '|||' -%}
-                            {%- if line_parts.size >= 2 and line_parts[0] | strip == value -%}
-                              {%- assign swatch_hex = line_parts[1] | strip -%}
-                              {%- break -%}
+                          {%- assign map_parts = settings.swatch_color_map | default: '' | split: '|||' -%}
+                          {%- assign current_map_value = '' -%}
+                          {%- for part in map_parts -%}
+                            {%- assign part_segments = part | split: newline -%}
+                            {%- assign first_seg = part_segments[0] | strip -%}
+                            {%- if forloop.first -%}
+                              {%- assign current_map_value = first_seg -%}
+                            {%- else -%}
+                              {%- if current_map_value == value_stripped -%}
+                                {%- assign swatch_hex = first_seg -%}
+                                {%- break -%}
+                              {%- endif -%}
+                              {%- if part_segments[1] != blank -%}
+                                {%- assign current_map_value = part_segments[1] | strip -%}
+                              {%- endif -%}
                             {%- endif -%}
                           {%- endfor -%}
                           <button
