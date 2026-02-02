@@ -213,12 +213,12 @@
       {%- endif -%}
       {%- if has_features != blank -%}
         <div class="product-tab-content{% if has_description == 0 %} active{% endif %}" id="tab-features">
-          <div class="product-tab-body rte">{{ product.metafields.custom.features }}</div>
+          <div class="product-tab-body rte">{{ product.metafields.custom.features.value | richtext }}</div>
         </div>
       {%- endif -%}
       {%- if has_care != blank -%}
         <div class="product-tab-content{% if has_description == 0 and has_features == blank %} active{% endif %}" id="tab-care">
-          <div class="product-tab-body rte">{{ product.metafields.custom.care }}</div>
+          <div class="product-tab-body rte">{{ product.metafields.custom.care.value | richtext }}</div>
         </div>
       {%- endif -%}
   </div>
