@@ -3371,7 +3371,7 @@
 
 .product-trust-strip {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
   gap: 1rem;
   padding: 2rem 0;
   border-top: 1px solid #EDE8E0;
@@ -3385,6 +3385,9 @@
   height: 2.4rem;
   margin: 0 auto 0.5rem;
   color: #C4A77D;
+}
+.product-trust-icon--img {
+  object-fit: contain;
 }
 /* text-xs text-[#1A1A1A]/60 */
 .product-trust-item span {
