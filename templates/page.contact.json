@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "contact": {
@@ -5,16 +14,29 @@
       "settings": {
         "background_type": "color",
         "background_color": "#faf7f2",
-        "right_box_background_color": "#EDE8E0",
+        "right_box_background_color": "#ede8e0",
         "box_heading": "Other Ways to Reach Us",
         "contact_email": "hello@example.com",
         "instagram_handle": "@yourstore",
+        "instagram_url": "",
         "response_text": "We typically respond within 24-48 hours.",
         "faq_text": "Looking for quick answers?",
         "faq_url": "/pages/faq",
         "faq_link_text": "Visit our FAQ"
       }
+    },
+    "about_title_1_FBCEqi": {
+      "type": "about-title-1",
+      "name": "About Title 1",
+      "settings": {
+        "subheading": "The Story",
+        "heading": "More Than Fashion. A Movement.",
+        "description": "Sacred Rebel was born from a simple truth: spirituality doesn't have to be soft, and rebellion doesn't have to be reckless."
+      }
     }
   },
-  "order": ["contact"]
+  "order": [
+    "about_title_1_FBCEqi",
+    "contact"
+  ]
 }
