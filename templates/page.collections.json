@@ -100,12 +100,181 @@
         "heading": "Apparel Collections",
         "cta_text": "Shop Now"
       }
+    },
+    "collection_title_page_9mXLW3": {
+      "type": "collection-title-page",
+      "name": "Title Page",
+      "settings": {
+        "background_image": "shopify://shop_images/pexels-photo-6944915.jpg",
+        "use_collection_details": false,
+        "label": "Spiritually Armed & Dangerously Aligned",
+        "heading": "God Squad",
+        "description": "For the warriors of light who claim their divine backup without apology.",
+        "button_text": "Shop Collection",
+        "button_url": ""
+      }
+    },
+    "philosophy_iVQQMj": {
+      "type": "philosophy",
+      "blocks": {
+        "philosophy_zdgBnX": {
+          "type": "philosophy",
+          "settings": {
+            "heading": "Faith as Fuel",
+            "description": "We believe faith isn't fragile. It's the fire that keeps us moving when logic says stop."
+          }
+        },
+        "philosophy_WniJgY": {
+          "type": "philosophy",
+          "settings": {
+            "heading": "Protection Through Presence",
+            "description": "The God Squad knows that showing up fully—in truth and power—is itself a form of divine protection."
+          }
+        },
+        "philosophy_KnQ4Bz": {
+          "type": "philosophy",
+          "settings": {
+            "heading": "Bold Proclamation",
+            "description": "In a world that wants you quiet, wearing your beliefs is a radical act of sovereignty."
+          }
+        }
+      },
+      "block_order": [
+        "philosophy_zdgBnX",
+        "philosophy_WniJgY",
+        "philosophy_KnQ4Bz"
+      ],
+      "name": "Philosophy",
+      "settings": {
+        "background_type": "color",
+        "background_color": "#1A1A1A",
+        "heading": "The Philosophy"
+      }
+    },
+    "lookbook_xP6ME7": {
+      "type": "lookbook",
+      "blocks": {
+        "image_UxBWKG": {
+          "type": "image",
+          "settings": {
+            "alt": ""
+          }
+        },
+        "image_PVKHRa": {
+          "type": "image",
+          "settings": {
+            "alt": ""
+          }
+        },
+        "image_pbC9wg": {
+          "type": "image",
+          "settings": {
+            "alt": ""
+          }
+        },
+        "image_AGQEfX": {
+          "type": "image",
+          "settings": {
+            "alt": ""
+          }
+        },
+        "image_apWXX7": {
+          "type": "image",
+          "settings": {
+            "alt": ""
+          }
+        },
+        "image_NL4X7z": {
+          "type": "image",
+          "settings": {
+            "alt": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_UxBWKG",
+        "image_PVKHRa",
+        "image_pbC9wg",
+        "image_AGQEfX",
+        "image_apWXX7",
+        "image_NL4X7z"
+      ],
+      "name": "The Lookbook",
+      "settings": {
+        "background_type": "color",
+        "background_color": "#faf7f2",
+        "heading": "The Lookbook"
+      }
+    },
+    "shop_products_ThPxNP": {
+      "type": "shop-products",
+      "name": "Shop products",
+      "settings": {
+        "background_type": "color",
+        "background_color": "#EDE8E0",
+        "use_current_collection": false,
+        "collection": "",
+        "heading": "Shop God Squad",
+        "section_id": "shop",
+        "products_to_show": 12
+      }
+    },
+    "testimonials_quotes_wHbmcB": {
+      "type": "testimonials-quotes",
+      "blocks": {
+        "testimonial_Rqk94f": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I wore my God Squad hoodie to a family dinner and my grandmother asked where she could get one. Three generations deep now.",
+            "author_name": "Marcus T.",
+            "author_location": "Atlanta, GA",
+            "product_name": "GOD SQUAD Hoodie"
+          }
+        },
+        "testimonial_EHjqzQ": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "People stop me constantly to ask about this hoodie. It's become my conversation starter about faith and fashion.",
+            "author_name": "Destiny R.",
+            "author_location": "Miami, FL",
+            "product_name": "GOD SQUAD Hoodie"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_Rqk94f",
+        "testimonial_EHjqzQ"
+      ],
+      "name": "Testimonials",
+      "settings": {
+        "background_type": "color",
+        "background_color": "#faf7f2",
+        "heading": "What They're Saying",
+        "card_background_color": "#EDE8E0"
+      }
+    },
+    "journal_posts_JGkjXr": {
+      "type": "journal-posts",
+      "name": "Journal posts",
+      "settings": {
+        "background_type": "color",
+        "background_color": "#1A1A1A",
+        "heading": "From the Journal",
+        "blog": "news",
+        "posts_to_show": 2
+      }
     }
   },
   "order": [
     "page-content",
     "about_title_1_rt6zbD",
     "retreats_journeys_rAM7EN",
-    "collection_apparel_CXdDPh"
+    "collection_apparel_CXdDPh",
+    "collection_title_page_9mXLW3",
+    "philosophy_iVQQMj",
+    "lookbook_xP6ME7",
+    "shop_products_ThPxNP",
+    "testimonials_quotes_wHbmcB",
+    "journal_posts_JGkjXr"
   ]
 }
