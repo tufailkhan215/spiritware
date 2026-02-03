@@ -1,0 +1,155 @@
+{% comment %}
+  Shop products: heading + product count + grid of products from a collection.
+  Section background: color or image (theme setting). Uses product-card-shop snippet.
+{% endcomment %}
+
+{%- assign bg_type = section.settings.background_type | default: 'color' -%}
+{%- assign bg_color = section.settings.background_color | default: '#EDE8E0' -%}
+{%- assign bg_image = section.settings.background_image -%}
+
+{%- if section.settings.use_current_collection and collection != blank -%}
+  {%- assign coll = collection -%}
+{%- else -%}
+  {%- assign coll = section.settings.collection -%}
+{%- endif -%}
+
+{%- assign section_id = section.settings.section_id | strip -%}
+{%- assign heading_text = section.settings.heading | default: coll.title -%}
+{%- assign products_limit = section.settings.products_to_show | default: 12 -%}
+
+{%- if coll != blank -%}
+<section
+  class="shop-products-section"
+  data-section-id="{{ section.id }}"
+  {% if section_id != blank %}id="{{ section_id | escape }}"{% endif %}
+  style="
+    {%- if bg_type == 'color' -%}
+      background-color: {{ bg_color }};
+    {%- elsif bg_type == 'image' and bg_image != blank -%}
+      background-image: url({{ bg_image | image_url: width: 1920 }});
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {%- else -%}
+      background-color: {{ bg_color }};
+    {%- endif -%}
+  "
+>
+  {%- if bg_type == 'image' and bg_image != blank -%}
+    <div class="shop-products-section__overlay" aria-hidden="true"></div>
+  {%- endif -%}
+
+  <div class="shop-products-section__inner">
+    <div class="shop-products-section__header">
+      {%- if heading_text != blank -%}
+        <h2 class="shop-products-section__title">{{ heading_text }}</h2>
+      {%- endif -%}
+      <span class="shop-products-section__count">
+        {{ coll.products_count }} {% if coll.products_count == 1 %}piece{% else %}pieces{% endif %}
+      </span>
+    </div>
+
+    {%- if coll.products.size > 0 -%}
+      <div class="shop-products-section__grid">
+        {%- for product in coll.products limit: products_limit -%}
+          <div class="shop-products-section__card-wrap">
+            {%- render 'product-card-shop', product: product -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <p class="shop-products-section__empty">No products in this collection.</p>
+    {%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Shop products",
+  "tag": "section",
+  "class": "shop-products-section-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section background"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background type",
+      "default": "color",
+      "options": [
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#EDE8E0"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "info": "Used when Background type is Image."
+    },
+    {
+      "type": "header",
+      "content": "Collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_current_collection",
+      "label": "Use current collection on collection pages",
+      "default": false,
+      "info": "When on a collection page, show that collection's products and title instead of the collection selected below."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Products and count come from this collection when not using current collection."
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop God Squad",
+      "info": "Leave blank to use the collection title."
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section ID",
+      "default": "shop",
+      "info": "For anchor links (e.g. #shop)."
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Maximum products to show",
+      "min": 2,
+      "max": 24,
+      "step": 1,
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop products",
+      "settings": {
+        "heading": "Shop God Squad",
+        "section_id": "shop",
+        "products_to_show": 12
+      }
+    }
+  ]
+}
+{% endschema %}

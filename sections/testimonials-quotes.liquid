@@ -1,0 +1,177 @@
+{% comment %}
+  Testimonials (What They're Saying): section heading + stacked quote cards.
+  Each card: quote (italic), author name, location, product name. Section background dynamic.
+{% endcomment %}
+
+{%- assign bg_type = section.settings.background_type | default: 'color' -%}
+{%- assign bg_color = section.settings.background_color | default: '#faf7f2' -%}
+{%- assign bg_image = section.settings.background_image -%}
+{%- assign card_bg = section.settings.card_background_color | default: '#EDE8E0' -%}
+
+<section
+  class="testimonials-quotes-section"
+  data-section-id="{{ section.id }}"
+  style="
+    {%- if bg_type == 'color' -%}
+      background-color: {{ bg_color }};
+    {%- elsif bg_type == 'image' and bg_image != blank -%}
+      background-image: url({{ bg_image | image_url: width: 1920 }});
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {%- else -%}
+      background-color: {{ bg_color }};
+    {%- endif -%}
+  "
+>
+  {%- if bg_type == 'image' and bg_image != blank -%}
+    <div class="testimonials-quotes-section__overlay" aria-hidden="true"></div>
+  {%- endif -%}
+
+  <div class="testimonials-quotes-section__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="testimonials-quotes-section__title">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="testimonials-quotes-section__list">
+        {%- for block in section.blocks -%}
+          {%- if block.type != 'testimonial' -%}
+            {%- continue -%}
+          {%- endif -%}
+          <div
+            class="testimonials-quotes-section__card"
+            {{ block.shopify_attributes }}
+            style="background-color: {{ card_bg }};"
+          >
+            {%- if block.settings.quote != blank -%}
+              <p class="testimonials-quotes-section__quote">{{ block.settings.quote }}</p>
+            {%- endif -%}
+            <div class="testimonials-quotes-section__footer">
+              <div class="testimonials-quotes-section__author">
+                {%- if block.settings.author_name != blank -%}
+                  <p class="testimonials-quotes-section__author-name">{{ block.settings.author_name }}</p>
+                {%- endif -%}
+                {%- if block.settings.author_location != blank -%}
+                  <p class="testimonials-quotes-section__author-location">{{ block.settings.author_location }}</p>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.product_name != blank -%}
+                <p class="testimonials-quotes-section__product">{{ block.settings.product_name }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "class": "testimonials-quotes-section-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section background"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background type",
+      "default": "color",
+      "options": [
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#faf7f2"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "info": "Used when Background type is Image."
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What They're Saying"
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Card background color",
+      "default": "#EDE8E0"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "I wore my God Squad hoodie to a family dinner and my grandmother asked where she could get one. Three generations deep now."
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Author name",
+          "default": "Marcus T."
+        },
+        {
+          "type": "text",
+          "id": "author_location",
+          "label": "Author location",
+          "default": "Atlanta, GA"
+        },
+        {
+          "type": "text",
+          "id": "product_name",
+          "label": "Product name",
+          "default": "GOD SQUAD Hoodie"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I wore my God Squad hoodie to a family dinner and my grandmother asked where she could get one. Three generations deep now.",
+            "author_name": "Marcus T.",
+            "author_location": "Atlanta, GA",
+            "product_name": "GOD SQUAD Hoodie"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "People stop me constantly to ask about this hoodie. It's become my conversation starter about faith and fashion.",
+            "author_name": "Destiny R.",
+            "author_location": "Miami, FL",
+            "product_name": "GOD SQUAD Hoodie"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

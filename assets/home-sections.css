@@ -4389,3 +4389,512 @@
 .collection-apparel__card:hover .collection-apparel__cta-icon {
   transform: translateX(0.5rem);
 }
+
+/* ==========================================================================
+   Title Page (collection hero) — full-width image, gradient, label, heading, CTA.
+   ========================================================================== */
+.collection-title-page {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.collection-title-page__bg {
+  position: absolute;
+  inset: 0;
+}
+.collection-title-page__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.collection-title-page__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1A1A1A;
+}
+.collection-title-page__placeholder-svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+}
+.collection-title-page__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(26, 26, 26, 0.7), rgba(26, 26, 26, 0.5) 50%, transparent);
+  pointer-events: none;
+}
+.collection-title-page__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 8rem 1.5rem;
+}
+@media (min-width: 990px) {
+  .collection-title-page__inner {
+    padding: 8rem 3rem;
+  }
+}
+.collection-title-page__content {
+  max-width: 42rem;
+  color: #FAF7F2;
+}
+.collection-title-page__label {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C4A77D;
+  margin-bottom: 1rem;
+  display: block;
+}
+.collection-title-page__heading {
+  font-family: var(--font-heading-family, Georgia, serif);
+  font-size: 4.8rem;
+  font-weight: 500;
+  line-height: 1;
+  margin: 0 0 1.5rem;
+  color: #FAF7F2;
+}
+@media (min-width: 750px) {
+  .collection-title-page__heading {
+    font-size: 5.6rem;
+  }
+}
+@media (min-width: 990px) {
+  .collection-title-page__heading {
+    font-size: 6.4rem;
+  }
+}
+.collection-title-page__desc {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 2rem;
+  line-height: 1.6;
+  color: rgba(250, 247, 242, 0.8);
+  margin: 0 0 2rem;
+}
+.collection-title-page__btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  background-color: #FAF7F2;
+  color: #1A1A1A;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.collection-title-page__btn:hover {
+  background-color: #C4A77D;
+  color: #FAF7F2;
+}
+.collection-title-page__btn-icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-left: 0.5rem;
+}
+
+/* ==========================================================================
+   Philosophy — heading + grid of philosophy blocks (dark theme).
+   ========================================================================== */
+.philosophy-section {
+  position: relative;
+  padding: 6rem 1.5rem;
+  color: #FAF7F2;
+}
+@media (min-width: 990px) {
+  .philosophy-section {
+    padding: 6rem 3rem;
+  }
+}
+.philosophy-section__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.9);
+  pointer-events: none;
+}
+.philosophy-section__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.philosophy-section__header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.philosophy-section__title {
+  font-family: var(--font-heading-family, Georgia, serif);
+  font-size: 3.2rem;
+  font-weight: 500;
+  margin: 0 0 1rem;
+  color: #FAF7F2;
+}
+@media (min-width: 750px) {
+  .philosophy-section__title {
+    font-size: 4rem;
+  }
+}
+.philosophy-section__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+@media (min-width: 750px) {
+  .philosophy-section__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+.philosophy-section__card {
+  text-align: center;
+  padding: 2rem;
+  border: 1px solid rgba(250, 247, 242, 0.1);
+}
+.philosophy-section__card-title {
+  font-family: var(--font-heading-family, Georgia, serif);
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0 0 1rem;
+  color: #FAF7F2;
+}
+.philosophy-section__card-desc {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.6;
+  color: rgba(250, 247, 242, 0.6);
+  margin: 0;
+}
+
+/* ==========================================================================
+   The Lookbook — heading + image grid (3/4 aspect, hover scale).
+   ========================================================================== */
+.lookbook-section {
+  position: relative;
+  padding: 6rem 1.5rem;
+}
+@media (min-width: 990px) {
+  .lookbook-section {
+    padding: 6rem 3rem;
+  }
+}
+.lookbook-section__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(250, 247, 242, 0.92);
+  pointer-events: none;
+}
+.lookbook-section__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.lookbook-section__title {
+  font-family: var(--font-heading-family, Georgia, serif);
+  font-size: 3.2rem;
+  font-weight: 500;
+  color: #1A1A1A;
+  text-align: center;
+  margin: 0 0 3rem;
+}
+.lookbook-section__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media (min-width: 750px) {
+  .lookbook-section__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+}
+.lookbook-section__item {
+  overflow: hidden;
+}
+.lookbook-section__image {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+.lookbook-section__item:hover .lookbook-section__image {
+  transform: scale(1.05);
+}
+.lookbook-section__placeholder {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #EDE8E0;
+}
+.lookbook-section__placeholder-svg {
+  width: 60%;
+  height: 60%;
+  opacity: 0.5;
+}
+
+/* ==========================================================================
+   Shop products — heading + count + product grid (dynamic background).
+   ========================================================================== */
+.shop-products-section {
+  position: relative;
+  padding: 6rem 1.5rem;
+}
+@media (min-width: 990px) {
+  .shop-products-section {
+    padding: 6rem 3rem;
+  }
+}
+.shop-products-section__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(237, 232, 224, 0.92);
+  pointer-events: none;
+}
+.shop-products-section__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.shop-products-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+}
+.shop-products-section__title {
+  font-family: var(--font-heading-family, Georgia, serif);
+  font-size: 3.2rem;
+  font-weight: 500;
+  color: #1A1A1A;
+  margin: 0;
+}
+.shop-products-section__count {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.4rem;
+  color: rgba(26, 26, 26, 0.6);
+}
+.shop-products-section__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+@media (min-width: 750px) {
+  .shop-products-section__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 990px) {
+  .shop-products-section__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+.shop-products-section__card-wrap {
+  margin: 0;
+}
+.shop-products-section__empty {
+  text-align: center;
+  color: rgba(26, 26, 26, 0.6);
+  padding: 3rem 0;
+  margin: 0;
+}
+
+/* ==========================================================================
+   Testimonials (What They're Saying) — heading + stacked quote cards.
+   ========================================================================== */
+.testimonials-quotes-section {
+  position: relative;
+  padding: 6rem 1.5rem;
+}
+@media (min-width: 990px) {
+  .testimonials-quotes-section {
+    padding: 6rem 3rem;
+  }
+}
+.testimonials-quotes-section__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(250, 247, 242, 0.92);
+  pointer-events: none;
+}
+.testimonials-quotes-section__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.testimonials-quotes-section__title {
+  font-family: var(--font-heading-family, Georgia, serif);
+  font-size: 3.2rem;
+  font-weight: 500;
+  color: #1A1A1A;
+  text-align: center;
+  margin: 0 0 3rem;
+}
+.testimonials-quotes-section__list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.testimonials-quotes-section__card {
+  padding: 2rem;
+}
+.testimonials-quotes-section__quote {
+  font-family: var(--font-heading-family, Georgia, serif);
+  font-size: 2rem;
+  font-style: italic;
+  color: #1A1A1A;
+  line-height: 1.5;
+  margin: 0 0 1.5rem;
+}
+.testimonials-quotes-section__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.testimonials-quotes-section__author {
+  margin: 0;
+}
+.testimonials-quotes-section__author-name {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 500;
+  font-size: 1.6rem;
+  color: #1A1A1A;
+  margin: 0 0 0.2rem;
+}
+.testimonials-quotes-section__author-location {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.4rem;
+  color: rgba(26, 26, 26, 0.6);
+  margin: 0;
+}
+.testimonials-quotes-section__product {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.4rem;
+  color: #C4A77D;
+  margin: 0;
+}
+
+/* ==========================================================================
+   Journal posts (From the Journal) — heading + blog post cards (2:1 image, category, title).
+   ========================================================================== */
+.journal-posts-section {
+  position: relative;
+  padding: 6rem 1.5rem;
+  color: #FAF7F2;
+}
+@media (min-width: 990px) {
+  .journal-posts-section {
+    padding: 6rem 3rem;
+  }
+}
+.journal-posts-section__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.9);
+  pointer-events: none;
+}
+.journal-posts-section__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.journal-posts-section__title {
+  font-family: var(--font-heading-family, Georgia, serif);
+  font-size: 2.8rem;
+  font-weight: 500;
+  color: #FAF7F2;
+  text-align: center;
+  margin: 0 0 3rem;
+}
+.journal-posts-section__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+@media (min-width: 750px) {
+  .journal-posts-section__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+.journal-posts-section__card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.journal-posts-section__image-wrap {
+  position: relative;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.journal-posts-section__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+.journal-posts-section__card:hover .journal-posts-section__image {
+  transform: scale(1.05);
+}
+.journal-posts-section__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2a2a2a;
+}
+.journal-posts-section__placeholder-svg {
+  width: 60%;
+  height: 60%;
+  opacity: 0.4;
+}
+.journal-posts-section__category {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #C4A77D;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.journal-posts-section__card-title {
+  font-family: var(--font-heading-family, Georgia, serif);
+  font-size: 2rem;
+  font-weight: 500;
+  color: #FAF7F2;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+.journal-posts-section__card:hover .journal-posts-section__card-title {
+  color: #C4A77D;
+}
+.journal-posts-section__empty {
+  text-align: center;
+  color: rgba(250, 247, 242, 0.6);
+  padding: 3rem 0;
+  margin: 0;
+}

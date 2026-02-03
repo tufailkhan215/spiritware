@@ -1,0 +1,149 @@
+{% comment %}
+  Philosophy: section heading + grid of philosophy blocks (heading + description).
+  Section background: color or image (theme setting). Dark theme, light text.
+{% endcomment %}
+
+{%- assign bg_type = section.settings.background_type | default: 'color' -%}
+{%- assign bg_color = section.settings.background_color | default: '#1A1A1A' -%}
+{%- assign bg_image = section.settings.background_image -%}
+
+<section
+  class="philosophy-section"
+  data-section-id="{{ section.id }}"
+  style="
+    {%- if bg_type == 'color' -%}
+      background-color: {{ bg_color }};
+    {%- elsif bg_type == 'image' and bg_image != blank -%}
+      background-image: url({{ bg_image | image_url: width: 1920 }});
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {%- else -%}
+      background-color: {{ bg_color }};
+    {%- endif -%}
+  "
+>
+  {%- if bg_type == 'image' and bg_image != blank -%}
+    <div class="philosophy-section__overlay" aria-hidden="true"></div>
+  {%- endif -%}
+
+  <div class="philosophy-section__inner">
+    {%- if section.settings.heading != blank -%}
+      <div class="philosophy-section__header">
+        <h2 class="philosophy-section__title">{{ section.settings.heading }}</h2>
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="philosophy-section__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type != 'philosophy' -%}
+            {%- continue -%}
+          {%- endif -%}
+          <div class="philosophy-section__card" {{ block.shopify_attributes }}>
+            {%- if block.settings.heading != blank -%}
+              <h3 class="philosophy-section__card-title">{{ block.settings.heading }}</h3>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <p class="philosophy-section__card-desc">{{ block.settings.description }}</p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Philosophy",
+  "tag": "section",
+  "class": "philosophy-section-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section background"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background type",
+      "default": "color",
+      "options": [
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "info": "Used when Background type is Image. A dark overlay is applied for text readability."
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Philosophy"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "philosophy",
+      "name": "Philosophy block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Block heading",
+          "default": "Faith as Fuel"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "We believe faith isn't fragile. It's the fire that keeps us moving when logic says stop."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Philosophy",
+      "blocks": [
+        {
+          "type": "philosophy",
+          "settings": {
+            "heading": "Faith as Fuel",
+            "description": "We believe faith isn't fragile. It's the fire that keeps us moving when logic says stop."
+          }
+        },
+        {
+          "type": "philosophy",
+          "settings": {
+            "heading": "Protection Through Presence",
+            "description": "The God Squad knows that showing up fully—in truth and power—is itself a form of divine protection."
+          }
+        },
+        {
+          "type": "philosophy",
+          "settings": {
+            "heading": "Bold Proclamation",
+            "description": "In a world that wants you quiet, wearing your beliefs is a radical act of sovereignty."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
