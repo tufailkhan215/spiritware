@@ -4023,7 +4023,9 @@
 .retreats-journeys__inner {
   position: relative;
   z-index: 1;
-  max-width: 80rem;
+  max-width: 124rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -4238,7 +4240,9 @@
 .collection-apparel__inner {
   position: relative;
   z-index: 1;
-  max-width: 80rem;
+  max-width: 124rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -4530,7 +4534,9 @@
 .philosophy-section__inner {
   position: relative;
   z-index: 1;
-  max-width: 80rem;
+  max-width: 124rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -4602,7 +4608,9 @@
 .lookbook-section__inner {
   position: relative;
   z-index: 1;
-  max-width: 80rem;
+  max-width: 124rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -4741,7 +4749,7 @@
 .testimonials-quotes-section__inner {
   position: relative;
   z-index: 1;
-  max-width: 56rem;
+  max-width: 90rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -4821,7 +4829,9 @@
 .journal-posts-section__inner {
   position: relative;
   z-index: 1;
-  max-width: 80rem;
+  max-width: 124rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
   margin-left: auto;
   margin-right: auto;
 }
