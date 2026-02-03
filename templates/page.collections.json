@@ -22,10 +22,88 @@
         "heading": "More Than Fashion. A Movement.",
         "description": "Sacred Rebel was born from a simple truth: spirituality doesn't have to be soft, and rebellion doesn't have to be reckless."
       }
+    },
+    "retreats_journeys_rAM7EN": {
+      "type": "retreats-journeys",
+      "blocks": {
+        "journey_dLpftL": {
+          "type": "journey",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-33648329_65.jpg",
+            "overlay_text": "Sacred Rebel",
+            "url": "",
+            "card_label": "A Sacred Journey to Your Promised Land",
+            "title": "Milk & Honey",
+            "description": "More than a retreat—a pilgrimage back to yourself. Milk & Honey offers transformational experiences designed to reconnect you with your divine feminine essence.",
+            "retreat_title": "Next Retreat: Tulum: Surrender & Rise",
+            "retreat_date": "April 15-20, 2025 • Tulum, Mexico",
+            "cta_text": "Explore Retreats"
+          }
+        }
+      },
+      "block_order": [
+        "journey_dLpftL"
+      ],
+      "name": "Retreats & Journeys",
+      "settings": {
+        "background_type": "color",
+        "background_color": "#faf7f2",
+        "header_icon": "sparkles",
+        "label": "Transformational Experiences",
+        "heading": "Retreats & Journeys"
+      }
+    },
+    "collection_apparel_CXdDPh": {
+      "type": "collection-apparel",
+      "blocks": {
+        "collection_J7YHkL": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "image": "shopify://shop_images/pexels-photo-33648329_65.jpg",
+            "subtitle": "Spiritually Armed & Dangerously Aligned",
+            "title": "God Squad",
+            "description": "Bold typography, bolder energy. This collection is for those who walk in faith without walking on eggshells."
+          }
+        },
+        "collection_6AbHXx": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "subtitle": "Strip Down. Show Up. Be Seen.",
+            "title": "Pray Naked",
+            "description": "To pray naked is to approach the divine without armor. This collection is designed for intimacy—with yourself, your practice, and your highest power."
+          }
+        },
+        "collection_iWpAib": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "subtitle": "Here Today. Ascended Tomorrow.",
+            "title": "Limited Drops",
+            "description": "Our Limited Drops collection features exclusive designs produced in intentionally small quantities. For collectors and conscious consumers who value rarity and intention."
+          }
+        }
+      },
+      "block_order": [
+        "collection_J7YHkL",
+        "collection_6AbHXx",
+        "collection_iWpAib"
+      ],
+      "name": "Collection Apparel",
+      "settings": {
+        "background_type": "color",
+        "background_color": "#EDE8E0",
+        "subtitle": "Wearable Prayers",
+        "heading": "Apparel Collections",
+        "cta_text": "Shop Now"
+      }
     }
   },
   "order": [
     "page-content",
-    "about_title_1_rt6zbD"
+    "about_title_1_rt6zbD",
+    "retreats_journeys_rAM7EN",
+    "collection_apparel_CXdDPh"
   ]
 }
