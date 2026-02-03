@@ -1,0 +1,268 @@
+{% comment %}
+  Retreats & Journeys (About us details): header (icon + label + heading) and journey cards.
+  Section background: color or image. Header icon: select from list.
+{% endcomment %}
+
+{%- assign bg_type = section.settings.background_type | default: 'color' -%}
+{%- assign bg_color = section.settings.background_color | default: '#faf7f2' -%}
+{%- assign bg_image = section.settings.background_image -%}
+{%- assign header_icon = section.settings.header_icon | default: 'sparkles' -%}
+
+{%- if section.blocks.size > 0 -%}
+<section
+  class="retreats-journeys"
+  data-section-id="{{ section.id }}"
+  style="
+    {%- if bg_type == 'color' -%}
+      background-color: {{ bg_color }};
+    {%- elsif bg_type == 'image' and bg_image != blank -%}
+      background-image: url({{ bg_image | image_url: width: 1920 }});
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {%- else -%}
+      background-color: {{ bg_color }};
+    {%- endif -%}
+  "
+>
+  {%- if bg_type == 'image' and bg_image != blank -%}
+    <div class="retreats-journeys__overlay-bg" aria-hidden="true"></div>
+  {%- endif -%}
+  <div class="retreats-journeys__inner">
+    <div class="retreats-journeys__header">
+      <div class="retreats-journeys__label-wrap">
+        {%- if header_icon != 'none' -%}
+          {%- if header_icon == 'sparkles' -%}
+            <svg class="retreats-journeys__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></svg>
+          {%- elsif header_icon == 'star' -%}
+            <svg class="retreats-journeys__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          {%- elsif header_icon == 'heart' -%}
+            <svg class="retreats-journeys__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+          {%- elsif header_icon == 'compass' -%}
+            <svg class="retreats-journeys__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+          {%- elsif header_icon == 'sun' -%}
+            <svg class="retreats-journeys__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+          {%- elsif header_icon == 'leaf' -%}
+            <svg class="retreats-journeys__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+          {%- elsif header_icon == 'moon' -%}
+            <svg class="retreats-journeys__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+          {%- endif -%}
+        {%- endif -%}
+        {%- if section.settings.label != blank -%}
+          <span class="retreats-journeys__label">{{ section.settings.label }}</span>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.heading != blank -%}
+        <h2 class="retreats-journeys__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'journey' -%}
+          {%- assign card_url = block.settings.url | default: '#' -%}
+          <div class="retreats-journeys__card-wrap" {{ block.shopify_attributes }}>
+            <a href="{{ card_url }}" class="retreats-journeys__card group block">
+              <div class="retreats-journeys__grid">
+                <div class="retreats-journeys__image-wrap">
+                  {%- if block.settings.image != blank -%}
+                    <img
+                      src="{{ block.settings.image | image_url: width: 1200 }}"
+                      alt="{{ block.settings.title | default: block.settings.image.alt | escape }}"
+                      class="retreats-journeys__image"
+                      width="1200"
+                      height="900"
+                      loading="lazy"
+                    >
+                  {%- else -%}
+                    <div class="retreats-journeys__placeholder">{{ 'lifestyle-1' | placeholder_svg_tag: 'retreats-journeys__placeholder-svg' }}</div>
+                  {%- endif -%}
+                  {%- if block.settings.overlay_text != blank -%}
+                    <div class="retreats-journeys__overlay">
+                      <span class="retreats-journeys__overlay-text">{{ block.settings.overlay_text }}</span>
+                    </div>
+                  {%- endif -%}
+                </div>
+                <div class="retreats-journeys__content">
+                  {%- if block.settings.card_label != blank -%}
+                    <span class="retreats-journeys__card-label">{{ block.settings.card_label }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.title != blank -%}
+                    <h3 class="retreats-journeys__title">{{ block.settings.title }}</h3>
+                  {%- endif -%}
+                  {%- if block.settings.description != blank -%}
+                    <p class="retreats-journeys__desc">{{ block.settings.description }}</p>
+                  {%- endif -%}
+                  {%- if block.settings.retreat_title != blank or block.settings.retreat_date != blank -%}
+                    <div class="retreats-journeys__retreat-box">
+                      {%- if block.settings.retreat_title != blank -%}
+                        <p class="retreats-journeys__retreat-title">{{ block.settings.retreat_title }}</p>
+                      {%- endif -%}
+                      {%- if block.settings.retreat_date != blank -%}
+                        <p class="retreats-journeys__retreat-date">{{ block.settings.retreat_date }}</p>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                  {%- if block.settings.cta_text != blank -%}
+                    <span class="retreats-journeys__cta">
+                      {{ block.settings.cta_text }}
+                      <svg class="retreats-journeys__cta-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </span>
+                  {%- endif -%}
+                </div>
+              </div>
+            </a>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Retreats & Journeys",
+  "tag": "section",
+  "class": "retreats-journeys-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section background"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background type",
+      "default": "color",
+      "options": [
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#faf7f2"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "info": "Used when Background type is Image."
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "select",
+      "id": "header_icon",
+      "label": "Header icon",
+      "default": "sparkles",
+      "options": [
+        { "value": "sparkles", "label": "Sparkles" },
+        { "value": "star", "label": "Star" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "compass", "label": "Compass" },
+        { "value": "sun", "label": "Sun" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "moon", "label": "Moon" },
+        { "value": "none", "label": "None" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Transformational Experiences"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Retreats & Journeys"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "journey",
+      "name": "Journey card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "overlay_text",
+          "label": "Image overlay text",
+          "default": "Sacred Rebel",
+          "info": "Optional text overlay on the image (e.g. brand name)."
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link URL",
+          "default": "/collections/milk-and-honey"
+        },
+        {
+          "type": "text",
+          "id": "card_label",
+          "label": "Card label",
+          "default": "A Sacred Journey to Your Promised Land"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Milk & Honey"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "More than a retreat—a pilgrimage back to yourself. Milk & Honey offers transformational experiences designed to reconnect you with your divine feminine essence."
+        },
+        {
+          "type": "text",
+          "id": "retreat_title",
+          "label": "Retreat box title",
+          "default": "Next Retreat: Tulum: Surrender & Rise"
+        },
+        {
+          "type": "text",
+          "id": "retreat_date",
+          "label": "Retreat box date / location",
+          "default": "April 15-20, 2025 • Tulum, Mexico"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "CTA text",
+          "default": "Explore Retreats"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Retreats & Journeys",
+      "blocks": [
+        {
+          "type": "journey",
+          "settings": {
+            "card_label": "A Sacred Journey to Your Promised Land",
+            "title": "Milk & Honey",
+            "description": "More than a retreat—a pilgrimage back to yourself. Milk & Honey offers transformational experiences designed to reconnect you with your divine feminine essence.",
+            "retreat_title": "Next Retreat: Tulum: Surrender & Rise",
+            "retreat_date": "April 15-20, 2025 • Tulum, Mexico",
+            "cta_text": "Explore Retreats"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
