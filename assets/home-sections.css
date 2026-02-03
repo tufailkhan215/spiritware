@@ -4680,7 +4680,9 @@
 .shop-products-section__inner {
   position: relative;
   z-index: 1;
-  max-width: 80rem;
+  max-width: 124rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
   margin-left: auto;
   margin-right: auto;
 }
