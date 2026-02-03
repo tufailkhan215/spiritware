@@ -1,0 +1,223 @@
+{% comment %}
+  Collection Apparel: section header (subtitle + heading) and collection cards.
+  Each card: image (3/4), gradient overlay, subtitle, title, description, Shop Now.
+  Section background: color or image (theme setting).
+{% endcomment %}
+
+{%- assign bg_type = section.settings.background_type | default: 'color' -%}
+{%- assign bg_color = section.settings.background_color | default: '#EDE8E0' -%}
+{%- assign bg_image = section.settings.background_image -%}
+
+{%- assign has_cards = false -%}
+{%- for block in section.blocks -%}
+  {%- if block.type == 'collection' and block.settings.collection != blank -%}
+    {%- assign has_cards = true -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if has_cards -%}
+<section
+  class="collection-apparel"
+  data-section-id="{{ section.id }}"
+  style="
+    {%- if bg_type == 'color' -%}
+      background-color: {{ bg_color }};
+    {%- elsif bg_type == 'image' and bg_image != blank -%}
+      background-image: url({{ bg_image | image_url: width: 1920 }});
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {%- else -%}
+      background-color: {{ bg_color }};
+    {%- endif -%}
+  "
+>
+  {%- if bg_type == 'image' and bg_image != blank -%}
+    <div class="collection-apparel__overlay" aria-hidden="true"></div>
+  {%- endif -%}
+
+  <div class="collection-apparel__inner">
+    <div class="collection-apparel__header">
+      {%- if section.settings.subtitle != blank -%}
+        <span class="collection-apparel__subtitle">{{ section.settings.subtitle }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="collection-apparel__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+    </div>
+
+    <div class="collection-apparel__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type != 'collection' or block.settings.collection == blank -%}
+          {%- continue -%}
+        {%- endif -%}
+        {%- assign coll = block.settings.collection -%}
+        {%- assign card_url = coll.url | default: '#' -%}
+        {%- assign card_title = block.settings.title | default: coll.title -%}
+        {%- assign card_image = block.settings.image | default: coll.image -%}
+        <div class="collection-apparel__card-wrap" {{ block.shopify_attributes }}>
+          <a href="{{ card_url }}" class="collection-apparel__card">
+            <div class="collection-apparel__image-wrap">
+              {%- if card_image != blank -%}
+                <img
+                  src="{{ card_image | image_url: width: 800 }}"
+                  alt="{{ card_title | escape }}"
+                  class="collection-apparel__image"
+                  width="800"
+                  height="1067"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <div class="collection-apparel__placeholder">{{ 'collection-1' | placeholder_svg_tag: 'collection-apparel__placeholder-svg' }}</div>
+              {%- endif -%}
+              <div class="collection-apparel__gradient" aria-hidden="true"></div>
+            </div>
+            <div class="collection-apparel__content">
+              {%- if block.settings.subtitle != blank -%}
+                <span class="collection-apparel__card-subtitle">{{ block.settings.subtitle }}</span>
+              {%- endif -%}
+              {%- if card_title != blank -%}
+                <h3 class="collection-apparel__card-title">{{ card_title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <p class="collection-apparel__card-desc">{{ block.settings.description }}</p>
+              {%- endif -%}
+              <span class="collection-apparel__cta">
+                {{ section.settings.cta_text | default: 'Shop Now' }}
+                <svg class="collection-apparel__cta-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </span>
+            </div>
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collection Apparel",
+  "tag": "section",
+  "class": "collection-apparel-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section background"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background type",
+      "default": "color",
+      "options": [
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#EDE8E0"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "info": "Used when Background type is Image."
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Wearable Prayers"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Apparel Collections"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA button text",
+      "default": "Shop Now"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Optional. Uses collection image if blank."
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Card subtitle",
+          "default": "Spiritually Armed & Dangerously Aligned"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card title",
+          "info": "Optional. Uses collection title if blank."
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Bold typography, bolder energy. This collection is for those who walk in faith without walking on eggshells."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Apparel",
+      "blocks": [
+        {
+          "type": "collection",
+          "settings": {
+            "subtitle": "Spiritually Armed & Dangerously Aligned",
+            "title": "God Squad",
+            "description": "Bold typography, bolder energy. This collection is for those who walk in faith without walking on eggshells."
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "subtitle": "Strip Down. Show Up. Be Seen.",
+            "title": "Pray Naked",
+            "description": "To pray naked is to approach the divine without armor. This collection is designed for intimacy—with yourself, your practice, and your highest power."
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "subtitle": "Here Today. Ascended Tomorrow.",
+            "title": "Limited Drops",
+            "description": "Our Limited Drops collection features exclusive designs produced in intentionally small quantities. For collectors and conscious consumers who value rarity and intention."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
