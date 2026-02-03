@@ -59,7 +59,7 @@
         "collection_J7YHkL": {
           "type": "collection",
           "settings": {
-            "collection": "",
+            "collection": "collection-1",
             "image": "shopify://shop_images/pexels-photo-33648329_65.jpg",
             "subtitle": "Spiritually Armed & Dangerously Aligned",
             "title": "God Squad",
@@ -69,7 +69,8 @@
         "collection_6AbHXx": {
           "type": "collection",
           "settings": {
-            "collection": "",
+            "collection": "collection-2",
+            "image": "shopify://shop_images/pexels-photo-31545589.jpg",
             "subtitle": "Strip Down. Show Up. Be Seen.",
             "title": "Pray Naked",
             "description": "To pray naked is to approach the divine without armor. This collection is designed for intimacy—with yourself, your practice, and your highest power."
@@ -78,7 +79,8 @@
         "collection_iWpAib": {
           "type": "collection",
           "settings": {
-            "collection": "",
+            "collection": "collection-3",
+            "image": "shopify://shop_images/pexels-photo-33648329_65.jpg",
             "subtitle": "Here Today. Ascended Tomorrow.",
             "title": "Limited Drops",
             "description": "Our Limited Drops collection features exclusive designs produced in intentionally small quantities. For collectors and conscious consumers who value rarity and intention."
@@ -93,7 +95,7 @@
       "name": "Collection Apparel",
       "settings": {
         "background_type": "color",
-        "background_color": "#EDE8E0",
+        "background_color": "#ede8e0",
         "subtitle": "Wearable Prayers",
         "heading": "Apparel Collections",
         "cta_text": "Shop Now"
