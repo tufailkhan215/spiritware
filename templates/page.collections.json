@@ -147,7 +147,7 @@
       "name": "Philosophy",
       "settings": {
         "background_type": "color",
-        "background_color": "#1A1A1A",
+        "background_color": "#1a1a1a",
         "heading": "The Philosophy"
       }
     },
@@ -157,36 +157,21 @@
         "image_UxBWKG": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/pexels-photo-33648329_65.jpg",
             "alt": ""
           }
         },
         "image_PVKHRa": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/pexels-photo-6944915.jpg",
             "alt": ""
           }
         },
         "image_pbC9wg": {
           "type": "image",
           "settings": {
-            "alt": ""
-          }
-        },
-        "image_AGQEfX": {
-          "type": "image",
-          "settings": {
-            "alt": ""
-          }
-        },
-        "image_apWXX7": {
-          "type": "image",
-          "settings": {
-            "alt": ""
-          }
-        },
-        "image_NL4X7z": {
-          "type": "image",
-          "settings": {
+            "image": "shopify://shop_images/pexels-photo-31545589.jpg",
             "alt": ""
           }
         }
@@ -194,10 +179,7 @@
       "block_order": [
         "image_UxBWKG",
         "image_PVKHRa",
-        "image_pbC9wg",
-        "image_AGQEfX",
-        "image_apWXX7",
-        "image_NL4X7z"
+        "image_pbC9wg"
       ],
       "name": "The Lookbook",
       "settings": {
@@ -211,12 +193,12 @@
       "name": "Shop products",
       "settings": {
         "background_type": "color",
-        "background_color": "#EDE8E0",
+        "background_color": "#ede8e0",
         "use_current_collection": false,
-        "collection": "",
+        "collection": "collection-3",
         "heading": "Shop God Squad",
         "section_id": "shop",
-        "products_to_show": 12
+        "products_to_show": 3
       }
     },
     "testimonials_quotes_wHbmcB": {
@@ -250,7 +232,7 @@
         "background_type": "color",
         "background_color": "#faf7f2",
         "heading": "What They're Saying",
-        "card_background_color": "#EDE8E0"
+        "card_background_color": "#ede8e0"
       }
     },
     "journal_posts_JGkjXr": {
@@ -258,7 +240,7 @@
       "name": "Journal posts",
       "settings": {
         "background_type": "color",
-        "background_color": "#1A1A1A",
+        "background_color": "#1a1a1a",
         "heading": "From the Journal",
         "blog": "news",
         "posts_to_show": 2
