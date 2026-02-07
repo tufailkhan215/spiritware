@@ -156,7 +156,7 @@
             "enable_height_control": true,
             "image_height_desktop": 350,
             "min_height_desktop": 400,
-            "image_height_mobile": 150,
+            "image_height_mobile": 200,
             "min_height_mobile": 300,
             "object_fit": "cover"
           },
@@ -226,6 +226,26 @@
         "card_color": "#faf7f2"
       }
     },
+    "177050432393c4b975": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_46b5ddc_bUrtVX": {
+          "type": "ai_gen_block_46b5ddc",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-02-07_at_12.48.20_PM.png",
+            "desktop_max_height": 350,
+            "desktop_object_fit": "cover",
+            "mobile_max_height": 400,
+            "mobile_object_fit": "cover"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_46b5ddc_bUrtVX"
+      ],
+      "settings": {}
+    },
     "values_1_cyJPzb": {
       "type": "values-1",
       "blocks": {
@@ -279,6 +299,26 @@
         "description": "We believe fashion should nurture the earth, not deplete it. Our commitment to sustainability isn't a marketing angle—it's a sacred responsibility.",
         "card_color": "#ede8e0"
       }
+    },
+    "17705044398e4cdbea": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_434a84c_8BLCPA": {
+          "type": "ai_gen_block_434a84c",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-02-07_at_12.48.20_PM.png",
+            "desktop_max_height": 600,
+            "desktop_object_fit": "cover",
+            "mobile_max_height": 400,
+            "mobile_object_fit": "cover"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_434a84c_8BLCPA"
+      ],
+      "settings": {}
     },
     "values_1_Gte8Ax": {
       "type": "values-1",
@@ -473,7 +513,9 @@
     "1770504053e8106880",
     "1770503220a186b88f",
     "values_1_RicVrz",
+    "177050432393c4b975",
     "values_1_cyJPzb",
+    "17705044398e4cdbea",
     "values_1_Gte8Ax",
     "box_section_1_C86hXm",
     "title_text_1_tzzQJU",
