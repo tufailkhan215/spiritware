@@ -12,9 +12,66 @@
     "page-content": {
       "type": "page-content",
       "settings": {}
+    },
+    "1770502694fc113b19": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_5614f22_VCCPwE": {
+          "type": "ai_gen_block_5614f22",
+          "settings": {
+            "top_label": "THE JOURNAL",
+            "main_heading": "Stories & Insights",
+            "subtitle": "Thoughts on conscious living, sustainable fashion, spirituality, and everything in between.",
+            "featured_badge_text": "FEATURED",
+            "featured_category": "SUSTAINABILITY",
+            "featured_title": "Conscious Consumerism: Voting With Your Dollar",
+            "featured_description": "Every purchase is a vote for the world you want to live in. Here's how to make your consumption a spiritual practice.",
+            "featured_author": "Kateri Ewing",
+            "featured_read_time": "5 min read",
+            "all_articles_heading": "All Articles",
+            "article_1_category": "SUSTAINABILITY",
+            "article_1_title": "Conscious Consumerism: Voting With Your Dollar",
+            "article_1_description": "Every purchase is a vote for the world you want to live in. Here's how to make your consumption a spiritual practice.",
+            "article_1_author": "Kateri Ewing",
+            "article_1_read_time": "5 min read",
+            "article_2_category": "SPIRITUALITY",
+            "article_2_title": "Money as Frequency: Rewriting Your Abundance Story",
+            "article_2_description": "Money isn't just currency—it's energy. Learn how to shift your relationship with abundance and welcome prosperity as...",
+            "article_2_author": "Kateri Ewing",
+            "article_2_read_time": "6 min read",
+            "article_3_category": "SUSTAINABILITY",
+            "article_3_title": "Why Organic Materials Matter: For You & The Planet",
+            "article_3_description": "The clothes you wear sit against your skin all day. Here's why what they're made of matters more than you think.",
+            "article_3_author": "Eunice Reed Tran",
+            "article_3_read_time": "3 min read",
+            "background_color": "#FAF7F2",
+            "heading_color": "#1A1A1A",
+            "subtitle_color": "#666666",
+            "description_color": "#4A4A4A",
+            "label_color": "#8B7355",
+            "category_color": "#8B7355",
+            "meta_color": "#999999",
+            "featured_badge_bg": "#E8DCC8",
+            "featured_badge_color": "#5A4A3A",
+            "heading_font": "serif",
+            "heading_size": 48,
+            "subtitle_size": 16,
+            "featured_title_size": 36,
+            "article_title_size": 20,
+            "description_size": 15,
+            "article_description_size": 14
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_5614f22_VCCPwE"
+      ],
+      "settings": {}
     }
   },
   "order": [
-    "page-content"
+    "page-content",
+    "1770502694fc113b19"
   ]
 }
