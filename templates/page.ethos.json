@@ -36,7 +36,7 @@
             "image": "shopify://shop_images/Screenshot_2026-02-07_at_12.48.20_PM.png",
             "height_style": "fixed",
             "image_height": 400,
-            "mobile_image_height": 300
+            "mobile_image_height": 200
           },
           "blocks": {}
         }
