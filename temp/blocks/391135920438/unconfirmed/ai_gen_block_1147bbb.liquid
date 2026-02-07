@@ -1,6 +1,603 @@
+{% doc %}
+  @prompt
+    cinematic landing page that is hyper animated and dynamic
+    
+    The Story
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-cinematic-landing-{{ ai_gen_id }} {
+    display: block;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    background: {{ block.settings.background_color }};
+  }
+
+  .ai-cinematic-landing__bg-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .ai-cinematic-landing__bg-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    animation: ai-cinematic-fade-in-{{ ai_gen_id }} 2s ease-out forwards;
+  }
+
+  .ai-cinematic-landing__bg-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  }
+
+  .ai-cinematic-landing__bg-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+  }
+
+  .ai-cinematic-landing__overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      {{ block.settings.overlay_direction }},
+      {{ block.settings.overlay_color_1 }},
+      {{ block.settings.overlay_color_2 }}
+    );
+    opacity: {{ block.settings.overlay_opacity }};
+    z-index: 2;
+  }
+
+  .ai-cinematic-landing__particles-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .ai-cinematic-landing__particle-{{ ai_gen_id }} {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: {{ block.settings.particle_color }};
+    border-radius: 50%;
+    opacity: 0;
+  }
+
+  .ai-cinematic-landing__content-{{ ai_gen_id }} {
+    position: relative;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 60px 20px;
+    text-align: center;
+  }
+
+  .ai-cinematic-landing__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+    margin: 0 0 20px;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: ai-cinematic-slide-up-{{ ai_gen_id }} 1.2s ease-out 0.5s forwards;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    max-width: 1200px;
+  }
+
+  .ai-cinematic-landing__subtitle-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subtitle_size }}px;
+    color: {{ block.settings.subtitle_color }};
+    margin: 0 0 40px;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: ai-cinematic-slide-up-{{ ai_gen_id }} 1.2s ease-out 0.8s forwards;
+    max-width: 800px;
+    line-height: 1.6;
+  }
+
+  .ai-cinematic-landing__cta-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 48px;
+    background: {{ block.settings.cta_bg_color }};
+    color: {{ block.settings.cta_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.cta_border_radius }}px;
+    font-size: {{ block.settings.cta_text_size }}px;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+    animation: ai-cinematic-cta-appear-{{ ai_gen_id }} 1.2s ease-out 1.1s forwards;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ai-cinematic-landing__cta-{{ ai_gen_id }}::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+  }
+
+  .ai-cinematic-landing__cta-{{ ai_gen_id }}:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+
+  .ai-cinematic-landing__cta-{{ ai_gen_id }}:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .ai-cinematic-landing__cta-text-{{ ai_gen_id }} {
+    position: relative;
+    z-index: 1;
+  }
+
+  .ai-cinematic-landing__scroll-indicator-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    opacity: 0;
+    animation: ai-cinematic-fade-in-{{ ai_gen_id }} 1s ease-out 1.5s forwards,
+               ai-cinematic-bounce-{{ ai_gen_id }} 2s ease-in-out 2s infinite;
+  }
+
+  .ai-cinematic-landing__scroll-arrow-{{ ai_gen_id }} {
+    width: 30px;
+    height: 30px;
+    border-left: 2px solid {{ block.settings.scroll_indicator_color }};
+    border-bottom: 2px solid {{ block.settings.scroll_indicator_color }};
+    transform: rotate(-45deg);
+  }
+
+  @keyframes ai-cinematic-fade-in-{{ ai_gen_id }} {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes ai-cinematic-slide-up-{{ ai_gen_id }} {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes ai-cinematic-cta-appear-{{ ai_gen_id }} {
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes ai-cinematic-bounce-{{ ai_gen_id }} {
+    0%, 100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    50% {
+      transform: translateX(-50%) translateY(10px);
+    }
+  }
+
+  @keyframes ai-cinematic-particle-float-{{ ai_gen_id }} {
+    0% {
+      opacity: 0;
+      transform: translateY(0) translateX(0);
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(var(--ai-particle-y-{{ ai_gen_id }})) translateX(var(--ai-particle-x-{{ ai_gen_id }}));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-cinematic-landing__title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_size }}px * 0.5);
+    }
+
+    .ai-cinematic-landing__subtitle-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.subtitle_size }}px * 0.8);
+    }
+
+    .ai-cinematic-landing__cta-{{ ai_gen_id }} {
+      padding: 14px 32px;
+      font-size: calc({{ block.settings.cta_text_size }}px * 0.9);
+    }
+  }
+{% endstyle %}
+
+<cinematic-landing-{{ ai_gen_id }}
+  class="ai-cinematic-landing-{{ ai_gen_id }}"
+  data-particle-count="{{ block.settings.particle_count }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-cinematic-landing__bg-{{ ai_gen_id }}">
+    {% if block.settings.background_image %}
+      <img
+        src="{{ block.settings.background_image | image_url: width: 2400 }}"
+        alt="{{ block.settings.background_image.alt | escape }}"
+        class="ai-cinematic-landing__bg-image-{{ ai_gen_id }}"
+        loading="eager"
+        width="{{ block.settings.background_image.width }}"
+        height="{{ block.settings.background_image.height }}"
+      >
+    {% else %}
+      <div class="ai-cinematic-landing__bg-placeholder-{{ ai_gen_id }}">
+        {{ 'hero-apparel-1' | placeholder_svg_tag }}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="ai-cinematic-landing__overlay-{{ ai_gen_id }}"></div>
+
+  <div class="ai-cinematic-landing__particles-{{ ai_gen_id }}"></div>
+
+  <div class="ai-cinematic-landing__content-{{ ai_gen_id }}">
+    {% if block.settings.title != blank %}
+      <h1 class="ai-cinematic-landing__title-{{ ai_gen_id }}">
+        {{ block.settings.title }}
+      </h1>
+    {% endif %}
+
+    {% if block.settings.subtitle != blank %}
+      <div class="ai-cinematic-landing__subtitle-{{ ai_gen_id }}">
+        {{ block.settings.subtitle }}
+      </div>
+    {% endif %}
+
+    {% if block.settings.cta_text != blank %}
+      <a
+        href="{{ block.settings.cta_link }}"
+        class="ai-cinematic-landing__cta-{{ ai_gen_id }}"
+      >
+        <span class="ai-cinematic-landing__cta-text-{{ ai_gen_id }}">
+          {{ block.settings.cta_text }}
+        </span>
+      </a>
+    {% endif %}
+  </div>
+
+  {% if block.settings.show_scroll_indicator %}
+    <div class="ai-cinematic-landing__scroll-indicator-{{ ai_gen_id }}">
+      <div class="ai-cinematic-landing__scroll-arrow-{{ ai_gen_id }}"></div>
+    </div>
+  {% endif %}
+</cinematic-landing-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class CinematicLanding{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.particleCount = parseInt(this.dataset.particleCount) || 50;
+        this.particles = [];
+      }
+
+      connectedCallback() {
+        this.particlesContainer = this.querySelector('.ai-cinematic-landing__particles-{{ ai_gen_id }}');
+        this.bgImage = this.querySelector('.ai-cinematic-landing__bg-image-{{ ai_gen_id }}');
+        
+        this.initParticles();
+        this.initParallax();
+        
+        if (this.bgImage) {
+          this.initImageZoom();
+        }
+      }
+
+      initParticles() {
+        for (let i = 0; i < this.particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'ai-cinematic-landing__particle-{{ ai_gen_id }}';
+          
+          const startX = Math.random() * 100;
+          const startY = Math.random() * 100;
+          const endX = (Math.random() - 0.5) * 100;
+          const endY = -100 - Math.random() * 100;
+          const duration = 8 + Math.random() * 12;
+          const delay = Math.random() * 5;
+          const size = 1 + Math.random() * 2;
+          
+          particle.style.cssText = `
+            left: ${startX}%;
+            top: ${startY}%;
+            width: ${size}px;
+            height: ${size}px;
+            --ai-particle-x-{{ ai_gen_id }}: ${endX}px;
+            --ai-particle-y-{{ ai_gen_id }}: ${endY}px;
+            animation: ai-cinematic-particle-float-{{ ai_gen_id }} ${duration}s ease-in-out ${delay}s infinite;
+          `;
+          
+          this.particlesContainer.appendChild(particle);
+          this.particles.push(particle);
+        }
+      }
+
+      initParallax() {
+        let ticking = false;
+        
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              const scrolled = window.pageYOffset;
+              const parallaxElements = this.querySelectorAll('.ai-cinematic-landing__bg-{{ ai_gen_id }}, .ai-cinematic-landing__overlay-{{ ai_gen_id }}');
+              
+              parallaxElements.forEach(el => {
+                el.style.transform = `translateY(${scrolled * 0.5}px)`;
+              });
+              
+              ticking = false;
+            });
+            
+            ticking = true;
+          }
+        });
+      }
+
+      initImageZoom() {
+        let startTime = Date.now();
+        const zoomDuration = 20000;
+        const maxZoom = 1.1;
+        
+        const animate = () => {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(elapsed / zoomDuration, 1);
+          const scale = 1 + (maxZoom - 1) * progress;
+          
+          if (this.bgImage) {
+            this.bgImage.style.transform = `scale(${scale})`;
+          }
+          
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          }
+        };
+        
+        requestAnimationFrame(animate);
+      }
+    }
+
+    customElements.define('cinematic-landing-{{ ai_gen_id }}', CinematicLanding{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "The Story",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Title",
+      "default": "The Story"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "<p>Every journey begins with a single step into the unknown</p>"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Begin Your Journey"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "overlay_direction",
+      "label": "Overlay direction",
+      "options": [
+        {
+          "value": "to bottom",
+          "label": "Top to bottom"
+        },
+        {
+          "value": "to top",
+          "label": "Bottom to top"
+        },
+        {
+          "value": "to right",
+          "label": "Left to right"
+        },
+        {
+          "value": "135deg",
+          "label": "Diagonal"
+        }
+      ],
+      "default": "to bottom"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color_1",
+      "label": "Overlay start color",
+      "default": "rgba(0, 0, 0, 0.7)"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color_2",
+      "label": "Overlay end color",
+      "default": "rgba(0, 0, 0, 0.3)"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.6
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 40,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#E0E0E0"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "range",
+      "id": "cta_text_size",
+      "label": "Text size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "cta_bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "cta_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Effects"
+    },
+    {
+      "type": "range",
+      "id": "particle_count",
+      "label": "Particle count",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 50
+    },
+    {
+      "type": "color",
+      "id": "particle_color",
+      "label": "Particle color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scroll_indicator",
+      "label": "Show scroll indicator",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "scroll_indicator_color",
+      "label": "Scroll indicator color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "The Story"
+    }
+  ]
+}
 {% endschema %}
