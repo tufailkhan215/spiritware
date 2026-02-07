@@ -14,6 +14,10 @@
       "disabled": true,
       "settings": {}
     },
+    "177050336473979e03": {
+      "type": "_blocks",
+      "settings": {}
+    },
     "about_title_1_6AEaDz": {
       "type": "about-title-1",
       "name": "About Title 1",
@@ -22,6 +26,71 @@
         "heading": "More Than Fashion. A Movement.",
         "description": "Sacred Rebel was born from a simple truth: spirituality doesn't have to be soft, and rebellion doesn't have to be reckless."
       }
+    },
+    "1770503892eefdff12": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_0ba84e6_pMNxx9": {
+          "type": "ai_gen_block_0ba84e6",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-02-07_at_12.48.20_PM.png",
+            "height_style": "fixed",
+            "image_height": 400,
+            "mobile_image_height": 300
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_0ba84e6_pMNxx9"
+      ],
+      "settings": {}
+    },
+    "177050347399979366": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_ba81f40_n3nAPB": {
+          "type": "ai_gen_block_ba81f40",
+          "disabled": true,
+          "settings": {
+            "title": "SACRED REBEL",
+            "subtitle": "<p>Sacred Rebel was born from a simple truth: spirituality doesn't have to be soft, and rebellion doesn't have to be reckless.</p>",
+            "cta_text": "Begin Your Journey",
+            "cta_link": "",
+            "background_image": "shopify://shop_images/Screenshot_2026-02-07_at_12.48.20_PM.png",
+            "background_color": "#000000",
+            "overlay_direction": "to bottom",
+            "overlay_color_1": "rgba(0, 0, 0, 0.7)",
+            "overlay_color_2": "rgba(0, 0, 0, 0.3)",
+            "overlay_opacity": 0.6,
+            "title_font": "sans_serif_n7",
+            "title_size": 80,
+            "title_color": "#FFFFFF",
+            "title_letter_spacing": 0,
+            "title_text_transform": "none",
+            "subtitle_font": "sans_serif_n4",
+            "subtitle_size": 20,
+            "subtitle_color": "#E0E0E0",
+            "subtitle_letter_spacing": 0,
+            "button_font": "sans_serif_n7",
+            "cta_text_size": 16,
+            "button_letter_spacing": 0,
+            "button_text_transform": "none",
+            "cta_bg_color": "#FFFFFF",
+            "cta_text_color": "#000000",
+            "cta_border_radius": 4,
+            "particle_count": 50,
+            "particle_color": "#FFFFFF",
+            "show_scroll_indicator": true,
+            "scroll_indicator_color": "#FFFFFF"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_ba81f40_n3nAPB"
+      ],
+      "settings": {}
     },
     "values_1_jjVYWc": {
       "type": "values-1",
@@ -76,6 +145,32 @@
         "description": "We believe fashion should nurture the earth, not deplete it. Our commitment to sustainability isn't a marketing angle—it's a sacred responsibility.",
         "card_color": "#ede8e0"
       }
+    },
+    "1770504053e8106880": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_d8d18a5_hfjbRR": {
+          "type": "ai_gen_block_d8d18a5",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-02-07_at_2.27.33_PM.png",
+            "enable_height_control": true,
+            "image_height_desktop": 350,
+            "min_height_desktop": 400,
+            "image_height_mobile": 150,
+            "min_height_mobile": 300,
+            "object_fit": "cover"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_d8d18a5_hfjbRR"
+      ],
+      "settings": {}
+    },
+    "1770503220a186b88f": {
+      "type": "_blocks",
+      "settings": {}
     },
     "values_1_RicVrz": {
       "type": "values-1",
@@ -177,7 +272,7 @@
         "background_type": "color",
         "background_color": "#faf7f2",
         "background_opacity": 60,
-        "overlay_color": "#1A1A1A",
+        "overlay_color": "#1a1a1a",
         "overlay_opacity": 50,
         "subheading": "Honoring Pacha Mama",
         "heading": "Sustainability",
@@ -231,7 +326,7 @@
         "background_type": "color",
         "background_color": "#ede8e0",
         "background_opacity": 60,
-        "overlay_color": "#1A1A1A",
+        "overlay_color": "#1a1a1a",
         "overlay_opacity": 50,
         "subheading": "People Over Profit",
         "heading": "Ethical Manufacturing",
@@ -284,9 +379,9 @@
       "name": "Box Section 1",
       "settings": {
         "background_type": "color",
-        "background_color": "#1A1A1A",
+        "background_color": "#1a1a1a",
         "background_opacity": 60,
-        "overlay_color": "#1A1A1A",
+        "overlay_color": "#1a1a1a",
         "overlay_opacity": 50,
         "subheading": "Our Standards",
         "heading": "Certifications & Commitments"
@@ -300,7 +395,7 @@
         "background_type": "color",
         "background_color": "#faf7f2",
         "background_opacity": 60,
-        "overlay_color": "#1A1A1A",
+        "overlay_color": "#1a1a1a",
         "overlay_opacity": 70,
         "heading_color": "#1a1a1a",
         "body_color": "#1a1a1a",
@@ -323,15 +418,23 @@
       "settings": {
         "layout": "cta",
         "background_type": "color",
-        "background_color": "#1A1A1A",
+        "background_color": "#1a1a1a",
         "background_opacity": 60,
-        "overlay_color": "#1A1A1A",
+        "overlay_color": "#1a1a1a",
         "overlay_opacity": 70,
+        "heading_color": "#faf7f2",
+        "body_color": "#faf7f2",
+        "body_opacity": 90,
         "subheading": "Our Purpose",
         "heading": "Ready to Join the Movement?",
         "body": "Explore our collections and find pieces that speak to your soul.",
         "button_label": "Shop Now",
-        "button_link": "/shop"
+        "button_link": "/shop",
+        "button_background_color": "#faf7f2",
+        "button_text_color": "#1a1a1a",
+        "button_hover_background_color": "#c4a77d",
+        "newsletter_placeholder": "Your email",
+        "newsletter_button_label": "Subscribe"
       }
     },
     "title_text_1_D47fUP": {
@@ -342,7 +445,7 @@
         "background_type": "color",
         "background_color": "#1a1a1a",
         "background_opacity": 60,
-        "overlay_color": "#1A1A1A",
+        "overlay_color": "#1a1a1a",
         "overlay_opacity": 70,
         "heading_color": "#faf7f2",
         "body_color": "#faf7f2",
@@ -362,8 +465,13 @@
   },
   "order": [
     "page-content",
+    "177050336473979e03",
     "about_title_1_6AEaDz",
+    "1770503892eefdff12",
+    "177050347399979366",
     "values_1_jjVYWc",
+    "1770504053e8106880",
+    "1770503220a186b88f",
     "values_1_RicVrz",
     "values_1_cyJPzb",
     "values_1_Gte8Ax",
