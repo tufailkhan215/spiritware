@@ -1,6 +1,221 @@
+{% doc %}
+  @prompt
+    image pop out animated when scrolled
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-popout-image-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .ai-popout-image__wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: {{ block.settings.border_radius }}px;
+  }
+
+  .ai-popout-image__img-{{ ai_gen_id }} {
+    width: 100%;
+    height: auto;
+    display: block;
+    transform: scale(0.7);
+    opacity: 0;
+    transition: transform {{ block.settings.animation_duration }}s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity {{ block.settings.animation_duration }}s ease-out;
+  }
+
+  .ai-popout-image__img-{{ ai_gen_id }}.ai-popout-visible-{{ ai_gen_id }} {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .ai-popout-image__placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: {{ block.settings.border_radius }}px;
+  }
+
+  .ai-popout-image__placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-popout-empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-popout-image-{{ ai_gen_id }} {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<popout-image-{{ ai_gen_id }}
+  class="ai-popout-image-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-popout-image__wrapper-{{ ai_gen_id }}">
+    {% if block.settings.image %}
+      <img
+        src="{{ block.settings.image | image_url: width: 2000 }}"
+        alt="{{ block.settings.image.alt | escape }}"
+        loading="lazy"
+        width="{{ block.settings.image.width }}"
+        height="{{ block.settings.image.height }}"
+        class="ai-popout-image__img-{{ ai_gen_id }}"
+        data-popout-image
+      >
+    {% else %}
+      <div class="ai-popout-image__placeholder-{{ ai_gen_id }}">
+        {{ 'image' | placeholder_svg_tag }}
+        <div class="ai-popout-empty-state-{{ ai_gen_id }}">
+          Add an image to see the pop-out animation
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</popout-image-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class PopoutImage{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.image = this.querySelector('[data-popout-image]');
+        this.hasAnimated = false;
+      }
+
+      connectedCallback() {
+        if (!this.image) return;
+
+        this.observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting && !this.hasAnimated) {
+                this.image.classList.add('ai-popout-visible-{{ ai_gen_id }}');
+                this.hasAnimated = true;
+                if (!this.shouldRepeat()) {
+                  this.observer.disconnect();
+                }
+              } else if (!entry.isIntersecting && this.shouldRepeat()) {
+                this.image.classList.remove('ai-popout-visible-{{ ai_gen_id }}');
+                this.hasAnimated = false;
+              }
+            });
+          },
+          {
+            threshold: {{ block.settings.trigger_threshold }},
+            rootMargin: '0px'
+          }
+        );
+
+        this.observer.observe(this.image);
+      }
+
+      shouldRepeat() {
+        return {{ block.settings.repeat_animation }};
+      }
+
+      disconnectedCallback() {
+        if (this.observer) {
+          this.observer.disconnect();
+        }
+      }
+    }
+
+    customElements.define('popout-image-{{ ai_gen_id }}', PopoutImage{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Pop-out image",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "range",
+      "id": "animation_duration",
+      "label": "Animation duration",
+      "min": 0.5,
+      "max": 2,
+      "step": 0.1,
+      "unit": "s",
+      "default": 0.8
+    },
+    {
+      "type": "range",
+      "id": "trigger_threshold",
+      "label": "Trigger point",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.2,
+      "info": "How much of the image must be visible before animation starts (0 = top edge, 1 = fully visible)"
+    },
+    {
+      "type": "checkbox",
+      "id": "repeat_animation",
+      "label": "Repeat animation on scroll",
+      "default": false,
+      "info": "If enabled, animation plays each time image enters viewport"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pop-out image"
+    }
+  ]
+}
 {% endschema %}
