@@ -118,6 +118,7 @@
         "testimonial_agVXEF": {
           "type": "testimonial",
           "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-02-07_at_12.46.43_PM.png",
             "quote": "\"The quality is unmatched and the messages hit different. Every time I wear my hoodie, strangers stop me to ask about it.\"",
             "name": "Jordan K.",
             "location": "Austin, TX"
@@ -126,6 +127,7 @@
         "testimonial_EjMtH8": {
           "type": "testimonial",
           "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-02-07_at_12.43.57_PM.png",
             "quote": "\"Sacred Rebel isn't just clothing—it's a reminder to show up as yourself.\"",
             "name": "Alex M.",
             "location": "Portland, OR"
@@ -134,6 +136,7 @@
         "testimonial_4LXtFU": {
           "type": "testimonial",
           "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-02-07_at_12.46.43_PM.png",
             "quote": "\"The pieces feel intentional. I get compliments every time I wear them.\"",
             "name": "Sam R.",
             "location": "Brooklyn, NY"
@@ -157,6 +160,7 @@
       "name": "CTA 1",
       "settings": {
         "section_id": "cta",
+        "image": "shopify://shop_images/Screenshot_2026-02-07_at_12.48.20_PM.png",
         "heading": "Ready to Rebel with Reverence?",
         "text": "Join thousands of conscious warriors who wear their truth and walk in purpose.",
         "button_text": "Shop the Collection",
@@ -177,6 +181,7 @@
         },
         "slide_7A7AEW": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "heading": "Modern Mountain Living",
             "subtitle": "Home decor & lifestyle goods for your mountain retreat",
@@ -237,10 +242,12 @@
         "feature_FbjD3V",
         "feature_m7tHkQ"
       ],
+      "disabled": true,
       "settings": {}
     },
     "featured-products": {
       "type": "featured-products",
+      "disabled": true,
       "settings": {
         "small_label": "Shop Our Collection",
         "heading": "Featured Products",
@@ -295,6 +302,7 @@
         "category_8xkdLB",
         "category_kPqNxx"
       ],
+      "disabled": true,
       "settings": {
         "label": "Explore",
         "heading": "Shop by Category",
@@ -306,6 +314,7 @@
       "blocks": {
         "feature_39nqeP": {
           "type": "feature",
+          "disabled": true,
           "settings": {
             "layout": "left",
             "label": "Discover 89 Classics",
@@ -325,6 +334,7 @@
         },
         "feature_WhCxGj": {
           "type": "feature",
+          "disabled": true,
           "settings": {
             "layout": "right",
             "label": "Discover 89 Classics",
@@ -387,6 +397,7 @@
         "product_mpVDQe",
         "product_iNHikN"
       ],
+      "disabled": true,
       "settings": {
         "label": "CA89 Home",
         "heading": "Modern Mountain Living",
@@ -432,6 +443,7 @@
         "store_WkRzzB",
         "store_HxBMrR"
       ],
+      "disabled": true,
       "settings": {
         "label": "Our Story",
         "heading": "<p>Family Business,<br/>Mountain Roots</p>",
@@ -492,6 +504,7 @@
         "testimonial_fBgCbw",
         "testimonial_qEXbWE"
       ],
+      "disabled": true,
       "settings": {
         "label": "Testimonials",
         "heading": "What Our Customers Say",
@@ -508,6 +521,7 @@
     },
     "blog-posts": {
       "type": "blog-posts",
+      "disabled": true,
       "settings": {
         "label": "Get Inspired",
         "heading": "CA89 Blog",
