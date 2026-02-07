@@ -16,6 +16,7 @@
     },
     "about_title_1_XmxH3k": {
       "type": "about-title-1",
+      "disabled": true,
       "name": "About Title 1",
       "settings": {
         "subheading": "The Story",
@@ -70,6 +71,7 @@
         "image_position": "right",
         "background_type": "color",
         "background_color": "#ede8e0",
+        "background_image": "shopify://shop_images/Screenshot_2026-02-07_at_12.46.43_PM.png",
         "background_opacity": 10,
         "overlay_color": "#1a1a1a",
         "overlay_opacity": 50,
