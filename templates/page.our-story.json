@@ -23,6 +23,45 @@
         "description": "Sacred Rebel was born from a simple truth: spirituality doesn't have to be soft, and rebellion doesn't have to be reckless."
       }
     },
+    "1770504825968c22a1": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_214b5b0_PLyVjr": {
+          "type": "ai_gen_block_214b5b0",
+          "settings": {
+            "eyebrow_text": "THE STORY",
+            "headline_text": "More Than Fashion. A Movement.",
+            "description_text": "Sacred Rebel was born from a simple truth: spirituality doesn't have to be soft, and rebellion doesn't have to be reckless.",
+            "text_alignment": "center",
+            "content_max_width": 800,
+            "desktop_width_percent": 100,
+            "padding_top": 80,
+            "padding_bottom": 80,
+            "padding_horizontal": 20,
+            "eyebrow_spacing": 15,
+            "headline_spacing": 25,
+            "eyebrow_size": 12,
+            "eyebrow_letter_spacing": 2,
+            "eyebrow_color": "#e6e1d8",
+            "heading_font": "serif",
+            "headline_size": 48,
+            "headline_color": "#1A1A1A",
+            "body_font": "system_ui_n4",
+            "description_size": 16,
+            "description_color": "#4A4A4A",
+            "marble_color_1": "#E8DDD0",
+            "marble_color_2": "#D4C4B0",
+            "marble_color_3": "#F0E6D8",
+            "animation_duration": 15
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_214b5b0_PLyVjr"
+      ],
+      "settings": {}
+    },
     "about_image_text_1_FkQP6k": {
       "type": "about-image-text-1",
       "name": "About Image Text 1",
@@ -30,9 +69,9 @@
         "design": "simple",
         "image_position": "right",
         "background_type": "color",
-        "background_color": "#EDE8E0",
+        "background_color": "#ede8e0",
         "background_opacity": 10,
-        "overlay_color": "#1A1A1A",
+        "overlay_color": "#1a1a1a",
         "overlay_opacity": 50,
         "heading": "Where It All Began",
         "paragraph_1": "Sacred Rebel emerged from the space between—the sacred and the savage, the divine and the dichotomy. We saw a world where spirituality was being boxed into rigid definitions, where \"holy\" meant quiet and \"rebellious\" meant lost.",
@@ -42,9 +81,8 @@
         "subtitle": "Founder & Creative Director",
         "blockquote": "\"I created Sacred Rebel for the ones who feel too wild for the temple and too sacred for the streets. This is for us.\"",
         "body": "Kateri is an entrepreneur, fashion designer, and spiritual seeker with a passion for sustainability and authentic self-expression. After years of feeling like she didn't fit into conventional spiritual or fashion spaces, she created Sacred Rebel as a home for conscious warriors everywhere.",
-        "image": "shopify://shop_images/pexels-photo-6944915.jpg",
         "image_accent": "color",
-        "image_accent_color": "#EDE8E0"
+        "image_accent_color": "#ede8e0"
       }
     },
     "title_text_1_PDQQic": {
@@ -53,15 +91,23 @@
       "settings": {
         "layout": "mission",
         "background_type": "color",
-        "background_color": "#1A1A1A",
+        "background_color": "#1a1a1a",
         "background_opacity": 60,
-        "overlay_color": "#1A1A1A",
+        "overlay_color": "#1a1a1a",
         "overlay_opacity": 70,
+        "heading_color": "#faf7f2",
+        "body_color": "#faf7f2",
+        "body_opacity": 90,
         "subheading": "Our Purpose",
         "heading": "Our Mission",
         "body": "\"To craft sustainable, stylish clothing that empowers individuals to embody their authentic selves and wear their truth with reverence. Through poems, prayers, and passages, we offer the opportunity to be about it—not just talk about it.\"",
         "button_label": "Shop Now",
-        "button_link": ""
+        "button_link": "",
+        "button_background_color": "#faf7f2",
+        "button_text_color": "#1a1a1a",
+        "button_hover_background_color": "#c4a77d",
+        "newsletter_placeholder": "Your email",
+        "newsletter_button_label": "Subscribe"
       }
     },
     "about_image_text_1_R6WeJb": {
@@ -73,7 +119,7 @@
         "background_type": "color",
         "background_color": "rgba(0,0,0,0)",
         "background_opacity": 60,
-        "overlay_color": "#1A1A1A",
+        "overlay_color": "#1a1a1a",
         "overlay_opacity": 50,
         "heading": "Where It All Began",
         "paragraph_1": "Sacred Rebel emerged from the space between—the sacred and the savage, the divine and the dichotomy. We saw a world where spirituality was being boxed into rigid definitions, where \"holy\" meant quiet and \"rebellious\" meant lost.",
@@ -83,9 +129,8 @@
         "subtitle": "Founder & Creative Director",
         "blockquote": "\"I created Sacred Rebel for the ones who feel too wild for the temple and too sacred for the streets. This is for us.\"",
         "body": "Kateri is an entrepreneur, fashion designer, and spiritual seeker with a passion for sustainability and authentic self-expression. After years of feeling like she didn't fit into conventional spiritual or fashion spaces, she created Sacred Rebel as a home for conscious warriors everywhere.",
-        "image": "shopify://shop_images/pexels-photo-31545589.jpg",
         "image_accent": "none",
-        "image_accent_color": "#EDE8E0"
+        "image_accent_color": "#ede8e0"
       }
     },
     "values_1_iFA7Km": {
@@ -132,14 +177,14 @@
         "header_alignment": "center",
         "icon": "none",
         "background_type": "color",
-        "background_color": "#EDE8E0",
+        "background_color": "#ede8e0",
         "background_opacity": 60,
-        "overlay_color": "#1A1A1A",
+        "overlay_color": "#1a1a1a",
         "overlay_opacity": 50,
         "subheading": "What Guides Us",
         "heading": "Our Values",
         "description": "We believe fashion should nurture the earth, not deplete it. Our commitment to sustainability isn't a marketing angle—it's a sacred responsibility.",
-        "card_color": "#FAF7F2"
+        "card_color": "#faf7f2"
       }
     },
     "timeline_1_yJ84tr": {
@@ -187,9 +232,9 @@
       "name": "Timeline 1",
       "settings": {
         "background_type": "color",
-        "background_color": "#FAF7F2",
+        "background_color": "#faf7f2",
         "background_opacity": 60,
-        "overlay_color": "#1A1A1A",
+        "overlay_color": "#1a1a1a",
         "overlay_opacity": 50,
         "subheading": "Our Journey",
         "heading": "The Timeline"
@@ -201,21 +246,30 @@
       "settings": {
         "layout": "cta",
         "background_type": "color",
-        "background_color": "#1A1A1A",
+        "background_color": "#1a1a1a",
         "background_opacity": 60,
-        "overlay_color": "#1A1A1A",
+        "overlay_color": "#1a1a1a",
         "overlay_opacity": 70,
+        "heading_color": "#faf7f2",
+        "body_color": "#faf7f2",
+        "body_opacity": 90,
         "subheading": "Our Purpose",
         "heading": "Ready to Join the Movement?",
         "body": "Explore our collections and find pieces that speak to your soul.",
         "button_label": "Shop Now",
-        "button_link": "/shop"
+        "button_link": "/shop",
+        "button_background_color": "#faf7f2",
+        "button_text_color": "#1a1a1a",
+        "button_hover_background_color": "#c4a77d",
+        "newsletter_placeholder": "Your email",
+        "newsletter_button_label": "Subscribe"
       }
     }
   },
   "order": [
     "page-content",
     "about_title_1_XmxH3k",
+    "1770504825968c22a1",
     "about_image_text_1_FkQP6k",
     "title_text_1_PDQQic",
     "about_image_text_1_R6WeJb",
