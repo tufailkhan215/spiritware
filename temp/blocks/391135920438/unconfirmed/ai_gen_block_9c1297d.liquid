@@ -1,6 +1,245 @@
+{% doc %}
+  @prompt
+    image thats cinematic cut 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-cinematic-image-{{ ai_gen_id }} {
+    display: block;
+    position: relative;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    background-color: {{ block.settings.letterbox_color }};
+  }
+
+  .ai-cinematic-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: {{ block.settings.aspect_ratio }}%;
+    overflow: hidden;
+  }
+
+  .ai-cinematic-image-content-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ai-cinematic-image-content-{{ ai_gen_id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: {{ block.settings.image_position }};
+    display: block;
+  }
+
+  .ai-cinematic-image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ai-cinematic-image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 600px;
+    max-height: 400px;
+  }
+
+  .ai-cinematic-empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .ai-cinematic-overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, {{ block.settings.vignette_intensity }}) 0%,
+      rgba(0, 0, 0, 0) 20%,
+      rgba(0, 0, 0, 0) 80%,
+      rgba(0, 0, 0, {{ block.settings.vignette_intensity }}) 100%
+    );
+    pointer-events: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-cinematic-image-{{ ai_gen_id }} {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<cinematic-image-{{ ai_gen_id }}
+  class="ai-cinematic-image-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-cinematic-image-wrapper-{{ ai_gen_id }}">
+    <div class="ai-cinematic-image-content-{{ ai_gen_id }}">
+      {% if block.settings.image %}
+        <img
+          src="{{ block.settings.image | image_url: width: 2400 }}"
+          alt="{{ block.settings.image.alt | escape }}"
+          loading="lazy"
+          width="{{ block.settings.image.width }}"
+          height="{{ block.settings.image.height }}"
+        >
+        {% if block.settings.show_vignette %}
+          <div class="ai-cinematic-overlay-{{ ai_gen_id }}"></div>
+        {% endif %}
+      {% else %}
+        <div class="ai-cinematic-image-placeholder-{{ ai_gen_id }}">
+          {{ 'hero-apparel-1' | placeholder_svg_tag }}
+          <div class="ai-cinematic-empty-state-{{ ai_gen_id }}">
+            Add an image for cinematic effect
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</cinematic-image-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class CinematicImage{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.style.display = 'block';
+      }
+    }
+
+    customElements.define('cinematic-image-{{ ai_gen_id }}', CinematicImage{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Cinematic image",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Aspect ratio",
+      "options": [
+        {
+          "value": "42.18",
+          "label": "2.37:1 (Anamorphic)"
+        },
+        {
+          "value": "45",
+          "label": "2.2:1 (70mm)"
+        },
+        {
+          "value": "56.25",
+          "label": "16:9 (Widescreen)"
+        },
+        {
+          "value": "41.67",
+          "label": "2.4:1 (Ultra wide)"
+        }
+      ],
+      "default": "42.18"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Center"
+        },
+        {
+          "value": "top center",
+          "label": "Top"
+        },
+        {
+          "value": "bottom center",
+          "label": "Bottom"
+        },
+        {
+          "value": "center left",
+          "label": "Left"
+        },
+        {
+          "value": "center right",
+          "label": "Right"
+        }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Cinematic effects"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vignette",
+      "label": "Show vignette overlay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "vignette_intensity",
+      "label": "Vignette intensity",
+      "min": 0,
+      "max": 0.5,
+      "step": 0.1,
+      "default": 0.3
+    },
+    {
+      "type": "color",
+      "id": "letterbox_color",
+      "label": "Letterbox color",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cinematic image"
+    }
+  ]
+}
 {% endschema %}
