@@ -1,6 +1,757 @@
+{% doc %}
+  @prompt
+    Layout & Structure:
+    Use a light beige or off-white background for the entire section.
+    At the top, include a subtle, small uppercase label "THE JOURNAL" above the main heading.
+    Main heading: Large serif font, black or very dark gray, text: Stories & Insights.
+    Subtitle below heading: smaller, regular sans-serif font, dark gray, reading:
+    Thoughts on conscious living, sustainable fashion, spirituality, and everything in between.
+    Featured Article Section (Top):
+    Display a large rectangular image on the left side (approx. 50% width), showing hands with spiritual or sustainable-themed items around.
+    Above the image in small uppercase text with a colored highlight background, add the label: FEATURED.
+    On the right side (approx. 50% width), add:
+    Category label in small uppercase text: SUSTAINABILITY.
+    Article title in large serif font, bold:
+    Conscious Consumerism: Voting With Your Dollar
+    Short article description below, regular sans-serif font:
+    Every purchase is a vote for the world you want to live in. Here’s how to make your consumption a spiritual practice.
+    Below description, author name and estimated read time in small font and light gray color:
+    Kateri Ewing • 5 min read
+    All Articles Section (Below the featured article):
+    Title this section as All Articles in bold sans-serif font.
+    
+    Display articles in a grid layout of three columns.
+    
+    Each article block includes:
+    
+    A smaller rectangular image on top.
+    Category label in small uppercase text above or near the title (e.g., SUSTAINABILITY, SPIRITUALITY).
+    Article title in bold serif font below the image.
+    Article description in smaller sans-serif font below the title.
+    Author and read time below description in small light gray font.
+    Example articles:
+    
+    Image matching featured article’s image
+    Title: Conscious Consumerism: Voting With Your Dollar
+    Description: Every purchase is a vote for the world you want to live in. Here’s how to make your consumption a spiritual practice.
+    Author + time: Kateri Ewing • 5 min read
+    
+    Image of a woman with curly hair resting on arm
+    Category: SPIRITUALITY
+    Title: Money as Frequency: Rewriting Your Abundance Story
+    Description: Money isn’t just currency—it’s energy. Learn how to shift your relationship with abundance and welcome prosperity as...
+    Author + time: Kateri Ewing • 6 min read
+    
+    Dark background with candle flame
+    Category: SUSTAINABILITY
+    Title: Why Organic Materials Matter: For You & The Planet
+    Description: The clothes you wear sit against your skin all day. Here’s why what they’re made of matters more than you think.
+    Author + time: Eunice Reed Tran • 3 min read
+    
+    Fonts & Colors:
+    Serif font for main titles (e.g., Times New Roman or equivalent).
+    Sans-serif font for descriptions and labels (e.g., Helvetica or Arial).
+    Use black or very dark gray for titles.
+    Use medium gray for subtitles and descriptions.
+    Use a soft pastel highlight background for labels like FEATURED.
+    Spacing & Alignment:
+    Use generous white space around sections and between articles for an airy feel.
+    Align text left; images flush left or top aligned in their blocks.
+    Consistent margins and padding around images and text blocks.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-journal-{{ ai_gen_id }} {
+    display: block;
+    background-color: {{ block.settings.background_color }};
+    padding: 60px 20px;
+    width: 100%;
+  }
+
+  .ai-journal-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ai-journal-header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .ai-journal-label-{{ ai_gen_id }} {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: {{ block.settings.label_color }};
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .ai-journal-title-{{ ai_gen_id }} {
+    font-family: {{ block.settings.heading_font.family }}, serif;
+    font-size: {{ block.settings.heading_size }}px;
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 16px 0;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .ai-journal-subtitle-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subtitle_size }}px;
+    color: {{ block.settings.subtitle_color }};
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .ai-journal-featured-{{ ai_gen_id }} {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 80px;
+    align-items: stretch;
+  }
+
+  .ai-journal-featured-image-wrapper-{{ ai_gen_id }} {
+    flex: 1;
+    position: relative;
+  }
+
+  .ai-journal-featured-badge-{{ ai_gen_id }} {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: {{ block.settings.featured_badge_bg }};
+    color: {{ block.settings.featured_badge_color }};
+    padding: 6px 12px;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    z-index: 1;
+  }
+
+  .ai-journal-featured-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ai-journal-featured-image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 500px;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ai-journal-featured-image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-journal-featured-content-{{ ai_gen_id }} {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 0;
+  }
+
+  .ai-journal-category-{{ ai_gen_id }} {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: {{ block.settings.category_color }};
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  .ai-journal-featured-title-{{ ai_gen_id }} {
+    font-family: {{ block.settings.heading_font.family }}, serif;
+    font-size: {{ block.settings.featured_title_size }}px;
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 20px 0;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .ai-journal-featured-desc-{{ ai_gen_id }} {
+    font-size: {{ block.settings.description_size }}px;
+    color: {{ block.settings.description_color }};
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .ai-journal-meta-{{ ai_gen_id }} {
+    font-size: 13px;
+    color: {{ block.settings.meta_color }};
+  }
+
+  .ai-journal-all-section-{{ ai_gen_id }} {
+    margin-top: 60px;
+  }
+
+  .ai-journal-all-title-{{ ai_gen_id }} {
+    font-size: 24px;
+    font-weight: 700;
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 40px 0;
+  }
+
+  .ai-journal-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .ai-journal-article-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ai-journal-article-image-wrapper-{{ ai_gen_id }} {
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .ai-journal-article-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ai-journal-article-image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 280px;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-journal-article-image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-journal-article-category-{{ ai_gen_id }} {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: {{ block.settings.category_color }};
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .ai-journal-article-title-{{ ai_gen_id }} {
+    font-family: {{ block.settings.heading_font.family }}, serif;
+    font-size: {{ block.settings.article_title_size }}px;
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 12px 0;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .ai-journal-article-desc-{{ ai_gen_id }} {
+    font-size: {{ block.settings.article_description_size }}px;
+    color: {{ block.settings.description_color }};
+    line-height: 1.6;
+    margin-bottom: 16px;
+    flex-grow: 1;
+  }
+
+  .ai-journal-article-meta-{{ ai_gen_id }} {
+    font-size: 12px;
+    color: {{ block.settings.meta_color }};
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-journal-featured-{{ ai_gen_id }} {
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .ai-journal-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+
+    .ai-journal-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.heading_size }}px * 0.8);
+    }
+
+    .ai-journal-featured-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.featured_title_size }}px * 0.85);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-journal-{{ ai_gen_id }} {
+      padding: 40px 16px;
+    }
+
+    .ai-journal-grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .ai-journal-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.heading_size }}px * 0.7);
+    }
+
+    .ai-journal-featured-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.featured_title_size }}px * 0.75);
+    }
+
+    .ai-journal-article-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.article_title_size }}px * 0.9);
+    }
+  }
+{% endstyle %}
+
+<journal-block-{{ ai_gen_id }} class="ai-journal-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-journal-container-{{ ai_gen_id }}">
+    <div class="ai-journal-header-{{ ai_gen_id }}">
+      <div class="ai-journal-label-{{ ai_gen_id }}">{{ block.settings.top_label }}</div>
+      <h2 class="ai-journal-title-{{ ai_gen_id }}">{{ block.settings.main_heading }}</h2>
+      <div class="ai-journal-subtitle-{{ ai_gen_id }}">{{ block.settings.subtitle }}</div>
+    </div>
+
+    <div class="ai-journal-featured-{{ ai_gen_id }}">
+      <div class="ai-journal-featured-image-wrapper-{{ ai_gen_id }}">
+        <div class="ai-journal-featured-badge-{{ ai_gen_id }}">{{ block.settings.featured_badge_text }}</div>
+        {% if block.settings.featured_image %}
+          <img
+            src="{{ block.settings.featured_image | image_url: width: 800 }}"
+            alt="{{ block.settings.featured_image.alt | escape }}"
+            class="ai-journal-featured-image-{{ ai_gen_id }}"
+            loading="lazy"
+            width="{{ block.settings.featured_image.width }}"
+            height="{{ block.settings.featured_image.height }}"
+          >
+        {% else %}
+          <div class="ai-journal-featured-image-placeholder-{{ ai_gen_id }}">
+            {{ 'image' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="ai-journal-featured-content-{{ ai_gen_id }}">
+        <div class="ai-journal-category-{{ ai_gen_id }}">{{ block.settings.featured_category }}</div>
+        <h3 class="ai-journal-featured-title-{{ ai_gen_id }}">{{ block.settings.featured_title }}</h3>
+        <div class="ai-journal-featured-desc-{{ ai_gen_id }}">{{ block.settings.featured_description }}</div>
+        <div class="ai-journal-meta-{{ ai_gen_id }}">{{ block.settings.featured_author }} • {{ block.settings.featured_read_time }}</div>
+      </div>
+    </div>
+
+    <div class="ai-journal-all-section-{{ ai_gen_id }}">
+      <h3 class="ai-journal-all-title-{{ ai_gen_id }}">{{ block.settings.all_articles_heading }}</h3>
+
+      <div class="ai-journal-grid-{{ ai_gen_id }}">
+        {% for i in (1..3) %}
+          {% liquid
+            assign article_image_key = 'article_' | append: i | append: '_image'
+            assign article_category_key = 'article_' | append: i | append: '_category'
+            assign article_title_key = 'article_' | append: i | append: '_title'
+            assign article_desc_key = 'article_' | append: i | append: '_description'
+            assign article_author_key = 'article_' | append: i | append: '_author'
+            assign article_read_key = 'article_' | append: i | append: '_read_time'
+
+            assign article_image = block.settings[article_image_key]
+            assign article_category = block.settings[article_category_key]
+            assign article_title = block.settings[article_title_key]
+            assign article_desc = block.settings[article_desc_key]
+            assign article_author = block.settings[article_author_key]
+            assign article_read = block.settings[article_read_key]
+          %}
+
+          <div class="ai-journal-article-{{ ai_gen_id }}">
+            <div class="ai-journal-article-image-wrapper-{{ ai_gen_id }}">
+              {% if article_image %}
+                <img
+                  src="{{ article_image | image_url: width: 600 }}"
+                  alt="{{ article_image.alt | escape }}"
+                  class="ai-journal-article-image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="{{ article_image.width }}"
+                  height="{{ article_image.height }}"
+                >
+              {% else %}
+                <div class="ai-journal-article-image-placeholder-{{ ai_gen_id }}">
+                  {{ 'image' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+
+            {% if article_category != blank %}
+              <div class="ai-journal-article-category-{{ ai_gen_id }}">{{ article_category }}</div>
+            {% endif %}
+
+            <h4 class="ai-journal-article-title-{{ ai_gen_id }}">{{ article_title }}</h4>
+            <div class="ai-journal-article-desc-{{ ai_gen_id }}">{{ article_desc }}</div>
+            <div class="ai-journal-article-meta-{{ ai_gen_id }}">{{ article_author }} • {{ article_read }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</journal-block-{{ ai_gen_id }}>
+
+<script>
+(function() {
+  class JournalBlock{{ ai_gen_id }} extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      this.style.display = 'block';
+    }
+  }
+
+  customElements.define('journal-block-{{ ai_gen_id }}', JournalBlock{{ ai_gen_id }});
+})();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Stories & insights",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "top_label",
+      "label": "Top label",
+      "default": "THE JOURNAL"
+    },
+    {
+      "type": "text",
+      "id": "main_heading",
+      "label": "Main heading",
+      "default": "Stories & Insights"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Thoughts on conscious living, sustainable fashion, spirituality, and everything in between."
+    },
+    {
+      "type": "header",
+      "content": "Featured article"
+    },
+    {
+      "type": "text",
+      "id": "featured_badge_text",
+      "label": "Badge text",
+      "default": "FEATURED"
+    },
+    {
+      "type": "image_picker",
+      "id": "featured_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "featured_category",
+      "label": "Category",
+      "default": "SUSTAINABILITY"
+    },
+    {
+      "type": "text",
+      "id": "featured_title",
+      "label": "Title",
+      "default": "Conscious Consumerism: Voting With Your Dollar"
+    },
+    {
+      "type": "textarea",
+      "id": "featured_description",
+      "label": "Description",
+      "default": "Every purchase is a vote for the world you want to live in. Here's how to make your consumption a spiritual practice."
+    },
+    {
+      "type": "text",
+      "id": "featured_author",
+      "label": "Author",
+      "default": "Kateri Ewing"
+    },
+    {
+      "type": "text",
+      "id": "featured_read_time",
+      "label": "Read time",
+      "default": "5 min read"
+    },
+    {
+      "type": "header",
+      "content": "All articles section"
+    },
+    {
+      "type": "text",
+      "id": "all_articles_heading",
+      "label": "Section heading",
+      "default": "All Articles"
+    },
+    {
+      "type": "header",
+      "content": "Article 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "article_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "article_1_category",
+      "label": "Category",
+      "default": "SUSTAINABILITY"
+    },
+    {
+      "type": "text",
+      "id": "article_1_title",
+      "label": "Title",
+      "default": "Conscious Consumerism: Voting With Your Dollar"
+    },
+    {
+      "type": "textarea",
+      "id": "article_1_description",
+      "label": "Description",
+      "default": "Every purchase is a vote for the world you want to live in. Here's how to make your consumption a spiritual practice."
+    },
+    {
+      "type": "text",
+      "id": "article_1_author",
+      "label": "Author",
+      "default": "Kateri Ewing"
+    },
+    {
+      "type": "text",
+      "id": "article_1_read_time",
+      "label": "Read time",
+      "default": "5 min read"
+    },
+    {
+      "type": "header",
+      "content": "Article 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "article_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "article_2_category",
+      "label": "Category",
+      "default": "SPIRITUALITY"
+    },
+    {
+      "type": "text",
+      "id": "article_2_title",
+      "label": "Title",
+      "default": "Money as Frequency: Rewriting Your Abundance Story"
+    },
+    {
+      "type": "textarea",
+      "id": "article_2_description",
+      "label": "Description",
+      "default": "Money isn't just currency—it's energy. Learn how to shift your relationship with abundance and welcome prosperity as..."
+    },
+    {
+      "type": "text",
+      "id": "article_2_author",
+      "label": "Author",
+      "default": "Kateri Ewing"
+    },
+    {
+      "type": "text",
+      "id": "article_2_read_time",
+      "label": "Read time",
+      "default": "6 min read"
+    },
+    {
+      "type": "header",
+      "content": "Article 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "article_3_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "article_3_category",
+      "label": "Category",
+      "default": "SUSTAINABILITY"
+    },
+    {
+      "type": "text",
+      "id": "article_3_title",
+      "label": "Title",
+      "default": "Why Organic Materials Matter: For You & The Planet"
+    },
+    {
+      "type": "textarea",
+      "id": "article_3_description",
+      "label": "Description",
+      "default": "The clothes you wear sit against your skin all day. Here's why what they're made of matters more than you think."
+    },
+    {
+      "type": "text",
+      "id": "article_3_author",
+      "label": "Author",
+      "default": "Eunice Reed Tran"
+    },
+    {
+      "type": "text",
+      "id": "article_3_read_time",
+      "label": "Read time",
+      "default": "3 min read"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FAF7F2"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Headings",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Descriptions",
+      "default": "#4A4A4A"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Labels",
+      "default": "#8B7355"
+    },
+    {
+      "type": "color",
+      "id": "category_color",
+      "label": "Categories",
+      "default": "#8B7355"
+    },
+    {
+      "type": "color",
+      "id": "meta_color",
+      "label": "Meta text",
+      "default": "#999999"
+    },
+    {
+      "type": "color",
+      "id": "featured_badge_bg",
+      "label": "Featured badge background",
+      "default": "#E8DCC8"
+    },
+    {
+      "type": "color",
+      "id": "featured_badge_color",
+      "label": "Featured badge text",
+      "default": "#5A4A3A"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "serif"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Main heading size",
+      "min": 30,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "featured_title_size",
+      "label": "Featured title size",
+      "min": 24,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "article_title_size",
+      "label": "Article title size",
+      "min": 16,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "article_description_size",
+      "label": "Article description size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stories & insights"
+    }
+  ]
+}
 {% endschema %}
