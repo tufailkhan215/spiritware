@@ -172,6 +172,7 @@
       "blocks": {
         "slide_DQYzbp": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "heading": "Modern Mountain Living",
             "subtitle": "Home decor & lifestyle goods for your mountain retreat",
@@ -194,6 +195,7 @@
         "slide_DQYzbp",
         "slide_7A7AEW"
       ],
+      "disabled": true,
       "settings": {
         "auto_play_delay": 5,
         "show_dots": true,
@@ -585,6 +587,7 @@
         "image_qKgntq",
         "image_8PKntV"
       ],
+      "disabled": true,
       "settings": {
         "instagram_handle": "@cahwy89",
         "heading": "Follow Us on Instagram",
