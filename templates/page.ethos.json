@@ -229,20 +229,22 @@
     "177050432393c4b975": {
       "type": "_blocks",
       "blocks": {
-        "ai_gen_block_46b5ddc_bUrtVX": {
-          "type": "ai_gen_block_46b5ddc",
+        "ai_gen_block_d8d18a5_izncWE": {
+          "type": "ai_gen_block_d8d18a5",
           "settings": {
-            "image": "shopify://shop_images/Screenshot_2026-02-07_at_12.48.20_PM.png",
-            "desktop_max_height": 350,
-            "desktop_object_fit": "cover",
-            "mobile_max_height": 400,
-            "mobile_object_fit": "cover"
+            "image": "shopify://shop_images/Screenshot_2026-02-07_at_2.27.33_PM.png",
+            "enable_height_control": true,
+            "image_height_desktop": 350,
+            "min_height_desktop": 400,
+            "image_height_mobile": 200,
+            "min_height_mobile": 300,
+            "object_fit": "cover"
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "ai_gen_block_46b5ddc_bUrtVX"
+        "ai_gen_block_d8d18a5_izncWE"
       ],
       "settings": {}
     },
@@ -303,20 +305,22 @@
     "17705044398e4cdbea": {
       "type": "_blocks",
       "blocks": {
-        "ai_gen_block_434a84c_8BLCPA": {
-          "type": "ai_gen_block_434a84c",
+        "ai_gen_block_d8d18a5_MUeytk": {
+          "type": "ai_gen_block_d8d18a5",
           "settings": {
-            "image": "shopify://shop_images/Screenshot_2026-02-07_at_12.48.20_PM.png",
-            "desktop_max_height": 600,
-            "desktop_object_fit": "cover",
-            "mobile_max_height": 400,
-            "mobile_object_fit": "cover"
+            "image": "shopify://shop_images/Screenshot_2026-02-07_at_2.27.33_PM.png",
+            "enable_height_control": true,
+            "image_height_desktop": 350,
+            "min_height_desktop": 400,
+            "image_height_mobile": 200,
+            "min_height_mobile": 300,
+            "object_fit": "cover"
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "ai_gen_block_434a84c_8BLCPA"
+        "ai_gen_block_d8d18a5_MUeytk"
       ],
       "settings": {}
     },
@@ -458,7 +462,7 @@
       "settings": {
         "layout": "cta",
         "background_type": "color",
-        "background_color": "#1a1a1a",
+        "background_color": "#c7a573",
         "background_opacity": 60,
         "overlay_color": "#1a1a1a",
         "overlay_opacity": 70,
