@@ -68,10 +68,9 @@
       "name": "About Image Text 1",
       "settings": {
         "design": "simple",
-        "image_position": "right",
+        "image_position": "left",
         "background_type": "color",
         "background_color": "#ede8e0",
-        "background_image": "shopify://shop_images/Screenshot_2026-02-07_at_12.46.43_PM.png",
         "background_opacity": 10,
         "overlay_color": "#1a1a1a",
         "overlay_opacity": 50,
@@ -83,6 +82,7 @@
         "subtitle": "Founder & Creative Director",
         "blockquote": "\"I created Sacred Rebel for the ones who feel too wild for the temple and too sacred for the streets. This is for us.\"",
         "body": "Kateri is an entrepreneur, fashion designer, and spiritual seeker with a passion for sustainability and authentic self-expression. After years of feeling like she didn't fit into conventional spiritual or fashion spaces, she created Sacred Rebel as a home for conscious warriors everywhere.",
+        "image": "shopify://shop_images/Screenshot_2026-02-07_at_12.46.43_PM.png",
         "image_accent": "color",
         "image_accent_color": "#ede8e0"
       }
@@ -131,6 +131,7 @@
         "subtitle": "Founder & Creative Director",
         "blockquote": "\"I created Sacred Rebel for the ones who feel too wild for the temple and too sacred for the streets. This is for us.\"",
         "body": "Kateri is an entrepreneur, fashion designer, and spiritual seeker with a passion for sustainability and authentic self-expression. After years of feeling like she didn't fit into conventional spiritual or fashion spaces, she created Sacred Rebel as a home for conscious warriors everywhere.",
+        "image": "shopify://shop_images/Screenshot_2026-02-07_at_12.43.57_PM.png",
         "image_accent": "none",
         "image_accent_color": "#ede8e0"
       }
@@ -248,7 +249,7 @@
       "settings": {
         "layout": "cta",
         "background_type": "color",
-        "background_color": "#1a1a1a",
+        "background_color": "#be9d74",
         "background_opacity": 60,
         "overlay_color": "#1a1a1a",
         "overlay_opacity": 70,
