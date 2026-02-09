@@ -1,6 +1,899 @@
+{% doc %}
+  @prompt
+    Create a Shopify Online Store 2.0 custom section named “What’s Included – Feature Cards Grid”.
+    
+    Layout / styling:
+    - Full width section with warm beige background (like #E9E2D9).
+    - Centered container max-width 1100px with generous vertical padding (desktop 90–110px, mobile 60–80px).
+    - Centered heading text “What’s Included” in a serif style, dark charcoal.
+    - Below: a responsive card grid:
+      - Desktop: 3 columns, 2 rows (6 cards)
+      - Tablet: 2 columns
+      - Mobile: 1 column
+      - Gap ~28–36px.
+    - Each card:
+      - Off-white background (#F8F4EE), subtle border, soft shadow
+      - Padding 28–32px
+      - Icon in a thin gold circle at top-left (small line icon)
+      - Title (serif or elegant) + description (smaller, muted gray) under it.
+    
+    Content settings:
+    - Section heading text (default “What’s Included”)
+    - Cards as repeatable blocks (default 6 blocks):
+      1) Icon: home | Title: Accommodations | Text: Luxury shared or private rooms...
+      2) Icon: leaf | Title: Nourishment | Text: Three daily meals prepared with intention...
+      3) Icon: sun | Title: Daily Practices | Text: Morning breathwork, yoga...
+      4) Icon: heart | Title: Healing Sessions | Text: Group workshops on embodiment...
+      5) Icon: flame | Title: Sacred Ceremonies | Text: Cacao ceremonies, sound baths...
+      6) Icon: gift | Title: Sacred Rebel Gift | Text: Every attendee receives an exclusive...
+    - Provide an icon selector per block (home/leaf/sun/heart/flame/gift) and render matching inline SVG.
+    - Settings for background color, card background, accent gold color, text color, border radius, shadow strength.
+    
+    Animations (animate EVERYTHING on scroll into view, runs once):
+    - Heading: fade in + slight rise (10px) with an elegant ease-out.
+    - Grid cards: diagonal cascade reveal (top-left card first → then next across → then next row).
+      - Each card animates: opacity 0 → 1, translateY 14px → 0, slight scale 0.995 → 1.
+    - Icon “stamp” effect: icon circle scales from 0.9 → 1 with a tiny rotation settle (like stamping).
+    - Hover micro-interaction:
+      - Card lifts 4px and shadow increases slightly
+      - Icon circle border brightens a touch; icon nudges 1–2px
+    
+    Technical:
+    - Use IntersectionObserver to add an “is-visible” class and CSS transitions/keyframes.
+    - No external libraries.
+    - Respect prefers-reduced-motion (disable transforms/animation; show immediately).
+    - Add a setting toggle: Enable animations.
+    
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-whats-included-{{ ai_gen_id }} {
+    display: block;
+    background-color: {{ block.settings.background_color }};
+    width: 100%;
+  }
+
+  .ai-whats-included-container-{{ ai_gen_id }} {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 110px 24px;
+  }
+
+  .ai-whats-included-heading-{{ ai_gen_id }} {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 42px;
+    font-weight: 400;
+    color: {{ block.settings.heading_color }};
+    text-align: center;
+    margin: 0 0 56px;
+    line-height: 1.2;
+  }
+
+  .ai-whats-included-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .ai-whats-included-card-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_background }};
+    border: 1px solid {{ block.settings.card_border_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    padding: 30px;
+    box-shadow: 0 {{ block.settings.shadow_strength }}px {{ block.settings.shadow_strength | times: 2 }}px rgba(0, 0, 0, 0.06);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+    position: relative;
+  }
+
+  .ai-whats-included-card-{{ ai_gen_id }}:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 {{ block.settings.shadow_strength | times: 1.5 }}px {{ block.settings.shadow_strength | times: 3 }}px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-whats-included-icon-wrapper-{{ ai_gen_id }} {
+    width: 52px;
+    height: 52px;
+    border: 1.5px solid {{ block.settings.accent_color }};
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .ai-whats-included-card-{{ ai_gen_id }}:hover .ai-whats-included-icon-wrapper-{{ ai_gen_id }} {
+    border-color: {{ block.settings.accent_color | color_darken: 10 }};
+  }
+
+  .ai-whats-included-icon-{{ ai_gen_id }} {
+    width: 24px;
+    height: 24px;
+    color: {{ block.settings.accent_color }};
+    transition: transform 0.3s ease;
+  }
+
+  .ai-whats-included-card-{{ ai_gen_id }}:hover .ai-whats-included-icon-{{ ai_gen_id }} {
+    transform: translate(1px, -1px);
+  }
+
+  .ai-whats-included-card-title-{{ ai_gen_id }} {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 12px;
+    line-height: 1.3;
+  }
+
+  .ai-whats-included-card-text-{{ ai_gen_id }} {
+    font-size: 15px;
+    line-height: 1.6;
+    color: {{ block.settings.text_color }};
+    margin: 0;
+  }
+
+  {% if block.settings.enable_animations %}
+    @media (prefers-reduced-motion: no-preference) {
+      .ai-whats-included-heading-{{ ai_gen_id }} {
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .ai-whats-included-heading-{{ ai_gen_id }}.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .ai-whats-included-card-{{ ai_gen_id }} {
+        opacity: 0;
+        transform: translateY(14px) scale(0.995);
+        transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .ai-whats-included-card-{{ ai_gen_id }}.is-visible {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      .ai-whats-included-card-{{ ai_gen_id }}.is-visible .ai-whats-included-icon-wrapper-{{ ai_gen_id }} {
+        animation: ai-icon-stamp-{{ ai_gen_id }} 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s backwards;
+      }
+
+      @keyframes ai-icon-stamp-{{ ai_gen_id }} {
+        0% {
+          transform: scale(0.9) rotate(-3deg);
+        }
+        60% {
+          transform: scale(1.05) rotate(1deg);
+        }
+        100% {
+          transform: scale(1) rotate(0deg);
+        }
+      }
+    }
+  {% endif %}
+
+  @media screen and (max-width: 989px) {
+    .ai-whats-included-container-{{ ai_gen_id }} {
+      padding: 70px 24px;
+    }
+
+    .ai-whats-included-heading-{{ ai_gen_id }} {
+      font-size: 36px;
+      margin-bottom: 44px;
+    }
+
+    .ai-whats-included-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-whats-included-container-{{ ai_gen_id }} {
+      padding: 60px 20px;
+    }
+
+    .ai-whats-included-heading-{{ ai_gen_id }} {
+      font-size: 32px;
+      margin-bottom: 36px;
+    }
+
+    .ai-whats-included-grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .ai-whats-included-card-{{ ai_gen_id }} {
+      padding: 26px;
+    }
+  }
+{% endstyle %}
+
+<whats-included-{{ ai_gen_id }} class="ai-whats-included-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-whats-included-container-{{ ai_gen_id }}">
+    {% if block.settings.heading != blank %}
+      <h2 class="ai-whats-included-heading-{{ ai_gen_id }}" data-animate="heading">
+        {{ block.settings.heading }}
+      </h2>
+    {% endif %}
+
+    <div class="ai-whats-included-grid-{{ ai_gen_id }}">
+      {% if block.settings.show_card_1 %}
+        <div class="ai-whats-included-card-{{ ai_gen_id }}" data-animate="card" data-index="0">
+          <div class="ai-whats-included-icon-wrapper-{{ ai_gen_id }}">
+            {% case block.settings.icon_1 %}
+              {% when 'home' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              {% when 'leaf' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+                </svg>
+              {% when 'sun' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M12 2v2"></path>
+                  <path d="M12 20v2"></path>
+                  <path d="m4.93 4.93 1.41 1.41"></path>
+                  <path d="m17.66 17.66 1.41 1.41"></path>
+                  <path d="M2 12h2"></path>
+                  <path d="M20 12h2"></path>
+                  <path d="m6.34 17.66-1.41 1.41"></path>
+                  <path d="m19.07 4.93-1.41 1.41"></path>
+                </svg>
+              {% when 'heart' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              {% when 'flame' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+                </svg>
+              {% when 'gift' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                  <rect x="2" y="7" width="20" height="5"></rect>
+                  <line x1="12" y1="22" x2="12" y2="7"></line>
+                  <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+                  <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+                </svg>
+            {% endcase %}
+          </div>
+          <h3 class="ai-whats-included-card-title-{{ ai_gen_id }}">{{ block.settings.title_1 }}</h3>
+          <p class="ai-whats-included-card-text-{{ ai_gen_id }}">{{ block.settings.description_1 }}</p>
+        </div>
+      {% endif %}
+
+      {% if block.settings.show_card_2 %}
+        <div class="ai-whats-included-card-{{ ai_gen_id }}" data-animate="card" data-index="1">
+          <div class="ai-whats-included-icon-wrapper-{{ ai_gen_id }}">
+            {% case block.settings.icon_2 %}
+              {% when 'home' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              {% when 'leaf' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+                </svg>
+              {% when 'sun' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M12 2v2"></path>
+                  <path d="M12 20v2"></path>
+                  <path d="m4.93 4.93 1.41 1.41"></path>
+                  <path d="m17.66 17.66 1.41 1.41"></path>
+                  <path d="M2 12h2"></path>
+                  <path d="M20 12h2"></path>
+                  <path d="m6.34 17.66-1.41 1.41"></path>
+                  <path d="m19.07 4.93-1.41 1.41"></path>
+                </svg>
+              {% when 'heart' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              {% when 'flame' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+                </svg>
+              {% when 'gift' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                  <rect x="2" y="7" width="20" height="5"></rect>
+                  <line x1="12" y1="22" x2="12" y2="7"></line>
+                  <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+                  <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+                </svg>
+            {% endcase %}
+          </div>
+          <h3 class="ai-whats-included-card-title-{{ ai_gen_id }}">{{ block.settings.title_2 }}</h3>
+          <p class="ai-whats-included-card-text-{{ ai_gen_id }}">{{ block.settings.description_2 }}</p>
+        </div>
+      {% endif %}
+
+      {% if block.settings.show_card_3 %}
+        <div class="ai-whats-included-card-{{ ai_gen_id }}" data-animate="card" data-index="2">
+          <div class="ai-whats-included-icon-wrapper-{{ ai_gen_id }}">
+            {% case block.settings.icon_3 %}
+              {% when 'home' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              {% when 'leaf' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+                </svg>
+              {% when 'sun' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M12 2v2"></path>
+                  <path d="M12 20v2"></path>
+                  <path d="m4.93 4.93 1.41 1.41"></path>
+                  <path d="m17.66 17.66 1.41 1.41"></path>
+                  <path d="M2 12h2"></path>
+                  <path d="M20 12h2"></path>
+                  <path d="m6.34 17.66-1.41 1.41"></path>
+                  <path d="m19.07 4.93-1.41 1.41"></path>
+                </svg>
+              {% when 'heart' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              {% when 'flame' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+                </svg>
+              {% when 'gift' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                  <rect x="2" y="7" width="20" height="5"></rect>
+                  <line x1="12" y1="22" x2="12" y2="7"></line>
+                  <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+                  <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+                </svg>
+            {% endcase %}
+          </div>
+          <h3 class="ai-whats-included-card-title-{{ ai_gen_id }}">{{ block.settings.title_3 }}</h3>
+          <p class="ai-whats-included-card-text-{{ ai_gen_id }}">{{ block.settings.description_3 }}</p>
+        </div>
+      {% endif %}
+
+      {% if block.settings.show_card_4 %}
+        <div class="ai-whats-included-card-{{ ai_gen_id }}" data-animate="card" data-index="3">
+          <div class="ai-whats-included-icon-wrapper-{{ ai_gen_id }}">
+            {% case block.settings.icon_4 %}
+              {% when 'home' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              {% when 'leaf' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+                </svg>
+              {% when 'sun' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M12 2v2"></path>
+                  <path d="M12 20v2"></path>
+                  <path d="m4.93 4.93 1.41 1.41"></path>
+                  <path d="m17.66 17.66 1.41 1.41"></path>
+                  <path d="M2 12h2"></path>
+                  <path d="M20 12h2"></path>
+                  <path d="m6.34 17.66-1.41 1.41"></path>
+                  <path d="m19.07 4.93-1.41 1.41"></path>
+                </svg>
+              {% when 'heart' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              {% when 'flame' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+                </svg>
+              {% when 'gift' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                  <rect x="2" y="7" width="20" height="5"></rect>
+                  <line x1="12" y1="22" x2="12" y2="7"></line>
+                  <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+                  <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+                </svg>
+            {% endcase %}
+          </div>
+          <h3 class="ai-whats-included-card-title-{{ ai_gen_id }}">{{ block.settings.title_4 }}</h3>
+          <p class="ai-whats-included-card-text-{{ ai_gen_id }}">{{ block.settings.description_4 }}</p>
+        </div>
+      {% endif %}
+
+      {% if block.settings.show_card_5 %}
+        <div class="ai-whats-included-card-{{ ai_gen_id }}" data-animate="card" data-index="4">
+          <div class="ai-whats-included-icon-wrapper-{{ ai_gen_id }}">
+            {% case block.settings.icon_5 %}
+              {% when 'home' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              {% when 'leaf' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+                </svg>
+              {% when 'sun' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M12 2v2"></path>
+                  <path d="M12 20v2"></path>
+                  <path d="m4.93 4.93 1.41 1.41"></path>
+                  <path d="m17.66 17.66 1.41 1.41"></path>
+                  <path d="M2 12h2"></path>
+                  <path d="M20 12h2"></path>
+                  <path d="m6.34 17.66-1.41 1.41"></path>
+                  <path d="m19.07 4.93-1.41 1.41"></path>
+                </svg>
+              {% when 'heart' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              {% when 'flame' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+                </svg>
+              {% when 'gift' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                  <rect x="2" y="7" width="20" height="5"></rect>
+                  <line x1="12" y1="22" x2="12" y2="7"></line>
+                  <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+                  <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+                </svg>
+            {% endcase %}
+          </div>
+          <h3 class="ai-whats-included-card-title-{{ ai_gen_id }}">{{ block.settings.title_5 }}</h3>
+          <p class="ai-whats-included-card-text-{{ ai_gen_id }}">{{ block.settings.description_5 }}</p>
+        </div>
+      {% endif %}
+
+      {% if block.settings.show_card_6 %}
+        <div class="ai-whats-included-card-{{ ai_gen_id }}" data-animate="card" data-index="5">
+          <div class="ai-whats-included-icon-wrapper-{{ ai_gen_id }}">
+            {% case block.settings.icon_6 %}
+              {% when 'home' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              {% when 'leaf' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+                </svg>
+              {% when 'sun' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M12 2v2"></path>
+                  <path d="M12 20v2"></path>
+                  <path d="m4.93 4.93 1.41 1.41"></path>
+                  <path d="m17.66 17.66 1.41 1.41"></path>
+                  <path d="M2 12h2"></path>
+                  <path d="M20 12h2"></path>
+                  <path d="m6.34 17.66-1.41 1.41"></path>
+                  <path d="m19.07 4.93-1.41 1.41"></path>
+                </svg>
+              {% when 'heart' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              {% when 'flame' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+                </svg>
+              {% when 'gift' %}
+                <svg class="ai-whats-included-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                  <rect x="2" y="7" width="20" height="5"></rect>
+                  <line x1="12" y1="22" x2="12" y2="7"></line>
+                  <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+                  <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+                </svg>
+            {% endcase %}
+          </div>
+          <h3 class="ai-whats-included-card-title-{{ ai_gen_id }}">{{ block.settings.title_6 }}</h3>
+          <p class="ai-whats-included-card-text-{{ ai_gen_id }}">{{ block.settings.description_6 }}</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</whats-included-{{ ai_gen_id }}>
+
+<script>
+(function() {
+  class WhatsIncluded{{ ai_gen_id }} extends HTMLElement {
+    constructor() {
+      super();
+      this.animationsEnabled = {{ block.settings.enable_animations | json }};
+      this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+
+    connectedCallback() {
+      if (!this.animationsEnabled || this.prefersReducedMotion) {
+        this.showAllImmediately();
+        return;
+      }
+
+      this.setupIntersectionObserver();
+    }
+
+    showAllImmediately() {
+      const heading = this.querySelector('[data-animate="heading"]');
+      const cards = this.querySelectorAll('[data-animate="card"]');
+      
+      if (heading) heading.classList.add('is-visible');
+      cards.forEach(card => card.classList.add('is-visible'));
+    }
+
+    setupIntersectionObserver() {
+      const heading = this.querySelector('[data-animate="heading"]');
+      const cards = this.querySelectorAll('[data-animate="card"]');
+
+      const observerOptions = {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (entry.target.dataset.animate === 'heading') {
+              entry.target.classList.add('is-visible');
+            } else if (entry.target.dataset.animate === 'card') {
+              const index = parseInt(entry.target.dataset.index);
+              const row = Math.floor(index / 3);
+              const col = index % 3;
+              const delay = (row * 3 + col) * 100;
+              
+              setTimeout(() => {
+                entry.target.classList.add('is-visible');
+              }, delay);
+            }
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      if (heading) observer.observe(heading);
+      cards.forEach(card => observer.observe(card));
+    }
+  }
+
+  customElements.define('whats-included-{{ ai_gen_id }}', WhatsIncluded{{ ai_gen_id }});
+})();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "What's included cards",
+  "tag": null,
+  "class": "whats-included-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What's Included"
+    },
+    {
+      "type": "header",
+      "content": "Card 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_card_1",
+      "label": "Show card 1",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "icon_1",
+      "label": "Icon",
+      "options": [
+        { "value": "home", "label": "Home" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "sun", "label": "Sun" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "flame", "label": "Flame" },
+        { "value": "gift", "label": "Gift" }
+      ],
+      "default": "home"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title_1",
+      "label": "Title",
+      "default": "Accommodations"
+    },
+    {
+      "type": "textarea",
+      "id": "description_1",
+      "label": "Description",
+      "default": "Luxury shared or private rooms in a serene retreat setting, designed for rest and rejuvenation."
+    },
+    {
+      "type": "header",
+      "content": "Card 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_card_2",
+      "label": "Show card 2",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "icon_2",
+      "label": "Icon",
+      "options": [
+        { "value": "home", "label": "Home" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "sun", "label": "Sun" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "flame", "label": "Flame" },
+        { "value": "gift", "label": "Gift" }
+      ],
+      "default": "leaf"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title_2",
+      "label": "Title",
+      "default": "Nourishment"
+    },
+    {
+      "type": "textarea",
+      "id": "description_2",
+      "label": "Description",
+      "default": "Three daily meals prepared with intention using organic, locally-sourced ingredients to fuel your transformation."
+    },
+    {
+      "type": "header",
+      "content": "Card 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_card_3",
+      "label": "Show card 3",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "icon_3",
+      "label": "Icon",
+      "options": [
+        { "value": "home", "label": "Home" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "sun", "label": "Sun" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "flame", "label": "Flame" },
+        { "value": "gift", "label": "Gift" }
+      ],
+      "default": "sun"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title_3",
+      "label": "Title",
+      "default": "Daily Practices"
+    },
+    {
+      "type": "textarea",
+      "id": "description_3",
+      "label": "Description",
+      "default": "Morning breathwork, yoga, meditation, and movement sessions to awaken your body and spirit."
+    },
+    {
+      "type": "header",
+      "content": "Card 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_card_4",
+      "label": "Show card 4",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "icon_4",
+      "label": "Icon",
+      "options": [
+        { "value": "home", "label": "Home" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "sun", "label": "Sun" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "flame", "label": "Flame" },
+        { "value": "gift", "label": "Gift" }
+      ],
+      "default": "heart"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title_4",
+      "label": "Title",
+      "default": "Healing Sessions"
+    },
+    {
+      "type": "textarea",
+      "id": "description_4",
+      "label": "Description",
+      "default": "Group workshops on embodiment, shadow work, and reclaiming your authentic power."
+    },
+    {
+      "type": "header",
+      "content": "Card 5"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_card_5",
+      "label": "Show card 5",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "icon_5",
+      "label": "Icon",
+      "options": [
+        { "value": "home", "label": "Home" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "sun", "label": "Sun" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "flame", "label": "Flame" },
+        { "value": "gift", "label": "Gift" }
+      ],
+      "default": "flame"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title_5",
+      "label": "Title",
+      "default": "Sacred Ceremonies"
+    },
+    {
+      "type": "textarea",
+      "id": "description_5",
+      "label": "Description",
+      "default": "Cacao ceremonies, sound baths, and fire rituals to deepen your connection to self and community."
+    },
+    {
+      "type": "header",
+      "content": "Card 6"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_card_6",
+      "label": "Show card 6",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "icon_6",
+      "label": "Icon",
+      "options": [
+        { "value": "home", "label": "Home" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "sun", "label": "Sun" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "flame", "label": "Flame" },
+        { "value": "gift", "label": "Gift" }
+      ],
+      "default": "gift"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title_6",
+      "label": "Title",
+      "default": "Sacred Rebel Gift"
+    },
+    {
+      "type": "textarea",
+      "id": "description_6",
+      "label": "Description",
+      "default": "Every attendee receives an exclusive curated gift to support your continued journey of transformation."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#E9E2D9"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#F8F4EE"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border",
+      "default": "#E0D5C7"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (icon circle)",
+      "default": "#C4A77D"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#2B2B2B"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#6B6B6B"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "shadow_strength",
+      "label": "Shadow strength",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animations",
+      "label": "Enable animations",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "What's included cards"
+    }
+  ]
+}
 {% endschema %}
