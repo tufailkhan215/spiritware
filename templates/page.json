@@ -57,6 +57,32 @@
           },
           "blocks": {}
         },
+        "ai_gen_block_3357a55_Eamh4n": {
+          "type": "ai_gen_block_3357a55",
+          "settings": {
+            "eyebrow_text": "WHERE HEALING MEETS LUXURY",
+            "heading_text": "The Experience",
+            "body_text": "<p>Milk & Honey retreats are intimate, curated experiences for women seeking deep transformation in a sanctuary setting. Named after the biblical promise of abundance, these retreats are designed to help you shed what no longer serves and step into the fullness of who you're meant to be. </p><p>Each retreat blends spiritual practice with luxurious self-care, conscious community, and sacred space holding. You'll leave not just rested, but fundamentally shifted.</p>",
+            "chip_1_text": "Intimate groups of 12-15 women maximum",
+            "chip_2_text": "Luxury accommodations in sacred settings",
+            "chip_3_text": "Plant-based, nourishing cuisine",
+            "chip_4_text": "Expert facilitators and healers",
+            "chip_5_text": "Lifetime access to our alumni community",
+            "heading_size": 48,
+            "background_color": "#F6F1EA",
+            "accent_color": "#C4A77D",
+            "text_color": "#2C2C2C",
+            "body_color": "#5A5A5A",
+            "chip_background": "#EFE7DD",
+            "chip_border_radius": 10,
+            "padding_top_desktop": 96,
+            "padding_bottom_desktop": 96,
+            "padding_top_mobile": 64,
+            "padding_bottom_mobile": 64,
+            "enable_animations": true
+          },
+          "blocks": {}
+        },
         "ai_gen_block_5614f22_VCCPwE": {
           "type": "ai_gen_block_5614f22",
           "settings": {
@@ -107,6 +133,7 @@
       },
       "block_order": [
         "ai_gen_block_9e7f2cb_Mjjct6",
+        "ai_gen_block_3357a55_Eamh4n",
         "ai_gen_block_5614f22_VCCPwE"
       ],
       "settings": {}

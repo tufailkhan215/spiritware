@@ -1,0 +1,663 @@
+{% doc %}
+  @prompt
+    Create a Shopify Online Store 2.0 custom section named “The Experience – Text + Benefit Chips”.
+    
+    Layout / styling:
+    - Full-width section with a warm ivory background (#F6F1EA style), generous padding top/bottom (desktop 96px, mobile 64px).
+    - Centered container max-width 980px.
+    - Text aligned center.
+    - Eyebrow line above heading: small uppercase, wide letter spacing, light gold accent color.
+    - Main heading: large serif (editorial), dark charcoal text.
+    - Body: two paragraphs, medium width, soft charcoal/gray, line-height ~1.7.
+    - Below text: a “chip/badge” list (blocks) with a small check icon on the left and the text on the right.
+    - Chips have a slightly darker ivory background (#EFE7DD style), subtle border or shadow, rounded corners (8–12px), comfortable padding.
+    - Desktop chip layout: 2 chips on first row, 3 chips on second row; center aligned. Mobile: stack 1 per row.
+    
+    Content settings:
+    - Eyebrow text (default: “WHERE HEALING MEETS LUXURY”)
+    - Heading text (default: “The Experience”)
+    - Rich text field for body copy (2 paragraphs)
+    - Chip items as repeatable blocks (default 5 items):
+      1) Intimate groups of 12-15 women maximum
+      2) Luxury accommodations in sacred settings
+      3) Plant-based, nourishing cuisine
+      4) Expert facilitators and healers
+      5) Lifetime access to our alumni community
+    
+    Animate everything (on scroll into view, runs once):
+    - Section background subtly fades in (opacity from 0 to 1).
+    - Eyebrow: fade in + slight slide-down; letter-spacing tightens slightly as it lands.
+    - Heading: elegant mask reveal from bottom to top.
+    - Body paragraphs: staggered fade-up (paragraph 1 then 2).
+    - Each chip enters in a cascading sequence (stagger 90ms): rise up 12px + fade in + tiny scale from 0.99 to 1.
+    - Check icon: animate like it is being “drawn” (stroke-dashoffset effect) right as each chip appears.
+    - Hover micro-interaction: chip lifts 3px and shadow increases slightly; check icon gently pulses once. Button not needed in this section.
+    
+    Rules:
+    - Use IntersectionObserver + CSS keyframes (no external libraries).
+    - Respect prefers-reduced-motion (no transforms, no drawing animation, just show content).
+    - Add section setting: Animation preset toggle ON/OFF.
+    - Add settings for background color, accent color, text color, chip background, and spacing.
+    
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-experience-section-{{ ai_gen_id }} {
+    display: block;
+    background-color: {{ block.settings.background_color }};
+    padding-top: {{ block.settings.padding_top_desktop }}px;
+    padding-bottom: {{ block.settings.padding_bottom_desktop }}px;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-out;
+  }
+
+  .ai-experience-section-{{ ai_gen_id }}.ai-animated-{{ ai_gen_id }} {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ai-experience-section-{{ ai_gen_id }} {
+      opacity: 1;
+    }
+  }
+
+  .ai-experience-container-{{ ai_gen_id }} {
+    max-width: 980px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+  }
+
+  .ai-experience-eyebrow-{{ ai_gen_id }} {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: {{ block.settings.accent_color }};
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  .ai-experience-section-{{ ai_gen_id }}.ai-animated-{{ ai_gen_id }} .ai-experience-eyebrow-{{ ai_gen_id }} {
+    animation: ai-eyebrow-enter-{{ ai_gen_id }} 0.8s ease-out 0.2s forwards;
+  }
+
+  @keyframes ai-eyebrow-enter-{{ ai_gen_id }} {
+    0% {
+      opacity: 0;
+      transform: translateY(-8px);
+      letter-spacing: 5px;
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      letter-spacing: 3px;
+    }
+  }
+
+  .ai-experience-heading-wrapper-{{ ai_gen_id }} {
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+
+  .ai-experience-heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 400;
+    color: {{ block.settings.text_color }};
+    margin: 0;
+    line-height: 1.2;
+    transform: translateY(100%);
+  }
+
+  .ai-experience-section-{{ ai_gen_id }}.ai-animated-{{ ai_gen_id }} .ai-experience-heading-{{ ai_gen_id }} {
+    animation: ai-heading-reveal-{{ ai_gen_id }} 1s ease-out 0.4s forwards;
+  }
+
+  @keyframes ai-heading-reveal-{{ ai_gen_id }} {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  .ai-experience-body-{{ ai_gen_id }} {
+    max-width: 720px;
+    margin: 0 auto 48px;
+    color: {{ block.settings.body_color }};
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .ai-experience-body-{{ ai_gen_id }} p {
+    margin: 0 0 20px;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .ai-experience-body-{{ ai_gen_id }} p:last-child {
+    margin-bottom: 0;
+  }
+
+  .ai-experience-section-{{ ai_gen_id }}.ai-animated-{{ ai_gen_id }} .ai-experience-body-{{ ai_gen_id }} p:nth-child(1) {
+    animation: ai-paragraph-enter-{{ ai_gen_id }} 0.8s ease-out 0.8s forwards;
+  }
+
+  .ai-experience-section-{{ ai_gen_id }}.ai-animated-{{ ai_gen_id }} .ai-experience-body-{{ ai_gen_id }} p:nth-child(2) {
+    animation: ai-paragraph-enter-{{ ai_gen_id }} 0.8s ease-out 1s forwards;
+  }
+
+  @keyframes ai-paragraph-enter-{{ ai_gen_id }} {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .ai-experience-chips-{{ ai_gen_id }} {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .ai-experience-chip-{{ ai_gen_id }} {
+    background-color: {{ block.settings.chip_background }};
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: {{ block.settings.chip_border_radius }}px;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(12px) scale(0.99);
+    flex: 1 1 calc(50% - 8px);
+    min-width: 280px;
+  }
+
+  .ai-experience-chip-{{ ai_gen_id }}:nth-child(3),
+  .ai-experience-chip-{{ ai_gen_id }}:nth-child(4),
+  .ai-experience-chip-{{ ai_gen_id }}:nth-child(5) {
+    flex: 1 1 calc(33.333% - 11px);
+    min-width: 240px;
+  }
+
+  .ai-experience-section-{{ ai_gen_id }}.ai-animated-{{ ai_gen_id }} .ai-experience-chip-{{ ai_gen_id }}:nth-child(1) {
+    animation: ai-chip-enter-{{ ai_gen_id }} 0.6s ease-out 1.2s forwards;
+  }
+
+  .ai-experience-section-{{ ai_gen_id }}.ai-animated-{{ ai_gen_id }} .ai-experience-chip-{{ ai_gen_id }}:nth-child(2) {
+    animation: ai-chip-enter-{{ ai_gen_id }} 0.6s ease-out 1.29s forwards;
+  }
+
+  .ai-experience-section-{{ ai_gen_id }}.ai-animated-{{ ai_gen_id }} .ai-experience-chip-{{ ai_gen_id }}:nth-child(3) {
+    animation: ai-chip-enter-{{ ai_gen_id }} 0.6s ease-out 1.38s forwards;
+  }
+
+  .ai-experience-section-{{ ai_gen_id }}.ai-animated-{{ ai_gen_id }} .ai-experience-chip-{{ ai_gen_id }}:nth-child(4) {
+    animation: ai-chip-enter-{{ ai_gen_id }} 0.6s ease-out 1.47s forwards;
+  }
+
+  .ai-experience-section-{{ ai_gen_id }}.ai-animated-{{ ai_gen_id }} .ai-experience-chip-{{ ai_gen_id }}:nth-child(5) {
+    animation: ai-chip-enter-{{ ai_gen_id }} 0.6s ease-out 1.56s forwards;
+  }
+
+  @keyframes ai-chip-enter-{{ ai_gen_id }} {
+    0% {
+      opacity: 0;
+      transform: translateY(12px) scale(0.99);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .ai-experience-chip-{{ ai_gen_id }}:hover {
+    transform: translateY(-3px) scale(1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-experience-chip-icon-{{ ai_gen_id }} {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+  }
+
+  .ai-experience-chip-icon-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .ai-experience-chip-icon-{{ ai_gen_id }} svg path {
+    stroke: {{ block.settings.accent_color }};
+    stroke-width: 2;
+    fill: none;
+    stroke-dasharray: 20;
+    stroke-dashoffset: 20;
+  }
+
+  .ai-experience-section-{{ ai_gen_id }}.ai-animated-{{ ai_gen_id }} .ai-experience-chip-{{ ai_gen_id }}:nth-child(1) .ai-experience-chip-icon-{{ ai_gen_id }} svg path {
+    animation: ai-check-draw-{{ ai_gen_id }} 0.4s ease-out 1.4s forwards;
+  }
+
+  .ai-experience-section-{{ ai_gen_id }}.ai-animated-{{ ai_gen_id }} .ai-experience-chip-{{ ai_gen_id }}:nth-child(2) .ai-experience-chip-icon-{{ ai_gen_id }} svg path {
+    animation: ai-check-draw-{{ ai_gen_id }} 0.4s ease-out 1.49s forwards;
+  }
+
+  .ai-experience-section-{{ ai_gen_id }}.ai-animated-{{ ai_gen_id }} .ai-experience-chip-{{ ai_gen_id }}:nth-child(3) .ai-experience-chip-icon-{{ ai_gen_id }} svg path {
+    animation: ai-check-draw-{{ ai_gen_id }} 0.4s ease-out 1.58s forwards;
+  }
+
+  .ai-experience-section-{{ ai_gen_id }}.ai-animated-{{ ai_gen_id }} .ai-experience-chip-{{ ai_gen_id }}:nth-child(4) .ai-experience-chip-icon-{{ ai_gen_id }} svg path {
+    animation: ai-check-draw-{{ ai_gen_id }} 0.4s ease-out 1.67s forwards;
+  }
+
+  .ai-experience-section-{{ ai_gen_id }}.ai-animated-{{ ai_gen_id }} .ai-experience-chip-{{ ai_gen_id }}:nth-child(5) .ai-experience-chip-icon-{{ ai_gen_id }} svg path {
+    animation: ai-check-draw-{{ ai_gen_id }} 0.4s ease-out 1.76s forwards;
+  }
+
+  @keyframes ai-check-draw-{{ ai_gen_id }} {
+    0% {
+      stroke-dashoffset: 20;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .ai-experience-chip-{{ ai_gen_id }}:hover .ai-experience-chip-icon-{{ ai_gen_id }} svg path {
+    animation: ai-check-pulse-{{ ai_gen_id }} 0.5s ease-out;
+  }
+
+  @keyframes ai-check-pulse-{{ ai_gen_id }} {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.15);
+    }
+  }
+
+  .ai-experience-chip-text-{{ ai_gen_id }} {
+    font-size: 15px;
+    color: {{ block.settings.text_color }};
+    line-height: 1.4;
+    text-align: left;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ai-experience-section-{{ ai_gen_id }} * {
+      animation: none !important;
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .ai-experience-chip-icon-{{ ai_gen_id }} svg path {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-experience-section-{{ ai_gen_id }} {
+      padding-top: {{ block.settings.padding_top_mobile }}px;
+      padding-bottom: {{ block.settings.padding_bottom_mobile }}px;
+    }
+
+    .ai-experience-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.7 }}px;
+    }
+
+    .ai-experience-chip-{{ ai_gen_id }} {
+      flex: 1 1 100%;
+      min-width: 100%;
+    }
+
+    .ai-experience-chip-{{ ai_gen_id }}:nth-child(3),
+    .ai-experience-chip-{{ ai_gen_id }}:nth-child(4),
+    .ai-experience-chip-{{ ai_gen_id }}:nth-child(5) {
+      flex: 1 1 100%;
+      min-width: 100%;
+    }
+  }
+{% endstyle %}
+
+<ai-experience-section-{{ ai_gen_id }}
+  class="ai-experience-section-{{ ai_gen_id }}"
+  data-animation-enabled="{{ block.settings.enable_animations }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-experience-container-{{ ai_gen_id }}">
+    {% if block.settings.eyebrow_text != blank %}
+      <div class="ai-experience-eyebrow-{{ ai_gen_id }}">
+        {{ block.settings.eyebrow_text }}
+      </div>
+    {% endif %}
+
+    {% if block.settings.heading_text != blank %}
+      <div class="ai-experience-heading-wrapper-{{ ai_gen_id }}">
+        <h2 class="ai-experience-heading-{{ ai_gen_id }}">
+          {{ block.settings.heading_text }}
+        </h2>
+      </div>
+    {% endif %}
+
+    {% if block.settings.body_text != blank %}
+      <div class="ai-experience-body-{{ ai_gen_id }}">
+        {{ block.settings.body_text }}
+      </div>
+    {% endif %}
+
+    <div class="ai-experience-chips-{{ ai_gen_id }}">
+      {% if block.settings.chip_1_text != blank %}
+        <div class="ai-experience-chip-{{ ai_gen_id }}">
+          <div class="ai-experience-chip-icon-{{ ai_gen_id }}">
+            <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 10 L8 14 L16 6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="ai-experience-chip-text-{{ ai_gen_id }}">
+            {{ block.settings.chip_1_text }}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.chip_2_text != blank %}
+        <div class="ai-experience-chip-{{ ai_gen_id }}">
+          <div class="ai-experience-chip-icon-{{ ai_gen_id }}">
+            <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 10 L8 14 L16 6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="ai-experience-chip-text-{{ ai_gen_id }}">
+            {{ block.settings.chip_2_text }}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.chip_3_text != blank %}
+        <div class="ai-experience-chip-{{ ai_gen_id }}">
+          <div class="ai-experience-chip-icon-{{ ai_gen_id }}">
+            <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 10 L8 14 L16 6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="ai-experience-chip-text-{{ ai_gen_id }}">
+            {{ block.settings.chip_3_text }}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.chip_4_text != blank %}
+        <div class="ai-experience-chip-{{ ai_gen_id }}">
+          <div class="ai-experience-chip-icon-{{ ai_gen_id }}">
+            <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 10 L8 14 L16 6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="ai-experience-chip-text-{{ ai_gen_id }}">
+            {{ block.settings.chip_4_text }}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.chip_5_text != blank %}
+        <div class="ai-experience-chip-{{ ai_gen_id }}">
+          <div class="ai-experience-chip-icon-{{ ai_gen_id }}">
+            <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 10 L8 14 L16 6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="ai-experience-chip-text-{{ ai_gen_id }}">
+            {{ block.settings.chip_5_text }}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</ai-experience-section-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class AiExperienceSection{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.animationEnabled = this.dataset.animationEnabled === 'true';
+        this.hasAnimated = false;
+      }
+
+      connectedCallback() {
+        if (!this.animationEnabled) {
+          this.classList.add('ai-animated-{{ ai_gen_id }}');
+          return;
+        }
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
+        if (prefersReducedMotion) {
+          this.classList.add('ai-animated-{{ ai_gen_id }}');
+          return;
+        }
+
+        this.observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting && !this.hasAnimated) {
+                this.classList.add('ai-animated-{{ ai_gen_id }}');
+                this.hasAnimated = true;
+                this.observer.disconnect();
+              }
+            });
+          },
+          {
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
+          }
+        );
+
+        this.observer.observe(this);
+      }
+
+      disconnectedCallback() {
+        if (this.observer) {
+          this.observer.disconnect();
+        }
+      }
+    }
+
+    customElements.define('ai-experience-section-{{ ai_gen_id }}', AiExperienceSection{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Experience benefit chips",
+  "tag": null,
+  "class": "ai-experience-block",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_text",
+      "label": "Eyebrow text",
+      "default": "WHERE HEALING MEETS LUXURY"
+    },
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading",
+      "default": "The Experience"
+    },
+    {
+      "type": "richtext",
+      "id": "body_text",
+      "label": "Body text",
+      "default": "<p>Our retreats are designed for women who are ready to step into their power, heal their deepest wounds, and reclaim their authentic selves. Each experience is carefully curated to create a container for profound transformation.</p><p>We believe that true healing happens in community, surrounded by beauty, and supported by expert guidance. Every detail is intentionally crafted to support your journey home to yourself.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Benefit chips"
+    },
+    {
+      "type": "text",
+      "id": "chip_1_text",
+      "label": "Chip 1",
+      "default": "Intimate groups of 12-15 women maximum"
+    },
+    {
+      "type": "text",
+      "id": "chip_2_text",
+      "label": "Chip 2",
+      "default": "Luxury accommodations in sacred settings"
+    },
+    {
+      "type": "text",
+      "id": "chip_3_text",
+      "label": "Chip 3",
+      "default": "Plant-based, nourishing cuisine"
+    },
+    {
+      "type": "text",
+      "id": "chip_4_text",
+      "label": "Chip 4",
+      "default": "Expert facilitators and healers"
+    },
+    {
+      "type": "text",
+      "id": "chip_5_text",
+      "label": "Chip 5",
+      "default": "Lifetime access to our alumni community"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 32,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#F6F1EA"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#C4A77D"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#2C2C2C"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body text color",
+      "default": "#5A5A5A"
+    },
+    {
+      "type": "color",
+      "id": "chip_background",
+      "label": "Chip background color",
+      "default": "#EFE7DD"
+    },
+    {
+      "type": "range",
+      "id": "chip_border_radius",
+      "label": "Chip border radius",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Desktop padding top",
+      "min": 40,
+      "max": 160,
+      "step": 8,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Desktop padding bottom",
+      "min": 40,
+      "max": 160,
+      "step": 8,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile padding top",
+      "min": 32,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile padding bottom",
+      "min": 32,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animations",
+      "label": "Enable animations",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Experience benefit chips"
+    }
+  ]
+}
+{% endschema %}
