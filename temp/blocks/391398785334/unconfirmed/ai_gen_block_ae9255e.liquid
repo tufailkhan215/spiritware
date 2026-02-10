@@ -1,6 +1,1197 @@
+{% doc %}
+  @prompt
+    Build a Shopify custom section called “Upcoming Retreats – Spotlight Scroll”.
+    
+    Design:
+    - Same header as screenshot: eyebrow “JOIN US”, heading “Upcoming Retreats”, subtitle below.
+    - Stacked list of retreat cards (blocks), image left and content right on desktop, stacked on mobile.
+    - Same content fields: location, dates, title, description, 3 tags, price, duration, spots left, apply button.
+    
+    Animation concept (animate everything + change it up):
+    - Entrance (once):
+      - Header fades/masks in (eyebrow → heading → subtitle).
+      - All cards fade in softly with a slight rise (8px).
+    - Scroll spotlight behavior (continuous, subtle):
+      - As the user scrolls, the card that is most centered in the viewport gets an “active” state:
+        - active card: scale 1.00, stronger shadow, full opacity
+        - inactive cards: scale 0.985, slightly reduced opacity (still readable)
+      - Image inside active card gets tiny parallax drift (translateY small amount) for depth.
+      - Tags on the active card brighten slightly.
+    
+    Implementation:
+    - Use IntersectionObserver with threshold ~0.55 to toggle an “is-active” class per card.
+    - Use requestAnimationFrame for optional parallax (very small range).
+    - Disable spotlight + parallax on mobile and prefers-reduced-motion.
+    - No external libraries. Include schema for colors + animation toggles.
+    
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-retreat-spotlight-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: {{ block.settings.section_padding_top }}px 20px {{ block.settings.section_padding_bottom }}px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-retreat-spotlight-container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  .ai-retreat-spotlight-header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: {{ block.settings.header_spacing }}px;
+  }
+
+  .ai-retreat-spotlight-eyebrow-{{ ai_gen_id }} {
+    font-size: {{ block.settings.eyebrow_size }}px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: {{ block.settings.eyebrow_color }};
+    margin-bottom: 12px;
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .ai-retreat-spotlight-eyebrow-{{ ai_gen_id }}.is-visible {
+    animation: ai-retreat-fade-in-{{ ai_gen_id }} 0.8s ease-out forwards;
+  }
+
+  .ai-retreat-spotlight-heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    font-weight: 700;
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 16px;
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .ai-retreat-spotlight-heading-{{ ai_gen_id }}.is-visible {
+    animation: ai-retreat-fade-in-{{ ai_gen_id }} 0.8s ease-out 0.15s forwards;
+  }
+
+  .ai-retreat-spotlight-subtitle-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subtitle_size }}px;
+    color: {{ block.settings.subtitle_color }};
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .ai-retreat-spotlight-subtitle-{{ ai_gen_id }}.is-visible {
+    animation: ai-retreat-fade-in-{{ ai_gen_id }} 0.8s ease-out 0.3s forwards;
+  }
+
+  @keyframes ai-retreat-fade-in-{{ ai_gen_id }} {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .ai-retreat-spotlight-list-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.card_gap }}px;
+  }
+
+  .ai-retreat-card-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 40px;
+    background-color: {{ block.settings.card_background }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    will-change: transform, box-shadow, opacity;
+  }
+
+  .ai-retreat-card-{{ ai_gen_id }}.is-loaded {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .ai-retreat-card-{{ ai_gen_id }}.is-active {
+    transform: scale(1.00);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    opacity: 1;
+  }
+
+  .ai-retreat-card-{{ ai_gen_id }}:not(.is-active) {
+    transform: scale(0.985);
+    opacity: 0.75;
+  }
+
+  .ai-retreat-card-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    background-color: #f4f4f4;
+    min-height: 400px;
+  }
+
+  .ai-retreat-card-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease-out;
+    will-change: transform;
+  }
+
+  .ai-retreat-card-image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-retreat-card-content-{{ ai_gen_id }} {
+    padding: 40px 40px 40px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .ai-retreat-card-meta-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ai-retreat-card-location-{{ ai_gen_id }} {
+    font-size: {{ block.settings.location_size }}px;
+    font-weight: 600;
+    color: {{ block.settings.location_color }};
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .ai-retreat-card-dates-{{ ai_gen_id }} {
+    font-size: {{ block.settings.dates_size }}px;
+    color: {{ block.settings.dates_color }};
+  }
+
+  .ai-retreat-card-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.card_title_size }}px;
+    font-weight: 700;
+    color: {{ block.settings.card_title_color }};
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .ai-retreat-card-description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.description_size }}px;
+    color: {{ block.settings.description_color }};
+    line-height: 1.6;
+  }
+
+  .ai-retreat-card-tags-{{ ai_gen_id }} {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .ai-retreat-card-tag-{{ ai_gen_id }} {
+    padding: 6px 14px;
+    background-color: {{ block.settings.tag_background }};
+    color: {{ block.settings.tag_color }};
+    font-size: {{ block.settings.tag_size }}px;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .ai-retreat-card-{{ ai_gen_id }}.is-active .ai-retreat-card-tag-{{ ai_gen_id }} {
+    background-color: {{ block.settings.tag_active_background }};
+  }
+
+  .ai-retreat-card-footer-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px solid {{ block.settings.divider_color }};
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .ai-retreat-card-info-{{ ai_gen_id }} {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .ai-retreat-card-info-item-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .ai-retreat-card-info-label-{{ ai_gen_id }} {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: {{ block.settings.info_label_color }};
+    font-weight: 600;
+  }
+
+  .ai-retreat-card-info-value-{{ ai_gen_id }} {
+    font-size: {{ block.settings.info_value_size }}px;
+    color: {{ block.settings.info_value_color }};
+    font-weight: 600;
+  }
+
+  .ai-retreat-card-button-{{ ai_gen_id }} {
+    padding: 12px 32px;
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_color }};
+    border: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: {{ block.settings.button_size }}px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+  }
+
+  .ai-retreat-card-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background }};
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .ai-retreat-spotlight-{{ ai_gen_id }} {
+      padding: {{ block.settings.section_padding_top | times: 0.6 }}px 16px {{ block.settings.section_padding_bottom | times: 0.6 }}px;
+    }
+
+    .ai-retreat-card-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .ai-retreat-card-{{ ai_gen_id }}.is-active,
+    .ai-retreat-card-{{ ai_gen_id }}:not(.is-active) {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .ai-retreat-card-image-wrapper-{{ ai_gen_id }} {
+      min-height: 250px;
+    }
+
+    .ai-retreat-card-content-{{ ai_gen_id }} {
+      padding: 24px;
+    }
+
+    .ai-retreat-card-footer-{{ ai_gen_id }} {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .ai-retreat-card-button-{{ ai_gen_id }} {
+      width: 100%;
+      text-align: center;
+    }
+
+    .ai-retreat-spotlight-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.7 }}px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ai-retreat-card-{{ ai_gen_id }},
+    .ai-retreat-card-image-{{ ai_gen_id }},
+    .ai-retreat-card-tag-{{ ai_gen_id }},
+    .ai-retreat-card-button-{{ ai_gen_id }} {
+      transition: none;
+    }
+
+    .ai-retreat-card-{{ ai_gen_id }}.is-active,
+    .ai-retreat-card-{{ ai_gen_id }}:not(.is-active) {
+      transform: none;
+      opacity: 1;
+    }
+  }
+{% endstyle %}
+
+<ai-retreat-spotlight-{{ ai_gen_id }}
+  class="ai-retreat-spotlight-{{ ai_gen_id }}"
+  data-enable-animations="{{ block.settings.enable_animations }}"
+  data-enable-parallax="{{ block.settings.enable_parallax }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-retreat-spotlight-container-{{ ai_gen_id }}">
+    <div class="ai-retreat-spotlight-header-{{ ai_gen_id }}">
+      {% if block.settings.eyebrow != blank %}
+        <div class="ai-retreat-spotlight-eyebrow-{{ ai_gen_id }}">{{ block.settings.eyebrow }}</div>
+      {% endif %}
+      {% if block.settings.heading != blank %}
+        <h2 class="ai-retreat-spotlight-heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+      {% endif %}
+      {% if block.settings.subtitle != blank %}
+        <div class="ai-retreat-spotlight-subtitle-{{ ai_gen_id }}">{{ block.settings.subtitle }}</div>
+      {% endif %}
+    </div>
+
+    <div class="ai-retreat-spotlight-list-{{ ai_gen_id }}">
+      {% for i in (1..3) %}
+        {% liquid
+          assign image_key = 'image_' | append: i
+          assign location_key = 'location_' | append: i
+          assign dates_key = 'dates_' | append: i
+          assign title_key = 'title_' | append: i
+          assign description_key = 'description_' | append: i
+          assign tag_1_key = 'tag_1_' | append: i
+          assign tag_2_key = 'tag_2_' | append: i
+          assign tag_3_key = 'tag_3_' | append: i
+          assign price_key = 'price_' | append: i
+          assign duration_key = 'duration_' | append: i
+          assign spots_key = 'spots_left_' | append: i
+          assign button_text_key = 'button_text_' | append: i
+          assign button_link_key = 'button_link_' | append: i
+
+          assign image = block.settings[image_key]
+          assign location = block.settings[location_key]
+          assign dates = block.settings[dates_key]
+          assign title = block.settings[title_key]
+          assign description = block.settings[description_key]
+          assign tag_1 = block.settings[tag_1_key]
+          assign tag_2 = block.settings[tag_2_key]
+          assign tag_3 = block.settings[tag_3_key]
+          assign price = block.settings[price_key]
+          assign duration = block.settings[duration_key]
+          assign spots_left = block.settings[spots_key]
+          assign button_text = block.settings[button_text_key]
+          assign button_link = block.settings[button_link_key]
+        %}
+
+        <div class="ai-retreat-card-{{ ai_gen_id }}" data-card-index="{{ i }}">
+          <div class="ai-retreat-card-image-wrapper-{{ ai_gen_id }}">
+            {% if image %}
+              <img
+                src="{{ image | image_url: width: 800 }}"
+                alt="{{ image.alt | escape }}"
+                class="ai-retreat-card-image-{{ ai_gen_id }}"
+                loading="lazy"
+                width="800"
+                height="600"
+              >
+            {% else %}
+              <div class="ai-retreat-card-image-placeholder-{{ ai_gen_id }}">
+                {{ 'lifestyle-1' | placeholder_svg_tag }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="ai-retreat-card-content-{{ ai_gen_id }}">
+            <div class="ai-retreat-card-meta-{{ ai_gen_id }}">
+              {% if location != blank %}
+                <div class="ai-retreat-card-location-{{ ai_gen_id }}">{{ location }}</div>
+              {% endif %}
+              {% if dates != blank %}
+                <div class="ai-retreat-card-dates-{{ ai_gen_id }}">{{ dates }}</div>
+              {% endif %}
+            </div>
+
+            {% if title != blank %}
+              <h3 class="ai-retreat-card-title-{{ ai_gen_id }}">{{ title }}</h3>
+            {% endif %}
+
+            {% if description != blank %}
+              <div class="ai-retreat-card-description-{{ ai_gen_id }}">{{ description }}</div>
+            {% endif %}
+
+            <div class="ai-retreat-card-tags-{{ ai_gen_id }}">
+              {% if tag_1 != blank %}
+                <span class="ai-retreat-card-tag-{{ ai_gen_id }}">{{ tag_1 }}</span>
+              {% endif %}
+              {% if tag_2 != blank %}
+                <span class="ai-retreat-card-tag-{{ ai_gen_id }}">{{ tag_2 }}</span>
+              {% endif %}
+              {% if tag_3 != blank %}
+                <span class="ai-retreat-card-tag-{{ ai_gen_id }}">{{ tag_3 }}</span>
+              {% endif %}
+            </div>
+
+            <div class="ai-retreat-card-footer-{{ ai_gen_id }}">
+              <div class="ai-retreat-card-info-{{ ai_gen_id }}">
+                {% if price != blank %}
+                  <div class="ai-retreat-card-info-item-{{ ai_gen_id }}">
+                    <span class="ai-retreat-card-info-label-{{ ai_gen_id }}">Price</span>
+                    <span class="ai-retreat-card-info-value-{{ ai_gen_id }}">{{ price }}</span>
+                  </div>
+                {% endif %}
+                {% if duration != blank %}
+                  <div class="ai-retreat-card-info-item-{{ ai_gen_id }}">
+                    <span class="ai-retreat-card-info-label-{{ ai_gen_id }}">Duration</span>
+                    <span class="ai-retreat-card-info-value-{{ ai_gen_id }}">{{ duration }}</span>
+                  </div>
+                {% endif %}
+                {% if spots_left != blank %}
+                  <div class="ai-retreat-card-info-item-{{ ai_gen_id }}">
+                    <span class="ai-retreat-card-info-label-{{ ai_gen_id }}">Spots Left</span>
+                    <span class="ai-retreat-card-info-value-{{ ai_gen_id }}">{{ spots_left }}</span>
+                  </div>
+                {% endif %}
+              </div>
+
+              {% if button_text != blank %}
+                <a
+                  href="{{ button_link }}"
+                  class="ai-retreat-card-button-{{ ai_gen_id }}"
+                >
+                  {{ button_text }}
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</ai-retreat-spotlight-{{ ai_gen_id }}>
+
+<script>
+(function() {
+  class AiRetreatSpotlight{{ ai_gen_id }} extends HTMLElement {
+    constructor() {
+      super();
+      this.enableAnimations = this.dataset.enableAnimations === 'true';
+      this.enableParallax = this.dataset.enableParallax === 'true';
+      this.cards = [];
+      this.observer = null;
+      this.rafId = null;
+      this.isMobile = window.matchMedia('(max-width: 768px)').matches;
+      this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+
+    connectedCallback() {
+      this.init();
+    }
+
+    disconnectedCallback() {
+      if (this.observer) {
+        this.observer.disconnect();
+      }
+      if (this.rafId) {
+        cancelAnimationFrame(this.rafId);
+      }
+      window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    init() {
+      if (!this.enableAnimations || this.prefersReducedMotion) {
+        this.showAllElements();
+        return;
+      }
+
+      this.animateHeader();
+      this.setupCards();
+      
+      if (!this.isMobile) {
+        this.setupSpotlightObserver();
+        if (this.enableParallax) {
+          this.handleScroll = this.handleScrollParallax.bind(this);
+          window.addEventListener('scroll', this.handleScroll, { passive: true });
+        }
+      } else {
+        this.cards.forEach(card => card.classList.add('is-loaded'));
+      }
+    }
+
+    showAllElements() {
+      const eyebrow = this.querySelector('.ai-retreat-spotlight-eyebrow-{{ ai_gen_id }}');
+      const heading = this.querySelector('.ai-retreat-spotlight-heading-{{ ai_gen_id }}');
+      const subtitle = this.querySelector('.ai-retreat-spotlight-subtitle-{{ ai_gen_id }}');
+      const cards = this.querySelectorAll('.ai-retreat-card-{{ ai_gen_id }}');
+
+      if (eyebrow) eyebrow.style.opacity = '1';
+      if (heading) heading.style.opacity = '1';
+      if (subtitle) subtitle.style.opacity = '1';
+      cards.forEach(card => {
+        card.style.opacity = '1';
+        card.style.transform = 'none';
+      });
+    }
+
+    animateHeader() {
+      const eyebrow = this.querySelector('.ai-retreat-spotlight-eyebrow-{{ ai_gen_id }}');
+      const heading = this.querySelector('.ai-retreat-spotlight-heading-{{ ai_gen_id }}');
+      const subtitle = this.querySelector('.ai-retreat-spotlight-subtitle-{{ ai_gen_id }}');
+
+      const headerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (eyebrow) eyebrow.classList.add('is-visible');
+            if (heading) heading.classList.add('is-visible');
+            if (subtitle) subtitle.classList.add('is-visible');
+            headerObserver.disconnect();
+          }
+        });
+      }, { threshold: 0.2 });
+
+      const header = this.querySelector('.ai-retreat-spotlight-header-{{ ai_gen_id }}');
+      if (header) {
+        headerObserver.observe(header);
+      }
+    }
+
+    setupCards() {
+      this.cards = Array.from(this.querySelectorAll('.ai-retreat-card-{{ ai_gen_id }}'));
+      
+      const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.classList.add('is-loaded');
+            }, entry.target.dataset.cardIndex * 100);
+            cardObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      this.cards.forEach(card => {
+        cardObserver.observe(card);
+      });
+    }
+
+    setupSpotlightObserver() {
+      this.observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+            this.cards.forEach(card => card.classList.remove('is-active'));
+            entry.target.classList.add('is-active');
+          }
+        });
+      }, {
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+        rootMargin: '-20% 0px -20% 0px'
+      });
+
+      this.cards.forEach(card => {
+        this.observer.observe(card);
+      });
+    }
+
+    handleScrollParallax() {
+      if (this.rafId) {
+        cancelAnimationFrame(this.rafId);
+      }
+
+      this.rafId = requestAnimationFrame(() => {
+        this.cards.forEach(card => {
+          if (card.classList.contains('is-active')) {
+            const image = card.querySelector('.ai-retreat-card-image-{{ ai_gen_id }}');
+            if (image) {
+              const rect = card.getBoundingClientRect();
+              const cardCenter = rect.top + rect.height / 2;
+              const viewportCenter = window.innerHeight / 2;
+              const distance = cardCenter - viewportCenter;
+              const parallaxAmount = distance * 0.03;
+              image.style.transform = `translateY(${parallaxAmount}px)`;
+            }
+          }
+        });
+      });
+    }
+  }
+
+  customElements.define('ai-retreat-spotlight-{{ ai_gen_id }}', AiRetreatSpotlight{{ ai_gen_id }});
+})();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Retreat spotlight",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section header"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "JOIN US"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Upcoming Retreats"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Discover transformative experiences in beautiful locations around the world"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum width",
+      "min": 800,
+      "max": 1400,
+      "step": 50,
+      "unit": "px",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 150,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 150,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "header_spacing",
+      "label": "Header spacing",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Card gap",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow",
+      "default": "#C4A77D"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "location_color",
+      "label": "Location",
+      "default": "#C4A77D"
+    },
+    {
+      "type": "color",
+      "id": "dates_color",
+      "label": "Dates",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card title",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "tag_background",
+      "label": "Tag background",
+      "default": "#f4f4f4"
+    },
+    {
+      "type": "color",
+      "id": "tag_active_background",
+      "label": "Tag active background",
+      "default": "#C4A77D"
+    },
+    {
+      "type": "color",
+      "id": "tag_color",
+      "label": "Tag text",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "color",
+      "id": "info_label_color",
+      "label": "Info label",
+      "default": "#999999"
+    },
+    {
+      "type": "color",
+      "id": "info_value_color",
+      "label": "Info value",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button background",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Button hover background",
+      "default": "#C4A77D"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size",
+      "label": "Eyebrow size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 24,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "location_size",
+      "label": "Location size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "dates_size",
+      "label": "Dates size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "card_title_size",
+      "label": "Card title size",
+      "min": 18,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "tag_size",
+      "label": "Tag size",
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "info_value_size",
+      "label": "Info value size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "label": "Button size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animations",
+      "label": "Enable animations",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Enable parallax effect",
+      "default": true,
+      "info": "Subtle image movement on active cards"
+    },
+    {
+      "type": "header",
+      "content": "Retreat 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "location_1",
+      "label": "Location",
+      "default": "Bali, Indonesia"
+    },
+    {
+      "type": "text",
+      "id": "dates_1",
+      "label": "Dates",
+      "default": "March 15-22, 2026"
+    },
+    {
+      "type": "text",
+      "id": "title_1",
+      "label": "Title",
+      "default": "Sacred Feminine Awakening"
+    },
+    {
+      "type": "textarea",
+      "id": "description_1",
+      "label": "Description",
+      "default": "A transformative 7-day journey to reconnect with your inner goddess through yoga, meditation, and sacred rituals."
+    },
+    {
+      "type": "text",
+      "id": "tag_1_1",
+      "label": "Tag 1",
+      "default": "Yoga"
+    },
+    {
+      "type": "text",
+      "id": "tag_2_1",
+      "label": "Tag 2",
+      "default": "Meditation"
+    },
+    {
+      "type": "text",
+      "id": "tag_3_1",
+      "label": "Tag 3",
+      "default": "Wellness"
+    },
+    {
+      "type": "text",
+      "id": "price_1",
+      "label": "Price",
+      "default": "$2,800"
+    },
+    {
+      "type": "text",
+      "id": "duration_1",
+      "label": "Duration",
+      "default": "7 Days"
+    },
+    {
+      "type": "text",
+      "id": "spots_left_1",
+      "label": "Spots left",
+      "default": "5"
+    },
+    {
+      "type": "text",
+      "id": "button_text_1",
+      "label": "Button text",
+      "default": "Apply Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link_1",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Retreat 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "location_2",
+      "label": "Location",
+      "default": "Tulum, Mexico"
+    },
+    {
+      "type": "text",
+      "id": "dates_2",
+      "label": "Dates",
+      "default": "April 10-17, 2026"
+    },
+    {
+      "type": "text",
+      "id": "title_2",
+      "label": "Title",
+      "default": "Coastal Healing Retreat"
+    },
+    {
+      "type": "textarea",
+      "id": "description_2",
+      "label": "Description",
+      "default": "Immerse yourself in healing practices by the ocean, combining breathwork, sound healing, and movement."
+    },
+    {
+      "type": "text",
+      "id": "tag_1_2",
+      "label": "Tag 1",
+      "default": "Breathwork"
+    },
+    {
+      "type": "text",
+      "id": "tag_2_2",
+      "label": "Tag 2",
+      "default": "Sound Healing"
+    },
+    {
+      "type": "text",
+      "id": "tag_3_2",
+      "label": "Tag 3",
+      "default": "Movement"
+    },
+    {
+      "type": "text",
+      "id": "price_2",
+      "label": "Price",
+      "default": "$3,200"
+    },
+    {
+      "type": "text",
+      "id": "duration_2",
+      "label": "Duration",
+      "default": "7 Days"
+    },
+    {
+      "type": "text",
+      "id": "spots_left_2",
+      "label": "Spots left",
+      "default": "3"
+    },
+    {
+      "type": "text",
+      "id": "button_text_2",
+      "label": "Button text",
+      "default": "Apply Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Retreat 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "location_3",
+      "label": "Location",
+      "default": "Sedona, Arizona"
+    },
+    {
+      "type": "text",
+      "id": "dates_3",
+      "label": "Dates",
+      "default": "May 5-12, 2026"
+    },
+    {
+      "type": "text",
+      "id": "title_3",
+      "label": "Title",
+      "default": "Desert Soul Journey"
+    },
+    {
+      "type": "textarea",
+      "id": "description_3",
+      "label": "Description",
+      "default": "Connect with the powerful energy of the red rocks through meditation, hiking, and spiritual practices."
+    },
+    {
+      "type": "text",
+      "id": "tag_1_3",
+      "label": "Tag 1",
+      "default": "Meditation"
+    },
+    {
+      "type": "text",
+      "id": "tag_2_3",
+      "label": "Tag 2",
+      "default": "Hiking"
+    },
+    {
+      "type": "text",
+      "id": "tag_3_3",
+      "label": "Tag 3",
+      "default": "Spiritual"
+    },
+    {
+      "type": "text",
+      "id": "price_3",
+      "label": "Price",
+      "default": "$2,500"
+    },
+    {
+      "type": "text",
+      "id": "duration_3",
+      "label": "Duration",
+      "default": "7 Days"
+    },
+    {
+      "type": "text",
+      "id": "spots_left_3",
+      "label": "Spots left",
+      "default": "8"
+    },
+    {
+      "type": "text",
+      "id": "button_text_3",
+      "label": "Button text",
+      "default": "Apply Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link_3",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Retreat spotlight"
+    }
+  ]
+}
 {% endschema %}
