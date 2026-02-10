@@ -1,6 +1,826 @@
+{% doc %}
+  @prompt
+    Build a Shopify OS 2.0 custom section called “Stories of Transformation – Testimonial Slider”.
+    
+    Design:
+    - Same dark background + centered serif heading.
+    - Desktop: show 3 cards in a row.
+    - Mobile: transform into a horizontal swipe slider with snap points and dots (pagination).
+    
+    Card styling:
+    - Dark card background, thin border, gold stars, quote, avatar + name + sub-label.
+    
+    Animation (animate everything, different style):
+    - Header appears first (fade + slight rise).
+    - Cards enter as a horizontal glide:
+      - Card 1 slides in from left, Card 2 from bottom, Card 3 from right (subtle, not dramatic).
+      - Stagger timing 120ms.
+    - Stars “fill” animation: stars scale up slightly as they appear (no twinkle, more modern).
+    - On mobile slider:
+      - When a card becomes active (centered), it gains a stronger shadow and slightly higher opacity.
+      - Inactive cards are slightly dimmed.
+    
+    Hover (desktop):
+    - “Magnetic” hover feel: card tilts 1 degree toward cursor (very subtle) + border glow increases slightly.
+    - Disable tilt on mobile.
+    
+    Technical:
+    - Use IntersectionObserver for entrance.
+    - Use CSS scroll-snap for slider (no JS slider libraries).
+    - prefers-reduced-motion disables slides/tilt; keeps snap.
+    , can you make this more minimal vibe. matte nude color 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-testimonial-slider-{{ ai_gen_id }} {
+    display: block;
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.section_padding_top }}px 20px {{ block.settings.section_padding_bottom }}px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .ai-testimonial-slider__container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  .ai-testimonial-slider__header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 60px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__header-{{ ai_gen_id }} {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .ai-testimonial-slider__heading-{{ ai_gen_id }} {
+    font-family: {{ block.settings.heading_font.family }}, {{ block.settings.heading_font.fallback_families }};
+    font-weight: {{ block.settings.heading_font.weight }};
+    font-size: {{ block.settings.heading_size }}px;
+    color: {{ block.settings.heading_color }};
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .ai-testimonial-slider__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .ai-testimonial-slider__card-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_background }};
+    border: {{ block.settings.card_border_width }}px solid {{ block.settings.card_border_color }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    padding: 36px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    opacity: 0;
+    transform: translateX(0);
+    transition: opacity 0.7s ease, transform 0.7s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    position: relative;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(1) {
+    opacity: 1;
+    transform: translateX(0);
+    animation: ai-slide-from-left-{{ ai_gen_id }} 0.7s ease forwards;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(2) {
+    opacity: 1;
+    transform: translateY(0);
+    animation: ai-slide-from-bottom-{{ ai_gen_id }} 0.7s ease 0.12s forwards;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(3) {
+    opacity: 1;
+    transform: translateX(0);
+    animation: ai-slide-from-right-{{ ai_gen_id }} 0.7s ease 0.24s forwards;
+  }
+
+  @keyframes ai-slide-from-left-{{ ai_gen_id }} {
+    from {
+      opacity: 0;
+      transform: translateX(-40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes ai-slide-from-bottom-{{ ai_gen_id }} {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes ai-slide-from-right-{{ ai_gen_id }} {
+    from {
+      opacity: 0;
+      transform: translateX(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .ai-testimonial-slider__card-{{ ai_gen_id }} {
+      transition: opacity 0.7s ease, transform 0.7s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .ai-testimonial-slider__card-{{ ai_gen_id }}:hover {
+      box-shadow: 0 4px 16px rgba({{ block.settings.card_border_color | color_extract: 'red' }}, {{ block.settings.card_border_color | color_extract: 'green' }}, {{ block.settings.card_border_color | color_extract: 'blue' }}, 0.15);
+      border-color: {{ block.settings.card_hover_border_color }};
+    }
+  }
+
+  .ai-testimonial-slider__stars-{{ ai_gen_id }} {
+    display: flex;
+    gap: 3px;
+  }
+
+  .ai-testimonial-slider__star-{{ ai_gen_id }} {
+    width: 16px;
+    height: 16px;
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__star-{{ ai_gen_id }} {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(1) .ai-testimonial-slider__star-{{ ai_gen_id }}:nth-child(1) {
+    transition-delay: 0.8s;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(1) .ai-testimonial-slider__star-{{ ai_gen_id }}:nth-child(2) {
+    transition-delay: 0.9s;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(1) .ai-testimonial-slider__star-{{ ai_gen_id }}:nth-child(3) {
+    transition-delay: 1s;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(1) .ai-testimonial-slider__star-{{ ai_gen_id }}:nth-child(4) {
+    transition-delay: 1.1s;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(1) .ai-testimonial-slider__star-{{ ai_gen_id }}:nth-child(5) {
+    transition-delay: 1.2s;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(2) .ai-testimonial-slider__star-{{ ai_gen_id }}:nth-child(1) {
+    transition-delay: 0.92s;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(2) .ai-testimonial-slider__star-{{ ai_gen_id }}:nth-child(2) {
+    transition-delay: 1.02s;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(2) .ai-testimonial-slider__star-{{ ai_gen_id }}:nth-child(3) {
+    transition-delay: 1.12s;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(2) .ai-testimonial-slider__star-{{ ai_gen_id }}:nth-child(4) {
+    transition-delay: 1.22s;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(2) .ai-testimonial-slider__star-{{ ai_gen_id }}:nth-child(5) {
+    transition-delay: 1.32s;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(3) .ai-testimonial-slider__star-{{ ai_gen_id }}:nth-child(1) {
+    transition-delay: 1.04s;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(3) .ai-testimonial-slider__star-{{ ai_gen_id }}:nth-child(2) {
+    transition-delay: 1.14s;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(3) .ai-testimonial-slider__star-{{ ai_gen_id }}:nth-child(3) {
+    transition-delay: 1.24s;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(3) .ai-testimonial-slider__star-{{ ai_gen_id }}:nth-child(4) {
+    transition-delay: 1.34s;
+  }
+
+  .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}:nth-child(3) .ai-testimonial-slider__star-{{ ai_gen_id }}:nth-child(5) {
+    transition-delay: 1.44s;
+  }
+
+  .ai-testimonial-slider__quote-{{ ai_gen_id }} {
+    font-size: {{ block.settings.quote_size }}px;
+    color: {{ block.settings.quote_color }};
+    line-height: 1.7;
+    font-style: normal;
+    font-weight: 300;
+  }
+
+  .ai-testimonial-slider__author-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: auto;
+  }
+
+  .ai-testimonial-slider__avatar-{{ ai_gen_id }} {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    background-color: {{ block.settings.card_border_color }};
+  }
+
+  .ai-testimonial-slider__avatar-{{ ai_gen_id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-testimonial-slider__avatar-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-testimonial-slider__avatar-placeholder-{{ ai_gen_id }} svg {
+    width: 24px;
+    height: 24px;
+    opacity: 0.2;
+  }
+
+  .ai-testimonial-slider__author-info-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .ai-testimonial-slider__name-{{ ai_gen_id }} {
+    font-size: {{ block.settings.name_size }}px;
+    color: {{ block.settings.name_color }};
+    font-weight: 400;
+    margin: 0;
+  }
+
+  .ai-testimonial-slider__label-{{ ai_gen_id }} {
+    font-size: {{ block.settings.label_size }}px;
+    color: {{ block.settings.label_color }};
+    margin: 0;
+    font-weight: 300;
+  }
+
+  .ai-testimonial-slider__dots-{{ ai_gen_id }} {
+    display: none;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 30px;
+  }
+
+  .ai-testimonial-slider__dot-{{ ai_gen_id }} {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: {{ block.settings.card_border_color }};
+    opacity: 0.25;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .ai-testimonial-slider__dot-{{ ai_gen_id }}.active {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-testimonial-slider__grid-{{ ai_gen_id }} {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 20px;
+      padding-bottom: 10px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .ai-testimonial-slider__grid-{{ ai_gen_id }}::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ai-testimonial-slider__card-{{ ai_gen_id }} {
+      min-width: 85%;
+      scroll-snap-align: center;
+      opacity: 0.5;
+      transition: opacity 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .ai-testimonial-slider__card-{{ ai_gen_id }}.active {
+      opacity: 1;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }} {
+      animation: none;
+      opacity: 0.5;
+    }
+
+    .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }}.active {
+      opacity: 1;
+    }
+
+    .ai-testimonial-slider__dots-{{ ai_gen_id }} {
+      display: flex;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ai-testimonial-slider__header-{{ ai_gen_id }},
+    .ai-testimonial-slider__card-{{ ai_gen_id }},
+    .ai-testimonial-slider__star-{{ ai_gen_id }} {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__header-{{ ai_gen_id }} {
+      opacity: 1;
+      transform: none;
+    }
+
+    .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__card-{{ ai_gen_id }} {
+      opacity: 1;
+      transform: none;
+    }
+
+    .ai-testimonial-slider-{{ ai_gen_id }}.ai-animated .ai-testimonial-slider__star-{{ ai_gen_id }} {
+      opacity: 1;
+      transform: none;
+    }
+
+    .ai-testimonial-slider__card-{{ ai_gen_id }} {
+      transform: none !important;
+    }
+  }
+{% endstyle %}
+
+<testimonial-slider-{{ ai_gen_id }} class="ai-testimonial-slider-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-testimonial-slider__container-{{ ai_gen_id }}">
+    <div class="ai-testimonial-slider__header-{{ ai_gen_id }}">
+      <h2 class="ai-testimonial-slider__heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+    </div>
+
+    <div class="ai-testimonial-slider__grid-{{ ai_gen_id }}" data-slider>
+      {% for i in (1..3) %}
+        {% assign testimonial_name_key = 'testimonial_' | append: i | append: '_name' %}
+        {% assign testimonial_label_key = 'testimonial_' | append: i | append: '_label' %}
+        {% assign testimonial_quote_key = 'testimonial_' | append: i | append: '_quote' %}
+        {% assign testimonial_avatar_key = 'testimonial_' | append: i | append: '_avatar' %}
+
+        <div class="ai-testimonial-slider__card-{{ ai_gen_id }}" data-card>
+          <div class="ai-testimonial-slider__stars-{{ ai_gen_id }}">
+            {% for star in (1..5) %}
+              <svg class="ai-testimonial-slider__star-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="{{ block.settings.star_color }}">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            {% endfor %}
+          </div>
+
+          <div class="ai-testimonial-slider__quote-{{ ai_gen_id }}">
+            "{{ block.settings[testimonial_quote_key] }}"
+          </div>
+
+          <div class="ai-testimonial-slider__author-{{ ai_gen_id }}">
+            <div class="ai-testimonial-slider__avatar-{{ ai_gen_id }}">
+              {% if block.settings[testimonial_avatar_key] %}
+                <img src="{{ block.settings[testimonial_avatar_key] | image_url: width: 100 }}" alt="{{ block.settings[testimonial_name_key] }}" loading="lazy" width="44" height="44">
+              {% else %}
+                <div class="ai-testimonial-slider__avatar-placeholder-{{ ai_gen_id }}">
+                  {{ 'image' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-testimonial-slider__author-info-{{ ai_gen_id }}">
+              <p class="ai-testimonial-slider__name-{{ ai_gen_id }}">{{ block.settings[testimonial_name_key] }}</p>
+              <p class="ai-testimonial-slider__label-{{ ai_gen_id }}">{{ block.settings[testimonial_label_key] }}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="ai-testimonial-slider__dots-{{ ai_gen_id }}" data-dots>
+      <span class="ai-testimonial-slider__dot-{{ ai_gen_id }} active" data-dot="0"></span>
+      <span class="ai-testimonial-slider__dot-{{ ai_gen_id }}" data-dot="1"></span>
+      <span class="ai-testimonial-slider__dot-{{ ai_gen_id }}" data-dot="2"></span>
+    </div>
+  </div>
+</testimonial-slider-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class TestimonialSlider{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.slider = null;
+        this.cards = [];
+        this.dots = [];
+        this.currentIndex = 0;
+        this.isAnimated = false;
+        this.isMobile = window.innerWidth <= 989;
+        this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      }
+
+      connectedCallback() {
+        this.slider = this.querySelector('[data-slider]');
+        this.cards = Array.from(this.querySelectorAll('[data-card]'));
+        this.dots = Array.from(this.querySelectorAll('[data-dot]'));
+
+        this.setupIntersectionObserver();
+        this.setupMobileSlider();
+        this.setupMagneticHover();
+        this.setupResizeObserver();
+      }
+
+      setupIntersectionObserver() {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && !this.isAnimated) {
+              this.classList.add('ai-animated');
+              this.isAnimated = true;
+            }
+          });
+        }, {
+          threshold: 0.2
+        });
+
+        observer.observe(this);
+      }
+
+      setupMobileSlider() {
+        if (!this.isMobile) return;
+
+        this.updateActiveCard();
+
+        this.slider.addEventListener('scroll', () => {
+          this.updateActiveCard();
+        });
+      }
+
+      updateActiveCard() {
+        if (!this.isMobile) return;
+
+        const scrollLeft = this.slider.scrollLeft;
+        const cardWidth = this.cards[0].offsetWidth;
+        const gap = 20;
+        const index = Math.round(scrollLeft / (cardWidth + gap));
+
+        this.currentIndex = Math.max(0, Math.min(index, this.cards.length - 1));
+
+        this.cards.forEach((card, i) => {
+          if (i === this.currentIndex) {
+            card.classList.add('active');
+          } else {
+            card.classList.remove('active');
+          }
+        });
+
+        this.dots.forEach((dot, i) => {
+          if (i === this.currentIndex) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        });
+      }
+
+      setupMagneticHover() {
+        if (this.isMobile || this.prefersReducedMotion) return;
+
+        this.cards.forEach(card => {
+          card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / centerY * 1;
+            const rotateY = (x - centerX) / centerX * 1;
+
+            card.style.transform = `perspective(1000px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
+          });
+
+          card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+          });
+        });
+      }
+
+      setupResizeObserver() {
+        const resizeObserver = new ResizeObserver(() => {
+          const wasMobile = this.isMobile;
+          this.isMobile = window.innerWidth <= 989;
+
+          if (wasMobile !== this.isMobile) {
+            if (this.isMobile) {
+              this.setupMobileSlider();
+              this.cards.forEach(card => {
+                card.style.transform = '';
+              });
+            } else {
+              this.cards.forEach(card => {
+                card.classList.remove('active');
+              });
+            }
+          }
+        });
+
+        resizeObserver.observe(document.body);
+      }
+    }
+
+    customElements.define('testimonial-slider-{{ ai_gen_id }}', TestimonialSlider{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Stories of transformation",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Stories of Transformation"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "serif"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 42
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#5A4A42"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "testimonial_1_avatar",
+      "label": "Avatar"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_1_name",
+      "label": "Name",
+      "default": "Sarah Mitchell"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_1_label",
+      "label": "Label",
+      "default": "Wellness Coach"
+    },
+    {
+      "type": "textarea",
+      "id": "testimonial_1_quote",
+      "label": "Quote",
+      "default": "This journey has completely transformed how I approach my daily rituals. The mindfulness practices have brought such peace into my life."
+    },
+    {
+      "type": "header",
+      "content": "Testimonial 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "testimonial_2_avatar",
+      "label": "Avatar"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_2_name",
+      "label": "Name",
+      "default": "Emma Rodriguez"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_2_label",
+      "label": "Label",
+      "default": "Yoga Instructor"
+    },
+    {
+      "type": "textarea",
+      "id": "testimonial_2_quote",
+      "label": "Quote",
+      "default": "I've discovered a deeper connection to myself through these practices. Every day feels more intentional and aligned with my true purpose."
+    },
+    {
+      "type": "header",
+      "content": "Testimonial 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "testimonial_3_avatar",
+      "label": "Avatar"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_3_name",
+      "label": "Name",
+      "default": "Maya Chen"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_3_label",
+      "label": "Label",
+      "default": "Meditation Teacher"
+    },
+    {
+      "type": "textarea",
+      "id": "testimonial_3_quote",
+      "label": "Quote",
+      "default": "The transformation has been profound. I feel more grounded, centered, and connected to the sacred feminine energy within me."
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#F5F1ED"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Border color",
+      "default": "#D4C4B8"
+    },
+    {
+      "type": "color",
+      "id": "card_hover_border_color",
+      "label": "Hover border color",
+      "default": "#C4B4A8"
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 3,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#B8A89A"
+    },
+    {
+      "type": "range",
+      "id": "quote_size",
+      "label": "Quote size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "quote_color",
+      "label": "Quote color",
+      "default": "#5A4A42"
+    },
+    {
+      "type": "range",
+      "id": "name_size",
+      "label": "Name size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Name color",
+      "default": "#5A4A42"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Label size",
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label color",
+      "default": "#8A7A72"
+    },
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#EBE5DF"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 800,
+      "max": 1400,
+      "step": 50,
+      "unit": "px",
+      "default": 1200
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stories of transformation"
+    }
+  ]
+}
 {% endschema %}
