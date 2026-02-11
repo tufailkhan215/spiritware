@@ -1,6 +1,652 @@
+{% doc %}
+  @prompt
+    Create a Shopify Online Store 2.0 custom section named “Common Questions – FAQ Accordion (Luxury)”.
+    
+    Design:
+    - Full-width section with warm beige background (like #E8E1D8).
+    - Centered container max-width 980px, large padding top/bottom (desktop ~100px, mobile ~70px).
+    - Centered serif heading text: “Common Questions” (editable).
+    - Accordion list with 5 items.
+    - Each item is a rectangular row with off-white background (#F7F2EB), thin border, subtle shadow, and generous padding.
+    - Question text left-aligned; chevron icon right-aligned in gold.
+    - When open, reveal answer text with comfortable line height and muted gray.
+    
+    Content (use exactly this copy):
+    1) Q: Who is Milk & Honey for?
+       A: Our retreats are for women (all women welcome) who feel called to deep transformation. Whether you're in a season of transition, seeking community, or simply craving sacred space to remember who you are—you belong here.
+    
+    2) Q: Do I need experience with yoga or meditation?
+       A: Not at all. We meet you exactly where you are. Our practices are accessible to all bodies and experience levels. The only prerequisite is an open heart.
+    
+    3) Q: What if I need to come alone?
+       A: Most of our attendees come solo—and leave with soul sisters. The retreat is designed for deep connection. You won't feel alone for long.
+    
+    4) Q: Are payment plans available?
+       A: Yes! We offer 3 and 6-month payment plans for all retreats. We believe financial barriers shouldn't keep you from transformation.
+    
+    5) Q: What's not included?
+       A: Flights, travel insurance, and optional spa treatments or private sessions beyond what's included. Everything else is covered.
+    
+    Settings/schema:
+    - Heading text
+    - Background color
+    - Card background color
+    - Accent color (gold for chevrons)
+    - Toggle: allow multiple open at once (default false)
+    - FAQ items as repeatable blocks (question + answer)
+    - Toggle: enable animations
+    
+    Animations (animate EVERYTHING):
+    Entrance (run once on scroll into view using IntersectionObserver):
+    - Heading: mask reveal from bottom to top + slight fade.
+    - Accordion items: staggered reveal (90ms) with a soft rise (12px) and fade in.
+    - Add a subtle “divider draw” effect under each row as it appears.
+    
+    Interaction animations (open/close):
+    - Chevron rotates 180 degrees and slightly morphs thickness/opacity (subtle).
+    - Answer expands with max-height transition + fades in + slight translateY.
+    - Add a soft highlight glow on the row background when it opens (very subtle, premium).
+    Hover:
+    - Row lifts 2px and shadow increases; chevron nudges 2px.
+    
+    Accessibility:
+    - Keyboard accessible buttons (aria-expanded, aria-controls).
+    - Respect prefers-reduced-motion: no transforms, just instant open/close.
+    No external libraries.
+    
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-faq-luxury-{{ ai_gen_id }} {
+    display: block;
+    background-color: {{ block.settings.background_color }};
+    padding: 100px 20px;
+    width: 100%;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-faq-luxury-{{ ai_gen_id }} {
+      padding: 70px 20px;
+    }
+  }
+
+  .ai-faq-luxury-container-{{ ai_gen_id }} {
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  .ai-faq-luxury-heading-{{ ai_gen_id }} {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 48px;
+    text-align: center;
+    margin: 0 0 60px;
+    color: #2C2C2C;
+    overflow: hidden;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-faq-luxury-heading-{{ ai_gen_id }} {
+      font-size: 36px;
+      margin-bottom: 40px;
+    }
+  }
+
+  .ai-faq-luxury-heading-inner-{{ ai_gen_id }} {
+    display: inline-block;
+    opacity: 0;
+  }
+
+  .ai-faq-luxury-heading-inner-{{ ai_gen_id }}.ai-faq-animated-{{ ai_gen_id }} {
+    animation: ai-faq-heading-reveal-{{ ai_gen_id }} 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes ai-faq-heading-reveal-{{ ai_gen_id }} {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+      clip-path: inset(100% 0 0 0);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  .ai-faq-luxury-list-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ai-faq-luxury-item-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_background_color }};
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .ai-faq-luxury-item-{{ ai_gen_id }}.ai-faq-animated-{{ ai_gen_id }} {
+    animation: ai-faq-item-reveal-{{ ai_gen_id }} 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes ai-faq-item-reveal-{{ ai_gen_id }} {
+    0% {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .ai-faq-luxury-item-{{ ai_gen_id }}:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .ai-faq-luxury-item-{{ ai_gen_id }}.ai-faq-open-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_background_color }};
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 0 0 1px {{ block.settings.accent_color }}1A;
+  }
+
+  .ai-faq-luxury-button-{{ ai_gen_id }} {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 32px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    gap: 24px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-faq-luxury-button-{{ ai_gen_id }} {
+      padding: 22px 24px;
+      gap: 16px;
+    }
+  }
+
+  .ai-faq-luxury-question-{{ ai_gen_id }} {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 20px;
+    line-height: 1.4;
+    color: #2C2C2C;
+    font-weight: 500;
+    flex: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-faq-luxury-question-{{ ai_gen_id }} {
+      font-size: 18px;
+    }
+  }
+
+  .ai-faq-luxury-chevron-{{ ai_gen_id }} {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    color: {{ block.settings.accent_color }};
+  }
+
+  .ai-faq-luxury-button-{{ ai_gen_id }}:hover .ai-faq-luxury-chevron-{{ ai_gen_id }} {
+    transform: translateX(2px);
+  }
+
+  .ai-faq-open-{{ ai_gen_id }} .ai-faq-luxury-chevron-{{ ai_gen_id }} {
+    transform: rotate(180deg);
+    opacity: 0.8;
+  }
+
+  .ai-faq-open-{{ ai_gen_id }} .ai-faq-luxury-button-{{ ai_gen_id }}:hover .ai-faq-luxury-chevron-{{ ai_gen_id }} {
+    transform: rotate(180deg) translateX(2px);
+  }
+
+  .ai-faq-luxury-answer-wrapper-{{ ai_gen_id }} {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .ai-faq-luxury-answer-{{ ai_gen_id }} {
+    padding: 0 32px 28px;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.4s ease 0.1s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-faq-luxury-answer-{{ ai_gen_id }} {
+      padding: 0 24px 22px;
+    }
+  }
+
+  .ai-faq-open-{{ ai_gen_id }} .ai-faq-luxury-answer-{{ ai_gen_id }} {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .ai-faq-luxury-answer-text-{{ ai_gen_id }} {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #666666;
+  }
+
+  .ai-faq-luxury-divider-{{ ai_gen_id }} {
+    height: 1px;
+    background: linear-gradient(to right, transparent, {{ block.settings.accent_color }}40, transparent);
+    margin-top: 16px;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .ai-faq-luxury-item-{{ ai_gen_id }}.ai-faq-animated-{{ ai_gen_id }} .ai-faq-luxury-divider-{{ ai_gen_id }} {
+    animation: ai-faq-divider-draw-{{ ai_gen_id }} 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+  }
+
+  @keyframes ai-faq-divider-draw-{{ ai_gen_id }} {
+    0% {
+      transform: scaleX(0);
+    }
+    100% {
+      transform: scaleX(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ai-faq-luxury-heading-inner-{{ ai_gen_id }},
+    .ai-faq-luxury-item-{{ ai_gen_id }},
+    .ai-faq-luxury-chevron-{{ ai_gen_id }},
+    .ai-faq-luxury-answer-{{ ai_gen_id }},
+    .ai-faq-luxury-divider-{{ ai_gen_id }} {
+      animation: none !important;
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .ai-faq-luxury-item-{{ ai_gen_id }}:hover {
+      transform: none;
+    }
+
+    .ai-faq-luxury-answer-wrapper-{{ ai_gen_id }} {
+      transition: none;
+    }
+  }
+{% endstyle %}
+
+<ai-faq-luxury-{{ ai_gen_id }} class="ai-faq-luxury-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-faq-luxury-container-{{ ai_gen_id }}">
+    {% if block.settings.heading != blank %}
+      <h2 class="ai-faq-luxury-heading-{{ ai_gen_id }}">
+        <span class="ai-faq-luxury-heading-inner-{{ ai_gen_id }}">{{ block.settings.heading }}</span>
+      </h2>
+    {% endif %}
+
+    <div class="ai-faq-luxury-list-{{ ai_gen_id }}">
+      {% if block.settings.faq_1_question != blank %}
+        <div class="ai-faq-luxury-item-{{ ai_gen_id }}" data-faq-item="1">
+          <button
+            class="ai-faq-luxury-button-{{ ai_gen_id }}"
+            aria-expanded="false"
+            aria-controls="ai-faq-answer-{{ ai_gen_id }}-1"
+          >
+            <span class="ai-faq-luxury-question-{{ ai_gen_id }}">{{ block.settings.faq_1_question }}</span>
+            <svg class="ai-faq-luxury-chevron-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="ai-faq-luxury-answer-wrapper-{{ ai_gen_id }}" id="ai-faq-answer-{{ ai_gen_id }}-1">
+            <div class="ai-faq-luxury-answer-{{ ai_gen_id }}">
+              <div class="ai-faq-luxury-answer-text-{{ ai_gen_id }}">{{ block.settings.faq_1_answer }}</div>
+            </div>
+          </div>
+          <div class="ai-faq-luxury-divider-{{ ai_gen_id }}"></div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.faq_2_question != blank %}
+        <div class="ai-faq-luxury-item-{{ ai_gen_id }}" data-faq-item="2">
+          <button
+            class="ai-faq-luxury-button-{{ ai_gen_id }}"
+            aria-expanded="false"
+            aria-controls="ai-faq-answer-{{ ai_gen_id }}-2"
+          >
+            <span class="ai-faq-luxury-question-{{ ai_gen_id }}">{{ block.settings.faq_2_question }}</span>
+            <svg class="ai-faq-luxury-chevron-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="ai-faq-luxury-answer-wrapper-{{ ai_gen_id }}" id="ai-faq-answer-{{ ai_gen_id }}-2">
+            <div class="ai-faq-luxury-answer-{{ ai_gen_id }}">
+              <div class="ai-faq-luxury-answer-text-{{ ai_gen_id }}">{{ block.settings.faq_2_answer }}</div>
+            </div>
+          </div>
+          <div class="ai-faq-luxury-divider-{{ ai_gen_id }}"></div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.faq_3_question != blank %}
+        <div class="ai-faq-luxury-item-{{ ai_gen_id }}" data-faq-item="3">
+          <button
+            class="ai-faq-luxury-button-{{ ai_gen_id }}"
+            aria-expanded="false"
+            aria-controls="ai-faq-answer-{{ ai_gen_id }}-3"
+          >
+            <span class="ai-faq-luxury-question-{{ ai_gen_id }}">{{ block.settings.faq_3_question }}</span>
+            <svg class="ai-faq-luxury-chevron-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="ai-faq-luxury-answer-wrapper-{{ ai_gen_id }}" id="ai-faq-answer-{{ ai_gen_id }}-3">
+            <div class="ai-faq-luxury-answer-{{ ai_gen_id }}">
+              <div class="ai-faq-luxury-answer-text-{{ ai_gen_id }}">{{ block.settings.faq_3_answer }}</div>
+            </div>
+          </div>
+          <div class="ai-faq-luxury-divider-{{ ai_gen_id }}"></div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.faq_4_question != blank %}
+        <div class="ai-faq-luxury-item-{{ ai_gen_id }}" data-faq-item="4">
+          <button
+            class="ai-faq-luxury-button-{{ ai_gen_id }}"
+            aria-expanded="false"
+            aria-controls="ai-faq-answer-{{ ai_gen_id }}-4"
+          >
+            <span class="ai-faq-luxury-question-{{ ai_gen_id }}">{{ block.settings.faq_4_question }}</span>
+            <svg class="ai-faq-luxury-chevron-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="ai-faq-luxury-answer-wrapper-{{ ai_gen_id }}" id="ai-faq-answer-{{ ai_gen_id }}-4">
+            <div class="ai-faq-luxury-answer-{{ ai_gen_id }}">
+              <div class="ai-faq-luxury-answer-text-{{ ai_gen_id }}">{{ block.settings.faq_4_answer }}</div>
+            </div>
+          </div>
+          <div class="ai-faq-luxury-divider-{{ ai_gen_id }}"></div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.faq_5_question != blank %}
+        <div class="ai-faq-luxury-item-{{ ai_gen_id }}" data-faq-item="5">
+          <button
+            class="ai-faq-luxury-button-{{ ai_gen_id }}"
+            aria-expanded="false"
+            aria-controls="ai-faq-answer-{{ ai_gen_id }}-5"
+          >
+            <span class="ai-faq-luxury-question-{{ ai_gen_id }}">{{ block.settings.faq_5_question }}</span>
+            <svg class="ai-faq-luxury-chevron-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="ai-faq-luxury-answer-wrapper-{{ ai_gen_id }}" id="ai-faq-answer-{{ ai_gen_id }}-5">
+            <div class="ai-faq-luxury-answer-{{ ai_gen_id }}">
+              <div class="ai-faq-luxury-answer-text-{{ ai_gen_id }}">{{ block.settings.faq_5_answer }}</div>
+            </div>
+          </div>
+          <div class="ai-faq-luxury-divider-{{ ai_gen_id }}"></div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</ai-faq-luxury-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class AiFaqLuxury{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.allowMultiple = {{ block.settings.allow_multiple_open }};
+        this.enableAnimations = {{ block.settings.enable_animations }};
+        this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      }
+
+      connectedCallback() {
+        this.items = this.querySelectorAll('.ai-faq-luxury-item-{{ ai_gen_id }}');
+        this.buttons = this.querySelectorAll('.ai-faq-luxury-button-{{ ai_gen_id }}');
+        this.heading = this.querySelector('.ai-faq-luxury-heading-inner-{{ ai_gen_id }}');
+
+        this.setupEventListeners();
+        
+        if (this.enableAnimations && !this.prefersReducedMotion) {
+          this.setupIntersectionObserver();
+        } else {
+          this.showAllContent();
+        }
+      }
+
+      setupEventListeners() {
+        this.buttons.forEach((button, index) => {
+          button.addEventListener('click', () => this.toggleItem(index));
+        });
+      }
+
+      setupIntersectionObserver() {
+        const options = {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              this.animateEntrance();
+              observer.unobserve(entry.target);
+            }
+          });
+        }, options);
+
+        observer.observe(this);
+      }
+
+      animateEntrance() {
+        if (this.heading) {
+          this.heading.classList.add('ai-faq-animated-{{ ai_gen_id }}');
+        }
+
+        this.items.forEach((item, index) => {
+          setTimeout(() => {
+            item.classList.add('ai-faq-animated-{{ ai_gen_id }}');
+          }, index * 90);
+        });
+      }
+
+      showAllContent() {
+        if (this.heading) {
+          this.heading.style.opacity = '1';
+          this.heading.style.transform = 'none';
+        }
+
+        this.items.forEach(item => {
+          item.style.opacity = '1';
+          item.style.transform = 'none';
+        });
+      }
+
+      toggleItem(index) {
+        const item = this.items[index];
+        const button = this.buttons[index];
+        const answerWrapper = item.querySelector('.ai-faq-luxury-answer-wrapper-{{ ai_gen_id }}');
+        const answer = item.querySelector('.ai-faq-luxury-answer-{{ ai_gen_id }}');
+        const isOpen = item.classList.contains('ai-faq-open-{{ ai_gen_id }}');
+
+        if (!this.allowMultiple && !isOpen) {
+          this.closeAllItems();
+        }
+
+        if (isOpen) {
+          this.closeItem(item, button, answerWrapper);
+        } else {
+          this.openItem(item, button, answerWrapper, answer);
+        }
+      }
+
+      openItem(item, button, answerWrapper, answer) {
+        item.classList.add('ai-faq-open-{{ ai_gen_id }}');
+        button.setAttribute('aria-expanded', 'true');
+        
+        const height = answer.scrollHeight;
+        answerWrapper.style.maxHeight = height + 'px';
+      }
+
+      closeItem(item, button, answerWrapper) {
+        item.classList.remove('ai-faq-open-{{ ai_gen_id }}');
+        button.setAttribute('aria-expanded', 'false');
+        answerWrapper.style.maxHeight = '0';
+      }
+
+      closeAllItems() {
+        this.items.forEach((item, index) => {
+          const button = this.buttons[index];
+          const answerWrapper = item.querySelector('.ai-faq-luxury-answer-wrapper-{{ ai_gen_id }}');
+          this.closeItem(item, button, answerWrapper);
+        });
+      }
+    }
+
+    customElements.define('ai-faq-luxury-{{ ai_gen_id }}', AiFaqLuxury{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "FAQ accordion luxury",
+  "tag": null,
+  "class": "ai-faq-luxury-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Common Questions"
+    },
+    {
+      "type": "header",
+      "content": "FAQ items"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add your frequently asked questions below. Each item includes a question and answer."
+    },
+    {
+      "type": "text",
+      "id": "faq_1_question",
+      "label": "Question 1",
+      "default": "Who is Milk & Honey for?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_1_answer",
+      "label": "Answer 1",
+      "default": "Our retreats are for women (all women welcome) who feel called to deep transformation. Whether you're in a season of transition, seeking community, or simply craving sacred space to remember who you are—you belong here."
+    },
+    {
+      "type": "text",
+      "id": "faq_2_question",
+      "label": "Question 2",
+      "default": "Do I need experience with yoga or meditation?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_2_answer",
+      "label": "Answer 2",
+      "default": "Not at all. We meet you exactly where you are. Our practices are accessible to all bodies and experience levels. The only prerequisite is an open heart."
+    },
+    {
+      "type": "text",
+      "id": "faq_3_question",
+      "label": "Question 3",
+      "default": "What if I need to come alone?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_3_answer",
+      "label": "Answer 3",
+      "default": "Most of our attendees come solo—and leave with soul sisters. The retreat is designed for deep connection. You won't feel alone for long."
+    },
+    {
+      "type": "text",
+      "id": "faq_4_question",
+      "label": "Question 4",
+      "default": "Are payment plans available?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_4_answer",
+      "label": "Answer 4",
+      "default": "Yes! We offer 3 and 6-month payment plans for all retreats. We believe financial barriers shouldn't keep you from transformation."
+    },
+    {
+      "type": "text",
+      "id": "faq_5_question",
+      "label": "Question 5",
+      "default": "What's not included?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_5_answer",
+      "label": "Answer 5",
+      "default": "Flights, travel insurance, and optional spa treatments or private sessions beyond what's included. Everything else is covered."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#E8E1D8"
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Card background",
+      "default": "#F7F2EB"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#C4A77D"
+    },
+    {
+      "type": "header",
+      "content": "Behavior"
+    },
+    {
+      "type": "checkbox",
+      "id": "allow_multiple_open",
+      "label": "Allow multiple open",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animations",
+      "label": "Enable animations",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ accordion luxury"
+    }
+  ]
+}
 {% endschema %}
