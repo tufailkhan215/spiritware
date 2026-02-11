@@ -274,6 +274,60 @@
           },
           "blocks": {}
         },
+        "ai_gen_block_ffaae6a_Lat6G3": {
+          "type": "ai_gen_block_ffaae6a",
+          "settings": {
+            "heading": "Common Questions",
+            "faq_1_question": "Who is Milk & Honey for?",
+            "faq_1_answer": "Our retreats are for women (all women welcome) who feel called to deep transformation. Whether you're in a season of transition, seeking community, or simply craving sacred space to remember who you are—you belong here.",
+            "faq_2_question": "Do I need experience with yoga or meditation?",
+            "faq_2_answer": "Not at all. We meet you exactly where you are. Our practices are accessible to all bodies and experience levels. The only prerequisite is an open heart.",
+            "faq_3_question": "What if I need to come alone?",
+            "faq_3_answer": "Most of our attendees come solo—and leave with soul sisters. The retreat is designed for deep connection. You won't feel alone for long.",
+            "faq_4_question": "Are payment plans available?",
+            "faq_4_answer": "Yes! We offer 3 and 6-month payment plans for all retreats. We believe financial barriers shouldn't keep you from transformation.",
+            "faq_5_question": "What's not included?",
+            "faq_5_answer": "Flights, travel insurance, and optional spa treatments or private sessions beyond what's included. Everything else is covered.",
+            "background_color": "#E8E1D8",
+            "card_background_color": "#F7F2EB",
+            "accent_color": "#C4A77D",
+            "allow_multiple_open": false,
+            "enable_animations": true
+          },
+          "blocks": {}
+        },
+        "ai_gen_block_69ccc26_emeLr8": {
+          "type": "ai_gen_block_69ccc26",
+          "settings": {
+            "overlay_opacity": 40,
+            "height_style": "full",
+            "desktop_width_percent": 100,
+            "heading": "Find Your Sacred Space",
+            "subtext": "<p>A transformative wellness retreat designed to reconnect you with your inner peace and purpose.</p>",
+            "text_alignment": "center",
+            "primary_button_label": "Book Your Retreat",
+            "primary_button_link": "",
+            "primary_button_bg": "#FAF7F2",
+            "primary_button_text": "#1A1A1A",
+            "primary_button_hover_bg": "#FFFFFF",
+            "secondary_button_label": "Learn More",
+            "secondary_button_link": "",
+            "secondary_button_text": "#FFFFFF",
+            "secondary_button_border": "#FFFFFF",
+            "secondary_button_hover_bg": "rgba(255, 255, 255, 0.1)",
+            "secondary_button_hover_border": "#FFFFFF",
+            "heading_font": "serif",
+            "heading_size": 72,
+            "heading_color": "#FFFFFF",
+            "body_font": "system_ui_n4",
+            "subtext_size": 18,
+            "subtext_color": "#FFFFFF",
+            "subtext_opacity": 85,
+            "button_border_radius": 4,
+            "enable_animations": true
+          },
+          "blocks": {}
+        },
         "ai_gen_block_5239485_fwk8EV": {
           "type": "ai_gen_block_5239485",
           "settings": {
@@ -317,6 +371,8 @@
         "ai_gen_block_5614f22_VCCPwE",
         "ai_gen_block_ae9255e_yG4jkw",
         "ai_gen_block_555947b_8XcY93",
+        "ai_gen_block_ffaae6a_Lat6G3",
+        "ai_gen_block_69ccc26_emeLr8",
         "ai_gen_block_5239485_fwk8EV"
       ],
       "settings": {}
