@@ -253,6 +253,27 @@
           },
           "blocks": {}
         },
+        "ai_gen_block_555947b_8XcY93": {
+          "type": "ai_gen_block_555947b",
+          "settings": {
+            "eyebrow": "Meet Your Guide",
+            "name": "Sarah Mitchell",
+            "role": "Somatic Healing Practitioner",
+            "bio": "<p>With over a decade of experience guiding individuals through transformative healing journeys, Sarah combines ancient wisdom with modern somatic practices to help you reconnect with your authentic self.</p>",
+            "show_stats": true,
+            "stat_1_value": "10+ years",
+            "stat_1_label": "Experience",
+            "stat_2_value": "500+ clients",
+            "stat_2_label": "Guided",
+            "stat_3_value": "Certified",
+            "stat_3_label": "Somatic healing",
+            "background_color": "#FAF7F2",
+            "text_color": "#2C2C2C",
+            "accent_color": "#C4A77D",
+            "enable_animations": true
+          },
+          "blocks": {}
+        },
         "ai_gen_block_5239485_fwk8EV": {
           "type": "ai_gen_block_5239485",
           "settings": {
@@ -295,6 +316,7 @@
         "ai_gen_block_0916a8e_JwWUn7",
         "ai_gen_block_5614f22_VCCPwE",
         "ai_gen_block_ae9255e_yG4jkw",
+        "ai_gen_block_555947b_8XcY93",
         "ai_gen_block_5239485_fwk8EV"
       ],
       "settings": {}
