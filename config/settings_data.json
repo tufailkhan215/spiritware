@@ -377,6 +377,30 @@
       },
       "header-1": {
         "type": "header-1",
+        "blocks": {
+          "mega_menu_jUWDXa": {
+            "type": "mega_menu",
+            "settings": {
+              "trigger_handle": "catalog",
+              "columns": "4",
+              "column_1_heading": "Column 1",
+              "column_1_menu": "customer-account-main-menu",
+              "column_2_heading": "Column 2",
+              "column_2_menu": "footer",
+              "column_3_heading": "Column 3",
+              "column_3_menu": "",
+              "column_3_image": "shopify://shop_images/Screenshot_2026-02-07_at_2.27.33_PM.png",
+              "column_4_heading": "Column 4",
+              "column_4_menu": "",
+              "column_4_image": "shopify://shop_images/Screenshot_2026-02-07_at_12.48.20_PM.png",
+              "column_5_heading": "",
+              "column_5_menu": ""
+            }
+          }
+        },
+        "block_order": [
+          "mega_menu_jUWDXa"
+        ],
         "settings": {
           "logo_text": "Sacred Rebel",
           "menu": "main-menu",
