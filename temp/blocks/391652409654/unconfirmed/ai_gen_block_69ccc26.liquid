@@ -1,6 +1,635 @@
+{% doc %}
+  @prompt
+    Build a premium centered hero section with a background image and overlay.
+    
+    Layout Structure
+    
+    Create a full-width hero section with:
+    
+    Background image (editable in settings)
+    
+    Dark semi-transparent overlay
+    
+    Centered content (both vertically + horizontally)
+    
+    Large serif headline
+    
+    Supporting paragraph text
+    
+    Two side-by-side buttons
+    
+    The layout must feel:
+    Minimal. Elevated. Retreat / luxury wellness aesthetic. Calm but powerful.
+    
+    Content Structure
+    
+    Center aligned:
+    
+    Heading (large, elegant serif)
+    Subtext (medium width, soft opacity)
+    Primary button (solid light button)
+    Secondary button (outlined transparent button)
+    
+    Buttons sit side by side on desktop.
+    Stack vertically on mobile.
+    
+    Styling Requirements
+    
+    Full viewport height (min-height: 90vh)
+    
+    Background image cover + center
+    
+    Add subtle gradient overlay for readability
+    
+    Max content width: 800px
+    
+    Generous spacing
+    
+    Serif font for headline
+    
+    Clean sans-serif for body
+    
+    Animation (Make It More Unique Than Standard)
+    
+    Add premium motion:
+    
+    Background image very subtle slow zoom (Ken Burns effect)
+    
+    Headline fade + slight upward motion on load
+    
+    Subtext fade in delayed (150ms stagger)
+    
+    Buttons fade in delayed (300ms stagger)
+    
+    Button hover micro interaction:
+    
+    Slight lift
+    
+    Soft glow or border accent
+    
+    Respect prefers-reduced-motion
+    
+    Animation should feel cinematic, not aggressive.
+    
+    Shopify Schema Settings
+    
+    Add customizable settings for:
+    
+    Background image
+    
+    Overlay opacity
+    
+    Heading text
+    
+    Subtext
+    
+    Button 1 label + link
+    
+    Button 2 label + link
+    
+    Text alignment toggle
+    
+    Height toggle (full screen / 70vh)
+    
+    Animation on/off toggle
+    
+    File Naming
+    
+    sections/ukiyo-hero-promised-land.liquid
+    
+    Use clean CSS inside <style> scoped to the section.
+    Use minimal JS only if required for scroll animations.
+    
+    Important
+    
+    Make it production ready.
+    No placeholders.
+    Clean, readable, maintainable code.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ukiyo-hero-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    min-height: {% if block.settings.height_style == 'full' %}90vh{% else %}70vh{% endif %};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .ukiyo-hero-{{ ai_gen_id }}__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+  }
+
+  .ukiyo-hero-{{ ai_gen_id }}__background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    {% if block.settings.enable_animations %}
+      animation: ukiyo-hero-ken-burns-{{ ai_gen_id }} 20s ease-in-out infinite alternate;
+    {% endif %}
+  }
+
+  .ukiyo-hero-{{ ai_gen_id }}__background-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ukiyo-hero-{{ ai_gen_id }}__background-placeholder svg {
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+  }
+
+  .ukiyo-hero-{{ ai_gen_id }}__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, {{ block.settings.overlay_opacity | divided_by: 100.0 }}),
+      rgba(0, 0, 0, {{ block.settings.overlay_opacity | plus: 10 | divided_by: 100.0 }})
+    );
+    z-index: -1;
+  }
+
+  .ukiyo-hero-{{ ai_gen_id }}__content {
+    position: relative;
+    max-width: 800px;
+    padding: 40px 20px;
+    text-align: {{ block.settings.text_alignment }};
+    width: 100%;
+  }
+
+  .ukiyo-hero-{{ ai_gen_id }}__heading {
+    font-family: {{ block.settings.heading_font.family }}, serif;
+    font-weight: {{ block.settings.heading_font.weight }};
+    font-style: {{ block.settings.heading_font.style }};
+    font-size: {{ block.settings.heading_size }}px;
+    line-height: 1.2;
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 24px;
+    {% if block.settings.enable_animations %}
+      opacity: 0;
+      animation: ukiyo-hero-fade-up-{{ ai_gen_id }} 1s ease-out 0.3s forwards;
+    {% endif %}
+  }
+
+  .ukiyo-hero-{{ ai_gen_id }}__subtext {
+    font-family: {{ block.settings.body_font.family }}, sans-serif;
+    font-weight: {{ block.settings.body_font.weight }};
+    font-style: {{ block.settings.body_font.style }};
+    font-size: {{ block.settings.subtext_size }}px;
+    line-height: 1.6;
+    color: {{ block.settings.subtext_color }};
+    opacity: {{ block.settings.subtext_opacity | divided_by: 100.0 }};
+    margin: 0 auto 40px;
+    max-width: 600px;
+    {% if block.settings.enable_animations %}
+      opacity: 0;
+      animation: ukiyo-hero-fade-up-{{ ai_gen_id }} 1s ease-out 0.45s forwards;
+    {% endif %}
+  }
+
+  .ukiyo-hero-{{ ai_gen_id }}__buttons {
+    display: flex;
+    gap: 16px;
+    {% if block.settings.text_alignment == 'center' %}
+      justify-content: center;
+    {% elsif block.settings.text_alignment == 'right' %}
+      justify-content: flex-end;
+    {% else %}
+      justify-content: flex-start;
+    {% endif %}
+    flex-wrap: wrap;
+    {% if block.settings.enable_animations %}
+      opacity: 0;
+      animation: ukiyo-hero-fade-up-{{ ai_gen_id }} 1s ease-out 0.6s forwards;
+    {% endif %}
+  }
+
+  .ukiyo-hero-{{ ai_gen_id }}__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 32px;
+    font-family: {{ block.settings.body_font.family }}, sans-serif;
+    font-weight: {{ block.settings.body_font.weight }};
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+    min-width: 160px;
+  }
+
+  .ukiyo-hero-{{ ai_gen_id }}__button--primary {
+    background-color: {{ block.settings.primary_button_bg }};
+    color: {{ block.settings.primary_button_text }};
+    border-color: {{ block.settings.primary_button_bg }};
+  }
+
+  .ukiyo-hero-{{ ai_gen_id }}__button--primary:hover {
+    background-color: {{ block.settings.primary_button_hover_bg }};
+    border-color: {{ block.settings.primary_button_hover_bg }};
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .ukiyo-hero-{{ ai_gen_id }}__button--secondary {
+    background-color: transparent;
+    color: {{ block.settings.secondary_button_text }};
+    border-color: {{ block.settings.secondary_button_border }};
+  }
+
+  .ukiyo-hero-{{ ai_gen_id }}__button--secondary:hover {
+    background-color: {{ block.settings.secondary_button_hover_bg }};
+    border-color: {{ block.settings.secondary_button_hover_border }};
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  }
+
+  @keyframes ukiyo-hero-ken-burns-{{ ai_gen_id }} {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes ukiyo-hero-fade-up-{{ ai_gen_id }} {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ukiyo-hero-{{ ai_gen_id }}__background-image,
+    .ukiyo-hero-{{ ai_gen_id }}__heading,
+    .ukiyo-hero-{{ ai_gen_id }}__subtext,
+    .ukiyo-hero-{{ ai_gen_id }}__buttons {
+      animation: none !important;
+      opacity: 1 !important;
+    }
+
+    .ukiyo-hero-{{ ai_gen_id }}__button:hover {
+      transform: none !important;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ukiyo-hero-{{ ai_gen_id }} {
+      min-height: {% if block.settings.height_style == 'full' %}80vh{% else %}60vh{% endif %};
+    }
+
+    .ukiyo-hero-{{ ai_gen_id }}__heading {
+      font-size: {{ block.settings.heading_size | times: 0.6 }}px;
+      margin-bottom: 16px;
+    }
+
+    .ukiyo-hero-{{ ai_gen_id }}__subtext {
+      font-size: {{ block.settings.subtext_size | times: 0.9 }}px;
+      margin-bottom: 32px;
+    }
+
+    .ukiyo-hero-{{ ai_gen_id }}__buttons {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .ukiyo-hero-{{ ai_gen_id }}__button {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<div class="ukiyo-hero-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ukiyo-hero-{{ ai_gen_id }}__background">
+    {% if block.settings.background_image %}
+      <img
+        src="{{ block.settings.background_image | image_url: width: 2400 }}"
+        srcset="{{ block.settings.background_image | image_url: width: 800 }} 800w,
+                {{ block.settings.background_image | image_url: width: 1200 }} 1200w,
+                {{ block.settings.background_image | image_url: width: 1600 }} 1600w,
+                {{ block.settings.background_image | image_url: width: 2400 }} 2400w"
+        sizes="100vw"
+        alt="{{ block.settings.background_image.alt | escape }}"
+        class="ukiyo-hero-{{ ai_gen_id }}__background-image"
+        loading="eager"
+        width="{{ block.settings.background_image.width }}"
+        height="{{ block.settings.background_image.height }}"
+      >
+    {% else %}
+      <div class="ukiyo-hero-{{ ai_gen_id }}__background-placeholder">
+        {{ 'hero-apparel-1' | placeholder_svg_tag }}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="ukiyo-hero-{{ ai_gen_id }}__overlay"></div>
+
+  <div class="ukiyo-hero-{{ ai_gen_id }}__content">
+    {% if block.settings.heading != blank %}
+      <h1 class="ukiyo-hero-{{ ai_gen_id }}__heading">
+        {{ block.settings.heading }}
+      </h1>
+    {% endif %}
+
+    {% if block.settings.subtext != blank %}
+      <div class="ukiyo-hero-{{ ai_gen_id }}__subtext">
+        {{ block.settings.subtext }}
+      </div>
+    {% endif %}
+
+    <div class="ukiyo-hero-{{ ai_gen_id }}__buttons">
+      {% if block.settings.primary_button_label != blank %}
+        <a
+          href="{{ block.settings.primary_button_link }}"
+          class="ukiyo-hero-{{ ai_gen_id }}__button ukiyo-hero-{{ ai_gen_id }}__button--primary"
+        >
+          {{ block.settings.primary_button_label }}
+        </a>
+      {% endif %}
+
+      {% if block.settings.secondary_button_label != blank %}
+        <a
+          href="{{ block.settings.secondary_button_link }}"
+          class="ukiyo-hero-{{ ai_gen_id }}__button ukiyo-hero-{{ ai_gen_id }}__button--secondary"
+        >
+          {{ block.settings.secondary_button_label }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Ukiyo hero promised land",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "height_style",
+      "label": "Section height",
+      "options": [
+        {
+          "value": "full",
+          "label": "Full screen (90vh)"
+        },
+        {
+          "value": "medium",
+          "label": "Medium (70vh)"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Find Your Sacred Space"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "<p>A transformative wellness retreat designed to reconnect you with your inner peace and purpose.</p>"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Primary button"
+    },
+    {
+      "type": "text",
+      "id": "primary_button_label",
+      "label": "Label",
+      "default": "Book Your Retreat"
+    },
+    {
+      "type": "url",
+      "id": "primary_button_link",
+      "label": "Link"
+    },
+    {
+      "type": "color",
+      "id": "primary_button_bg",
+      "label": "Background",
+      "default": "#FAF7F2"
+    },
+    {
+      "type": "color",
+      "id": "primary_button_text",
+      "label": "Text",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "primary_button_hover_bg",
+      "label": "Hover background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Secondary button"
+    },
+    {
+      "type": "text",
+      "id": "secondary_button_label",
+      "label": "Label",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "secondary_button_link",
+      "label": "Link"
+    },
+    {
+      "type": "color",
+      "id": "secondary_button_text",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "secondary_button_border",
+      "label": "Border",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "secondary_button_hover_bg",
+      "label": "Hover background",
+      "default": "rgba(255, 255, 255, 0.1)"
+    },
+    {
+      "type": "color",
+      "id": "secondary_button_hover_border",
+      "label": "Hover border",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "serif"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 32,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body font",
+      "default": "sans-serif"
+    },
+    {
+      "type": "range",
+      "id": "subtext_size",
+      "label": "Subtext size",
+      "min": 14,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Subtext color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "subtext_opacity",
+      "label": "Subtext opacity",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 85
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button border radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animations",
+      "label": "Enable animations",
+      "default": true,
+      "info": "Cinematic fade and zoom effects. Respects user motion preferences."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ukiyo hero promised land"
+    }
+  ]
+}
 {% endschema %}
