@@ -1,6 +1,733 @@
+{% doc %}
+  @prompt
+    You are a Shopify Section Creator + Liquid developer.
+    
+    Build a premium dark philosophy section based on the description below. You cannot see the reference image, so follow the layout and design direction precisely.
+    
+    SECTION TYPE:
+    Feature Grid (3 columns desktop, stacked on mobile)
+    
+    OVERALL STYLE:
+    - Dark, minimal, luxury aesthetic
+    - Spiritual / refined / elevated tone
+    - Very spacious layout
+    - Subtle elegance — not loud, not modern-tech
+    - No flashy gradients, no neon
+    
+    BACKGROUND:
+    - Deep charcoal / near-black solid background
+    - Very subtle soft radial glow behind center area (low opacity, optional toggle)
+    - No heavy textures
+    
+    LAYOUT:
+    - Centered section
+    - Large centered headline at top
+    - Three equal-width cards underneath
+    - Generous spacing between headline and cards
+    - Cards aligned in one row (desktop), stacked vertically (mobile)
+    
+    TYPOGRAPHY:
+    - Headline: elegant serif style, large, refined, light letter spacing
+    - Card titles: serif, medium size, centered
+    - Card body text: clean sans-serif, smaller, slightly muted color
+    - All text centered
+    
+    CONTENT STRUCTURE:
+    Eyebrow: (optional toggle)
+    Headline: The Philosophy
+    
+    Card 1:
+    Title: Faith as Fuel
+    Text: We believe faith isn't fragile. It's the fire that keeps us moving when logic says stop.
+    
+    Card 2:
+    Title: Protection Through Presence
+    Text: The God Squad knows that showing up fully in truth and power—is itself a form of divine protection.
+    
+    Card 3:
+    Title: Bold Proclamation
+    Text: In a world that wants you quiet, wearing your beliefs is a radical act of sovereignty.
+    
+    CARD DESIGN:
+    - Rectangular cards
+    - Thin subtle border (1px soft gray/low contrast)
+    - No heavy shadows
+    - Very subtle hover effect:
+        - slight lift (translateY -6px)
+        - soft glow border
+        - smooth 300–400ms transition
+    - Maintain premium restraint
+    
+    SPACING:
+    - Large top + bottom padding
+    - Wide gaps between cards
+    - Plenty of white space
+    
+    ANIMATION:
+    Include animation settings:
+    - Enable/disable toggle
+    - Presets:
+        1. Minimal (fade + slight rise)
+        2. Staggered Reveal (cards animate in one by one)
+        3. Soft Glow Entrance (fade + slight blur-in)
+    - Respect prefers-reduced-motion
+    - Keep animations subtle and elegant
+    
+    SETTINGS REQUIRED:
+    - Section padding top/bottom
+    - Background color picker
+    - Headline size (desktop + mobile)
+    - Card border toggle
+    - Card hover effect toggle
+    - Animation preset selector
+    - Animation speed
+    - Max width control
+    
+    ACCESSIBILITY:
+    - Semantic section + h2
+    - Proper contrast
+    - Keyboard focus styles
+    - No layout shift
+    
+    OUTPUT:
+    Provide:
+    1) Complete sections/philosophy-grid.liquid file (with schema)
+    2) Short install instructions
+    3) Recommended default settings
+    
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .philosophy-grid-{{ ai_gen_id }} {
+    display: block;
+    background-color: {{ block.settings.background_color }};
+    padding-top: {{ block.settings.padding_top }}px;
+    padding-bottom: {{ block.settings.padding_bottom }}px;
+    position: relative;
+    overflow: hidden;
+    width: {{ block.settings.desktop_width_percent }}%;
+  }
+
+  {% if block.settings.show_radial_glow %}
+    .philosophy-grid-{{ ai_gen_id }}::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+  {% endif %}
+
+  .philosophy-grid__container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .philosophy-grid__header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: {{ block.settings.header_spacing }}px;
+  }
+
+  {% if block.settings.show_eyebrow and block.settings.eyebrow_text != blank %}
+    .philosophy-grid__eyebrow-{{ ai_gen_id }} {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: {{ block.settings.eyebrow_color }};
+      margin-bottom: 16px;
+      font-weight: 400;
+    }
+  {% endif %}
+
+  .philosophy-grid__headline-{{ ai_gen_id }} {
+    font-family: {{ block.settings.headline_font.family }}, serif;
+    font-weight: {{ block.settings.headline_font.weight }};
+    font-size: {{ block.settings.headline_size_mobile }}px;
+    color: {{ block.settings.headline_color }};
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .philosophy-grid__headline-{{ ai_gen_id }} {
+      font-size: {{ block.settings.headline_size_desktop }}px;
+    }
+  }
+
+  .philosophy-grid__cards-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: {{ block.settings.card_gap_mobile }}px;
+    margin-top: {{ block.settings.header_spacing }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .philosophy-grid__cards-{{ ai_gen_id }} {
+      grid-template-columns: repeat(3, 1fr);
+      gap: {{ block.settings.card_gap_desktop }}px;
+    }
+  }
+
+  .philosophy-grid__card-{{ ai_gen_id }} {
+    background: transparent;
+    {% if block.settings.show_card_border %}
+      border: 1px solid {{ block.settings.card_border_color }};
+    {% endif %}
+    padding: {{ block.settings.card_padding }}px;
+    text-align: center;
+    transition: all {{ block.settings.animation_speed }}ms ease;
+    position: relative;
+  }
+
+  {% if block.settings.enable_hover_effect %}
+    .philosophy-grid__card-{{ ai_gen_id }}:hover {
+      transform: translateY(-6px);
+      border-color: {{ block.settings.card_hover_border_color }};
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.05);
+    }
+  {% endif %}
+
+  .philosophy-grid__card-{{ ai_gen_id }}:focus-within {
+    outline: 2px solid {{ block.settings.card_hover_border_color }};
+    outline-offset: 2px;
+  }
+
+  .philosophy-grid__card-title-{{ ai_gen_id }} {
+    font-family: {{ block.settings.card_title_font.family }}, serif;
+    font-weight: {{ block.settings.card_title_font.weight }};
+    font-size: {{ block.settings.card_title_size }}px;
+    color: {{ block.settings.card_title_color }};
+    margin: 0 0 16px 0;
+    letter-spacing: 0.3px;
+  }
+
+  .philosophy-grid__card-text-{{ ai_gen_id }} {
+    font-family: {{ block.settings.card_text_font.family }}, sans-serif;
+    font-weight: {{ block.settings.card_text_font.weight }};
+    font-size: {{ block.settings.card_text_size }}px;
+    color: {{ block.settings.card_text_color }};
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  {% if block.settings.animation_preset != 'none' %}
+    @media (prefers-reduced-motion: no-preference) {
+      .philosophy-grid__card-{{ ai_gen_id }} {
+        opacity: 0;
+      }
+
+      .philosophy-grid-{{ ai_gen_id }}.animated .philosophy-grid__card-{{ ai_gen_id }} {
+        animation-fill-mode: forwards;
+        animation-duration: {{ block.settings.animation_speed }}ms;
+        animation-timing-function: ease-out;
+      }
+
+      {% if block.settings.animation_preset == 'minimal' %}
+        @keyframes fadeRise-{{ ai_gen_id }} {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .philosophy-grid-{{ ai_gen_id }}.animated .philosophy-grid__card-{{ ai_gen_id }} {
+          animation-name: fadeRise-{{ ai_gen_id }};
+        }
+      {% endif %}
+
+      {% if block.settings.animation_preset == 'staggered' %}
+        @keyframes fadeRise-{{ ai_gen_id }} {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .philosophy-grid-{{ ai_gen_id }}.animated .philosophy-grid__card-{{ ai_gen_id }}:nth-child(1) {
+          animation-name: fadeRise-{{ ai_gen_id }};
+          animation-delay: 0ms;
+        }
+
+        .philosophy-grid-{{ ai_gen_id }}.animated .philosophy-grid__card-{{ ai_gen_id }}:nth-child(2) {
+          animation-name: fadeRise-{{ ai_gen_id }};
+          animation-delay: 150ms;
+        }
+
+        .philosophy-grid-{{ ai_gen_id }}.animated .philosophy-grid__card-{{ ai_gen_id }}:nth-child(3) {
+          animation-name: fadeRise-{{ ai_gen_id }};
+          animation-delay: 300ms;
+        }
+      {% endif %}
+
+      {% if block.settings.animation_preset == 'glow' %}
+        @keyframes glowEntrance-{{ ai_gen_id }} {
+          from {
+            opacity: 0;
+            filter: blur(8px);
+          }
+          to {
+            opacity: 1;
+            filter: blur(0);
+          }
+        }
+
+        .philosophy-grid-{{ ai_gen_id }}.animated .philosophy-grid__card-{{ ai_gen_id }} {
+          animation-name: glowEntrance-{{ ai_gen_id }};
+        }
+      {% endif %}
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .philosophy-grid__card-{{ ai_gen_id }} {
+        opacity: 1;
+        animation: none;
+      }
+    }
+  {% else %}
+    .philosophy-grid__card-{{ ai_gen_id }} {
+      opacity: 1;
+    }
+  {% endif %}
+{% endstyle %}
+
+<philosophy-grid-{{ ai_gen_id }} class="philosophy-grid-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="philosophy-grid__container-{{ ai_gen_id }}">
+    <div class="philosophy-grid__header-{{ ai_gen_id }}">
+      {% if block.settings.show_eyebrow and block.settings.eyebrow_text != blank %}
+        <div class="philosophy-grid__eyebrow-{{ ai_gen_id }}">{{ block.settings.eyebrow_text }}</div>
+      {% endif %}
+      {% if block.settings.headline != blank %}
+        <h2 class="philosophy-grid__headline-{{ ai_gen_id }}">{{ block.settings.headline }}</h2>
+      {% endif %}
+    </div>
+
+    <div class="philosophy-grid__cards-{{ ai_gen_id }}">
+      {% if block.settings.card_1_title != blank or block.settings.card_1_text != blank %}
+        <div class="philosophy-grid__card-{{ ai_gen_id }}">
+          {% if block.settings.card_1_title != blank %}
+            <h3 class="philosophy-grid__card-title-{{ ai_gen_id }}">{{ block.settings.card_1_title }}</h3>
+          {% endif %}
+          {% if block.settings.card_1_text != blank %}
+            <div class="philosophy-grid__card-text-{{ ai_gen_id }}">{{ block.settings.card_1_text }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.card_2_title != blank or block.settings.card_2_text != blank %}
+        <div class="philosophy-grid__card-{{ ai_gen_id }}">
+          {% if block.settings.card_2_title != blank %}
+            <h3 class="philosophy-grid__card-title-{{ ai_gen_id }}">{{ block.settings.card_2_title }}</h3>
+          {% endif %}
+          {% if block.settings.card_2_text != blank %}
+            <div class="philosophy-grid__card-text-{{ ai_gen_id }}">{{ block.settings.card_2_text }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.card_3_title != blank or block.settings.card_3_text != blank %}
+        <div class="philosophy-grid__card-{{ ai_gen_id }}">
+          {% if block.settings.card_3_title != blank %}
+            <h3 class="philosophy-grid__card-title-{{ ai_gen_id }}">{{ block.settings.card_3_title }}</h3>
+          {% endif %}
+          {% if block.settings.card_3_text != blank %}
+            <div class="philosophy-grid__card-text-{{ ai_gen_id }}">{{ block.settings.card_3_text }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</philosophy-grid-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class PhilosophyGrid{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.initAnimation();
+      }
+
+      initAnimation() {
+        const animationPreset = '{{ block.settings.animation_preset }}';
+        
+        if (animationPreset === 'none') return;
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return;
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              this.classList.add('animated');
+              observer.unobserve(this);
+            }
+          });
+        }, {
+          threshold: 0.1
+        });
+
+        observer.observe(this);
+      }
+    }
+
+    customElements.define('philosophy-grid-{{ ai_gen_id }}', PhilosophyGrid{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Philosophy grid",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 800,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "label": "Max content width",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "header_spacing",
+      "min": 30,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Header spacing",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_radial_glow",
+      "label": "Show radial glow",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Eyebrow"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_eyebrow",
+      "label": "Show eyebrow",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_text",
+      "label": "Eyebrow text"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow color",
+      "default": "#999999"
+    },
+    {
+      "type": "header",
+      "content": "Headline"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "The Philosophy"
+    },
+    {
+      "type": "font_picker",
+      "id": "headline_font",
+      "label": "Headline font",
+      "default": "serif"
+    },
+    {
+      "type": "range",
+      "id": "headline_size_desktop",
+      "min": 30,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Headline size (desktop)",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "headline_size_mobile",
+      "min": 24,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Headline size (mobile)",
+      "default": 36
+    },
+    {
+      "type": "color",
+      "id": "headline_color",
+      "label": "Headline color",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "header",
+      "content": "Card 1"
+    },
+    {
+      "type": "text",
+      "id": "card_1_title",
+      "label": "Title",
+      "default": "Faith as Fuel"
+    },
+    {
+      "type": "textarea",
+      "id": "card_1_text",
+      "label": "Text",
+      "default": "We believe faith isn't fragile. It's the fire that keeps us moving when logic says stop."
+    },
+    {
+      "type": "header",
+      "content": "Card 2"
+    },
+    {
+      "type": "text",
+      "id": "card_2_title",
+      "label": "Title",
+      "default": "Protection Through Presence"
+    },
+    {
+      "type": "textarea",
+      "id": "card_2_text",
+      "label": "Text",
+      "default": "The God Squad knows that showing up fully in truth and power—is itself a form of divine protection."
+    },
+    {
+      "type": "header",
+      "content": "Card 3"
+    },
+    {
+      "type": "text",
+      "id": "card_3_title",
+      "label": "Title",
+      "default": "Bold Proclamation"
+    },
+    {
+      "type": "textarea",
+      "id": "card_3_text",
+      "label": "Text",
+      "default": "In a world that wants you quiet, wearing your beliefs is a radical act of sovereignty."
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "range",
+      "id": "card_gap_desktop",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Card gap (desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "card_gap_mobile",
+      "min": 15,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Card gap (mobile)",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Card padding",
+      "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "show_card_border",
+      "label": "Show card border",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Border color",
+      "default": "#333333"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_hover_effect",
+      "label": "Enable hover effect",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "card_hover_border_color",
+      "label": "Hover border color",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Card typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "card_title_font",
+      "label": "Title font",
+      "default": "serif"
+    },
+    {
+      "type": "range",
+      "id": "card_title_size",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Title size",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Title color",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "font_picker",
+      "id": "card_text_font",
+      "label": "Text font",
+      "default": "sans-serif"
+    },
+    {
+      "type": "range",
+      "id": "card_text_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Text size",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Text color",
+      "default": "#b3b3b3"
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "select",
+      "id": "animation_preset",
+      "label": "Animation preset",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "minimal",
+          "label": "Minimal (fade + rise)"
+        },
+        {
+          "value": "staggered",
+          "label": "Staggered reveal"
+        },
+        {
+          "value": "glow",
+          "label": "Soft glow entrance"
+        }
+      ],
+      "default": "minimal"
+    },
+    {
+      "type": "range",
+      "id": "animation_speed",
+      "min": 200,
+      "max": 1000,
+      "step": 50,
+      "unit": "ms",
+      "label": "Animation speed",
+      "default": 600
+    }
+  ],
+  "presets": [
+    {
+      "name": "Philosophy grid"
+    }
+  ]
+}
 {% endschema %}
