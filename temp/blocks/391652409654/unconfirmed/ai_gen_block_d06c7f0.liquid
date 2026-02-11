@@ -1,6 +1,731 @@
+{% doc %}
+  @prompt
+    Create a Shopify Online Store 2.0 custom section called “Guide Spotlight – Signature Bio”.
+    
+    Layout:
+    - Full-width section with warm ivory background and generous padding (desktop 100px top/bottom, mobile 70px).
+    - Center container max-width 1180px.
+    - Two-column layout on desktop:
+      - Left: tall portrait image (about 46–50% width)
+      - Right: text content (about 50–54% width), vertically centered
+    - Mobile: image on top, text below, left-aligned on mobile with comfortable spacing.
+    
+    Design details (make it feel UNIQUE and editorial):
+    - Image is displayed like a “framed print”:
+      - Add an offset frame behind the image (a slightly darker ivory rectangle) shifted down/right by 14px.
+      - Add a thin border around the image and a soft shadow.
+      - Optional: add a tiny “tape” corner detail (small rotated rectangle) on the top edge for a collage feel (subtle, premium).
+    - On the text side:
+      - Eyebrow (editable): uppercase, wide tracking, gold accent.
+      - Name: large serif (dark charcoal).
+      - Add a “handwritten underline” stroke beneath the name using an SVG path (gold accent).
+      - Role line: smaller, gold or muted tone.
+      - Bio: paragraph text, muted gray, line height ~1.7.
+      - Add optional mini-stat blocks under the bio (2–3 items) like “10+ years”, “Hundreds guided”, “Somatic healing” (as repeatable blocks).
+    
+    Settings/schema:
+    - Image picker (primary portrait)
+    - Optional second image (hover swap)
+    - Eyebrow text, Name text, Role text, Bio rich text
+    - Stats blocks (label + value)
+    - Accent color, background color, text color
+    - Toggle: show/hide stats
+    - Toggle: enable animations
+    
+    Animations (animate EVERYTHING; run once when in view):
+    - Background: subtle fade-in + a soft gradient “wash” that moves very slightly from left to right (2s).
+    - Image: “polaroid settle” entrance:
+      - Starts slightly rotated (-1.5deg) and scaled (1.03), then settles to 0deg and 1.0 with ease-out.
+      - Reveal the image using a mask wipe from bottom to top (clip-path).
+    - Offset frame behind image slides in from the left (small distance).
+    - Eyebrow: stamp-in (opacity + tiny scale pop) and tracking tightens slightly.
+    - Name: masked reveal + underline draws itself (SVG stroke-dash animation).
+    - Role + bio: staggered fade-up (role first, then bio).
+    - Stats: each stat fades up, and the number does a quick count-up (only if it’s numeric).
+    - Hover micro-interactions (desktop):
+      - Image gently zooms to 1.04.
+      - If second image is provided, crossfade to it on hover (slow, premium).
+      - Underline gets a tiny shimmer sweep (once).
+    - Respect prefers-reduced-motion: no rotation, no count-up, no wipes—just simple fade-in.
+    
+    Technical requirements:
+    - No external libraries.
+    - Use IntersectionObserver to add “is-visible” classes.
+    - All animation values controlled via CSS variables for easy tuning.
+    
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .guide-spotlight-{{ ai_gen_id }} {
+    display: block;
+    position: relative;
+    background-color: {{ block.settings.background_color }};
+    padding: 100px 20px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 749px) {
+    .guide-spotlight-{{ ai_gen_id }} {
+      padding: 70px 20px;
+    }
+  }
+
+  .guide-spotlight-{{ ai_gen_id }}::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.15) 50%, transparent 100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .guide-spotlight-{{ ai_gen_id }}.is-visible::before {
+    animation: guide-spotlight-wash-{{ ai_gen_id }} 2s ease-out forwards;
+  }
+
+  @keyframes guide-spotlight-wash-{{ ai_gen_id }} {
+    0% {
+      left: -100%;
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      left: 100%;
+      opacity: 0;
+    }
+  }
+
+  .guide-spotlight-container-{{ ai_gen_id }} {
+    max-width: 1180px;
+    margin: 0 auto;
+    opacity: 0;
+  }
+
+  .guide-spotlight-{{ ai_gen_id }}.is-visible .guide-spotlight-container-{{ ai_gen_id }} {
+    animation: guide-spotlight-fade-in-{{ ai_gen_id }} 0.8s ease-out forwards;
+  }
+
+  @keyframes guide-spotlight-fade-in-{{ ai_gen_id }} {
+    to {
+      opacity: 1;
+    }
+  }
+
+  .guide-spotlight-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: 1fr 1.08fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  @media (max-width: 989px) {
+    .guide-spotlight-grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  .guide-spotlight-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+  }
+
+  .guide-spotlight-frame-offset-{{ ai_gen_id }} {
+    position: absolute;
+    top: 14px;
+    left: -14px;
+    width: 100%;
+    height: 100%;
+    background-color: {{ block.settings.background_color | color_darken: 8 }};
+    border-radius: 2px;
+    z-index: 1;
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+
+  .guide-spotlight-{{ ai_gen_id }}.is-visible .guide-spotlight-frame-offset-{{ ai_gen_id }} {
+    animation: guide-spotlight-frame-slide-{{ ai_gen_id }} 1s ease-out 0.2s forwards;
+  }
+
+  @keyframes guide-spotlight-frame-slide-{{ ai_gen_id }} {
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  .guide-spotlight-image-container-{{ ai_gen_id }} {
+    position: relative;
+    z-index: 2;
+    border: 1px solid {{ block.settings.background_color | color_darken: 12 }};
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transform: rotate(-1.5deg) scale(1.03);
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+  }
+
+  .guide-spotlight-{{ ai_gen_id }}.is-visible .guide-spotlight-image-container-{{ ai_gen_id }} {
+    animation: guide-spotlight-polaroid-settle-{{ ai_gen_id }} 1.2s ease-out 0.3s forwards,
+               guide-spotlight-image-reveal-{{ ai_gen_id }} 1s ease-out 0.3s forwards;
+  }
+
+  @keyframes guide-spotlight-polaroid-settle-{{ ai_gen_id }} {
+    to {
+      transform: rotate(0deg) scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes guide-spotlight-image-reveal-{{ ai_gen_id }} {
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  .guide-spotlight-image-container-{{ ai_gen_id }} img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+  }
+
+  .guide-spotlight-image-container-{{ ai_gen_id }}:hover img.guide-spotlight-primary-image-{{ ai_gen_id }} {
+    transform: scale(1.04);
+  }
+
+  .guide-spotlight-image-container-{{ ai_gen_id }} img.guide-spotlight-secondary-image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+  }
+
+  .guide-spotlight-image-container-{{ ai_gen_id }}:hover img.guide-spotlight-secondary-image-{{ ai_gen_id }} {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+
+  .guide-spotlight-tape-{{ ai_gen_id }} {
+    position: absolute;
+    top: -8px;
+    right: 15%;
+    width: 60px;
+    height: 20px;
+    background-color: {{ block.settings.accent_color | color_modify: 'alpha', 0.3 }};
+    transform: rotate(-3deg);
+    z-index: 3;
+    opacity: 0;
+  }
+
+  .guide-spotlight-{{ ai_gen_id }}.is-visible .guide-spotlight-tape-{{ ai_gen_id }} {
+    animation: guide-spotlight-fade-in-{{ ai_gen_id }} 0.6s ease-out 1.2s forwards;
+  }
+
+  .guide-spotlight-content-{{ ai_gen_id }} {
+    padding-left: 20px;
+  }
+
+  @media (max-width: 989px) {
+    .guide-spotlight-content-{{ ai_gen_id }} {
+      padding-left: 0;
+      text-align: left;
+    }
+  }
+
+  .guide-spotlight-eyebrow-{{ ai_gen_id }} {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: {{ block.settings.accent_color }};
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  .guide-spotlight-{{ ai_gen_id }}.is-visible .guide-spotlight-eyebrow-{{ ai_gen_id }} {
+    animation: guide-spotlight-stamp-{{ ai_gen_id }} 0.6s ease-out 0.6s forwards;
+  }
+
+  @keyframes guide-spotlight-stamp-{{ ai_gen_id }} {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+      letter-spacing: 0.3em;
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+      letter-spacing: 0.2em;
+    }
+  }
+
+  .guide-spotlight-name-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .guide-spotlight-name-{{ ai_gen_id }} {
+    font-family: Georgia, serif;
+    font-size: 48px;
+    line-height: 1.2;
+    color: {{ block.settings.text_color }};
+    margin: 0;
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+
+  @media (max-width: 749px) {
+    .guide-spotlight-name-{{ ai_gen_id }} {
+      font-size: 36px;
+    }
+  }
+
+  .guide-spotlight-{{ ai_gen_id }}.is-visible .guide-spotlight-name-{{ ai_gen_id }} {
+    animation: guide-spotlight-name-reveal-{{ ai_gen_id }} 1s ease-out 0.8s forwards;
+  }
+
+  @keyframes guide-spotlight-name-reveal-{{ ai_gen_id }} {
+    to {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  .guide-spotlight-underline-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    overflow: visible;
+  }
+
+  .guide-spotlight-underline-{{ ai_gen_id }} path {
+    stroke: {{ block.settings.accent_color }};
+    stroke-width: 2;
+    fill: none;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+  }
+
+  .guide-spotlight-{{ ai_gen_id }}.is-visible .guide-spotlight-underline-{{ ai_gen_id }} path {
+    animation: guide-spotlight-draw-underline-{{ ai_gen_id }} 1.2s ease-out 1.2s forwards;
+  }
+
+  @keyframes guide-spotlight-draw-underline-{{ ai_gen_id }} {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .guide-spotlight-name-wrapper-{{ ai_gen_id }}:hover .guide-spotlight-underline-{{ ai_gen_id }} path {
+    animation: guide-spotlight-shimmer-{{ ai_gen_id }} 0.8s ease-out;
+  }
+
+  @keyframes guide-spotlight-shimmer-{{ ai_gen_id }} {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
+
+  .guide-spotlight-role-{{ ai_gen_id }} {
+    font-size: 16px;
+    color: {{ block.settings.accent_color }};
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .guide-spotlight-{{ ai_gen_id }}.is-visible .guide-spotlight-role-{{ ai_gen_id }} {
+    animation: guide-spotlight-fade-up-{{ ai_gen_id }} 0.8s ease-out 1.4s forwards;
+  }
+
+  @keyframes guide-spotlight-fade-up-{{ ai_gen_id }} {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .guide-spotlight-bio-{{ ai_gen_id }} {
+    font-size: 16px;
+    line-height: 1.7;
+    color: {{ block.settings.text_color | color_modify: 'alpha', 0.8 }};
+    margin-bottom: 32px;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .guide-spotlight-{{ ai_gen_id }}.is-visible .guide-spotlight-bio-{{ ai_gen_id }} {
+    animation: guide-spotlight-fade-up-{{ ai_gen_id }} 0.8s ease-out 1.6s forwards;
+  }
+
+  .guide-spotlight-stats-{{ ai_gen_id }} {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 749px) {
+    .guide-spotlight-stats-{{ ai_gen_id }} {
+      gap: 24px;
+    }
+  }
+
+  .guide-spotlight-stat-{{ ai_gen_id }} {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .guide-spotlight-{{ ai_gen_id }}.is-visible .guide-spotlight-stat-{{ ai_gen_id }}:nth-child(1) {
+    animation: guide-spotlight-fade-up-{{ ai_gen_id }} 0.6s ease-out 1.8s forwards;
+  }
+
+  .guide-spotlight-{{ ai_gen_id }}.is-visible .guide-spotlight-stat-{{ ai_gen_id }}:nth-child(2) {
+    animation: guide-spotlight-fade-up-{{ ai_gen_id }} 0.6s ease-out 2s forwards;
+  }
+
+  .guide-spotlight-{{ ai_gen_id }}.is-visible .guide-spotlight-stat-{{ ai_gen_id }}:nth-child(3) {
+    animation: guide-spotlight-fade-up-{{ ai_gen_id }} 0.6s ease-out 2.2s forwards;
+  }
+
+  .guide-spotlight-stat-value-{{ ai_gen_id }} {
+    font-size: 28px;
+    font-weight: 600;
+    color: {{ block.settings.accent_color }};
+    margin-bottom: 4px;
+  }
+
+  .guide-spotlight-stat-label-{{ ai_gen_id }} {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: {{ block.settings.text_color | color_modify: 'alpha', 0.7 }};
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .guide-spotlight-{{ ai_gen_id }}::before,
+    .guide-spotlight-container-{{ ai_gen_id }},
+    .guide-spotlight-frame-offset-{{ ai_gen_id }},
+    .guide-spotlight-image-container-{{ ai_gen_id }},
+    .guide-spotlight-tape-{{ ai_gen_id }},
+    .guide-spotlight-eyebrow-{{ ai_gen_id }},
+    .guide-spotlight-name-{{ ai_gen_id }},
+    .guide-spotlight-underline-{{ ai_gen_id }} path,
+    .guide-spotlight-role-{{ ai_gen_id }},
+    .guide-spotlight-bio-{{ ai_gen_id }},
+    .guide-spotlight-stat-{{ ai_gen_id }} {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      clip-path: none !important;
+    }
+
+    .guide-spotlight-image-container-{{ ai_gen_id }} img,
+    .guide-spotlight-underline-{{ ai_gen_id }} path {
+      transition: none !important;
+    }
+  }
+{% endstyle %}
+
+<guide-spotlight-{{ ai_gen_id }} class="guide-spotlight-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="guide-spotlight-container-{{ ai_gen_id }}">
+    <div class="guide-spotlight-grid-{{ ai_gen_id }}">
+      <div class="guide-spotlight-image-wrapper-{{ ai_gen_id }}">
+        <div class="guide-spotlight-frame-offset-{{ ai_gen_id }}"></div>
+        <div class="guide-spotlight-image-container-{{ ai_gen_id }}">
+          {% if block.settings.primary_image %}
+            <img
+              src="{{ block.settings.primary_image | image_url: width: 800 }}"
+              alt="{{ block.settings.primary_image.alt | escape }}"
+              loading="lazy"
+              width="{{ block.settings.primary_image.width }}"
+              height="{{ block.settings.primary_image.height }}"
+              class="guide-spotlight-primary-image-{{ ai_gen_id }}"
+            >
+          {% else %}
+            <div style="aspect-ratio: 3/4; background: #f4f4f4; display: flex; align-items: center; justify-content: center;">
+              {{ 'image' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
+          {% if block.settings.secondary_image %}
+            <img
+              src="{{ block.settings.secondary_image | image_url: width: 800 }}"
+              alt="{{ block.settings.secondary_image.alt | escape }}"
+              loading="lazy"
+              width="{{ block.settings.secondary_image.width }}"
+              height="{{ block.settings.secondary_image.height }}"
+              class="guide-spotlight-secondary-image-{{ ai_gen_id }}"
+            >
+          {% endif %}
+        </div>
+        {% if block.settings.show_tape %}
+          <div class="guide-spotlight-tape-{{ ai_gen_id }}"></div>
+        {% endif %}
+      </div>
+
+      <div class="guide-spotlight-content-{{ ai_gen_id }}">
+        {% if block.settings.eyebrow != blank %}
+          <div class="guide-spotlight-eyebrow-{{ ai_gen_id }}">{{ block.settings.eyebrow }}</div>
+        {% endif %}
+
+        {% if block.settings.name != blank %}
+          <div class="guide-spotlight-name-wrapper-{{ ai_gen_id }}">
+            <h2 class="guide-spotlight-name-{{ ai_gen_id }}">{{ block.settings.name }}</h2>
+            <svg class="guide-spotlight-underline-{{ ai_gen_id }}" viewBox="0 0 300 12" preserveAspectRatio="none">
+              <path d="M 0 6 Q 75 2, 150 6 T 300 6" />
+            </svg>
+          </div>
+        {% endif %}
+
+        {% if block.settings.role != blank %}
+          <div class="guide-spotlight-role-{{ ai_gen_id }}">{{ block.settings.role }}</div>
+        {% endif %}
+
+        {% if block.settings.bio != blank %}
+          <div class="guide-spotlight-bio-{{ ai_gen_id }}">{{ block.settings.bio }}</div>
+        {% endif %}
+
+        {% if block.settings.show_stats %}
+          <div class="guide-spotlight-stats-{{ ai_gen_id }}">
+            {% if block.settings.stat_1_value != blank %}
+              <div class="guide-spotlight-stat-{{ ai_gen_id }}" data-value="{{ block.settings.stat_1_value }}">
+                <div class="guide-spotlight-stat-value-{{ ai_gen_id }}" data-count-target>{{ block.settings.stat_1_value }}</div>
+                <div class="guide-spotlight-stat-label-{{ ai_gen_id }}">{{ block.settings.stat_1_label }}</div>
+              </div>
+            {% endif %}
+            {% if block.settings.stat_2_value != blank %}
+              <div class="guide-spotlight-stat-{{ ai_gen_id }}" data-value="{{ block.settings.stat_2_value }}">
+                <div class="guide-spotlight-stat-value-{{ ai_gen_id }}" data-count-target>{{ block.settings.stat_2_value }}</div>
+                <div class="guide-spotlight-stat-label-{{ ai_gen_id }}">{{ block.settings.stat_2_label }}</div>
+              </div>
+            {% endif %}
+            {% if block.settings.stat_3_value != blank %}
+              <div class="guide-spotlight-stat-{{ ai_gen_id }}" data-value="{{ block.settings.stat_3_value }}">
+                <div class="guide-spotlight-stat-value-{{ ai_gen_id }}" data-count-target>{{ block.settings.stat_3_value }}</div>
+                <div class="guide-spotlight-stat-label-{{ ai_gen_id }}">{{ block.settings.stat_3_label }}</div>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</guide-spotlight-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class GuideSpotlight{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.hasAnimated = false;
+      }
+
+      connectedCallback() {
+        this.setupIntersectionObserver();
+      }
+
+      setupIntersectionObserver() {
+        const options = {
+          threshold: 0.2,
+          rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && !this.hasAnimated) {
+              this.classList.add('is-visible');
+              this.hasAnimated = true;
+              this.animateStats();
+            }
+          });
+        }, options);
+
+        observer.observe(this);
+      }
+
+      animateStats() {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return;
+
+        const stats = this.querySelectorAll('.guide-spotlight-stat-{{ ai_gen_id }}');
+        
+        stats.forEach((stat, index) => {
+          const valueElement = stat.querySelector('[data-count-target]');
+          const originalValue = stat.dataset.value;
+          const numericMatch = originalValue.match(/(\d+)/);
+          
+          if (numericMatch) {
+            const targetNumber = parseInt(numericMatch[0]);
+            const prefix = originalValue.substring(0, numericMatch.index);
+            const suffix = originalValue.substring(numericMatch.index + numericMatch[0].length);
+            
+            setTimeout(() => {
+              this.countUp(valueElement, 0, targetNumber, 1000, prefix, suffix);
+            }, 1800 + (index * 200));
+          }
+        });
+      }
+
+      countUp(element, start, end, duration, prefix, suffix) {
+        const range = end - start;
+        const increment = range / (duration / 16);
+        let current = start;
+        
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= end) {
+            current = end;
+            clearInterval(timer);
+          }
+          element.textContent = prefix + Math.floor(current) + suffix;
+        }, 16);
+      }
+    }
+
+    customElements.define('guide-spotlight-{{ ai_gen_id }}', GuideSpotlight{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Guide spotlight",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "primary_image",
+      "label": "Primary portrait"
+    },
+    {
+      "type": "image_picker",
+      "id": "secondary_image",
+      "label": "Secondary portrait (hover)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tape",
+      "label": "Show tape detail",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Meet Your Guide"
+    },
+    {
+      "type": "text",
+      "id": "name",
+      "label": "Name",
+      "default": "Sarah Mitchell"
+    },
+    {
+      "type": "text",
+      "id": "role",
+      "label": "Role",
+      "default": "Somatic Healing Practitioner"
+    },
+    {
+      "type": "richtext",
+      "id": "bio",
+      "label": "Bio",
+      "default": "<p>With over a decade of experience in somatic healing and embodiment practices, Sarah guides individuals through transformative journeys of self-discovery and healing. Her approach blends ancient wisdom with modern therapeutic techniques.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Stats"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stats",
+      "label": "Show stats",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "stat_1_value",
+      "label": "Stat 1 value",
+      "default": "10+ years"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Stat 1 label",
+      "default": "Experience"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_value",
+      "label": "Stat 2 value",
+      "default": "500+"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Stat 2 label",
+      "default": "Clients guided"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_value",
+      "label": "Stat 3 value",
+      "default": "100%"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Stat 3 label",
+      "default": "Dedicated"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FAF7F2"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#2C2C2C"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#C4A77D"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Guide spotlight"
+    }
+  ]
+}
 {% endschema %}
