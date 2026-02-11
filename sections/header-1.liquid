@@ -13,17 +13,101 @@
       <nav class="header-1__nav" aria-label="Main">
         {%- if section.settings.menu != blank -%}
           {%- for link in linklists[section.settings.menu].links -%}
-            <div class="header-1__nav-item" {% if link.links != empty %}aria-haspopup="true" aria-expanded="false"{% endif %}>
-              <a href="{{ link.url }}" class="header-1__nav-link {% if link.active %}header-1__nav-link--active{% endif %}">
+            {%- assign link_handle = link.title | handleize -%}
+            {%- assign mega_block = nil -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'mega_menu' and block.settings.trigger_handle != blank -%}
+                {%- assign trigger_handle = block.settings.trigger_handle | strip | handleize -%}
+                {%- if link_handle == trigger_handle -%}
+                  {%- assign mega_block = block -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- assign has_dropdown = false -%}
+            {%- if mega_block != nil or link.links != empty -%}
+              {%- assign has_dropdown = true -%}
+            {%- endif -%}
+            {%- assign is_mega = false -%}
+            {%- if mega_block != nil -%}
+              {%- assign is_mega = true -%}
+            {%- endif -%}
+            <div class="header-1__nav-item {% if has_dropdown %}header-1__nav-item--has-dropdown{% endif %} {% if is_mega %}header-1__nav-item--mega{% endif %}" {% if has_dropdown %}aria-haspopup="true" aria-expanded="false" data-header-dropdown{% endif %}>
+              <a href="{{ link.url }}" class="header-1__nav-link {% if link.active %}header-1__nav-link--active{% endif %}" {% if has_dropdown %}aria-expanded="false" aria-controls="header-1-dropdown-{{ section.id }}-{{ forloop.index }}" id="header-1-trigger-{{ section.id }}-{{ forloop.index }}"{% endif %}>
                 {{ link.title | escape }}
-                {%- if link.links != empty or forloop.index <= 2 -%}
+                {%- if has_dropdown -%}
                   <span class="header-1__nav-chevron" aria-hidden="true">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                   </span>
                 {%- endif -%}
               </a>
-              {%- if link.links != empty -%}
-                <div class="header-1__dropdown" role="menu" aria-label="{{ link.title | escape }}">
+              {%- if is_mega and mega_block != nil -%}
+                {%- assign col_count = mega_block.settings.columns | default: 2 -%}
+                <div class="header-1__mega" id="header-1-dropdown-{{ section.id }}-{{ forloop.index }}" role="menu" aria-label="{{ link.title | escape }}" style="--mega-columns: {{ col_count }};" {{ mega_block.shopify_attributes }}>
+                  <div class="header-1__mega-inner">
+                    {%- assign cols_done = 0 -%}
+                    {%- for i in (1..5) -%}
+                      {%- if cols_done >= col_count -%}
+                        {%- break -%}
+                      {%- endif -%}
+                      {%- assign col_heading = '' -%}
+                      {%- assign col_menu = '' -%}
+                      {%- assign col_image = nil -%}
+                      {%- if i == 1 -%}
+                        {%- assign col_heading = mega_block.settings.column_1_heading -%}
+                        {%- assign col_menu = mega_block.settings.column_1_menu -%}
+                        {%- assign col_image = mega_block.settings.column_1_image -%}
+                      {%- elsif i == 2 -%}
+                        {%- assign col_heading = mega_block.settings.column_2_heading -%}
+                        {%- assign col_menu = mega_block.settings.column_2_menu -%}
+                        {%- assign col_image = mega_block.settings.column_2_image -%}
+                      {%- elsif i == 3 -%}
+                        {%- assign col_heading = mega_block.settings.column_3_heading -%}
+                        {%- assign col_menu = mega_block.settings.column_3_menu -%}
+                        {%- assign col_image = mega_block.settings.column_3_image -%}
+                      {%- elsif i == 4 -%}
+                        {%- assign col_heading = mega_block.settings.column_4_heading -%}
+                        {%- assign col_menu = mega_block.settings.column_4_menu -%}
+                        {%- assign col_image = mega_block.settings.column_4_image -%}
+                      {%- elsif i == 5 -%}
+                        {%- assign col_heading = mega_block.settings.column_5_heading -%}
+                        {%- assign col_menu = mega_block.settings.column_5_menu -%}
+                        {%- assign col_image = mega_block.settings.column_5_image -%}
+                      {%- endif -%}
+                      {%- assign col_has_content = false -%}
+                      {%- if col_heading != blank or col_menu != blank -%}
+                        {%- assign col_has_content = true -%}
+                      {%- endif -%}
+                      {%- if col_menu != blank and linklists[col_menu].links.size > 0 -%}
+                        {%- assign col_has_content = true -%}
+                      {%- endif -%}
+                      {%- if col_has_content or col_image != blank -%}
+                        {%- assign cols_done = cols_done | plus: 1 -%}
+                        <div class="header-1__mega-column">
+                          {%- if col_image != blank -%}
+                            <div class="header-1__mega-column-image">
+                              <img src="{{ col_image | image_url: width: 400 }}" alt="{{ col_heading | default: '' | escape }}" width="400" height="300" loading="lazy">
+                            </div>
+                          {%- endif -%}
+                          {%- if col_heading != blank -%}
+                            <p class="header-1__mega-column-heading">{{ col_heading | escape }}</p>
+                          {%- endif -%}
+                          {%- if col_menu != blank and linklists[col_menu].links.size > 0 -%}
+                            <ul class="header-1__mega-column-links" role="none">
+                              {%- for child in linklists[col_menu].links -%}
+                                <li role="none">
+                                  <a href="{{ child.url }}" class="header-1__mega-link" role="menuitem">{{ child.title | escape }}</a>
+                                </li>
+                              {%- endfor -%}
+                            </ul>
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- elsif link.links != empty -%}
+                <div class="header-1__dropdown" id="header-1-dropdown-{{ section.id }}-{{ forloop.index }}" role="menu" aria-label="{{ link.title | escape }}">
                   {%- for child in link.links -%}
                     <a href="{{ child.url }}" class="header-1__dropdown-link" role="menuitem">{{ child.title | escape }}</a>
                   {%- endfor -%}
@@ -77,6 +161,68 @@
       "label": "Solid background on scroll",
       "default": true,
       "info": "When enabled, header gets a solid background after scrolling."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_menu",
+      "name": "Mega menu",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "trigger_handle",
+          "label": "Menu item handle",
+          "info": "Handle of the nav link that opens this mega menu (e.g. shop, collections). Matches the link title in lowercase with dashes (e.g. 'Our Story' → our-story)."
+        },
+        {
+          "type": "select",
+          "id": "columns",
+          "label": "Number of columns",
+          "default": "2",
+          "options": [
+            { "value": "2", "label": "2" },
+            { "value": "3", "label": "3" },
+            { "value": "4", "label": "4" },
+            { "value": "5", "label": "5" }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Column 1"
+        },
+        { "type": "text", "id": "column_1_heading", "label": "Heading" },
+        { "type": "link_list", "id": "column_1_menu", "label": "Menu" },
+        { "type": "image_picker", "id": "column_1_image", "label": "Image (optional)" },
+        {
+          "type": "header",
+          "content": "Column 2"
+        },
+        { "type": "text", "id": "column_2_heading", "label": "Heading" },
+        { "type": "link_list", "id": "column_2_menu", "label": "Menu" },
+        { "type": "image_picker", "id": "column_2_image", "label": "Image (optional)" },
+        {
+          "type": "header",
+          "content": "Column 3"
+        },
+        { "type": "text", "id": "column_3_heading", "label": "Heading" },
+        { "type": "link_list", "id": "column_3_menu", "label": "Menu" },
+        { "type": "image_picker", "id": "column_3_image", "label": "Image (optional)" },
+        {
+          "type": "header",
+          "content": "Column 4"
+        },
+        { "type": "text", "id": "column_4_heading", "label": "Heading" },
+        { "type": "link_list", "id": "column_4_menu", "label": "Menu" },
+        { "type": "image_picker", "id": "column_4_image", "label": "Image (optional)" },
+        {
+          "type": "header",
+          "content": "Column 5"
+        },
+        { "type": "text", "id": "column_5_heading", "label": "Heading" },
+        { "type": "link_list", "id": "column_5_menu", "label": "Menu" },
+        { "type": "image_picker", "id": "column_5_image", "label": "Image (optional)" }
+      ]
     }
   ]
 }

@@ -2,10 +2,43 @@
  * Header 1 (Sacred Rebel) — SACRED_REBEL_HOMEPAGE_PROMPT.md §2
  * - Scroll: add .header-1--scrolled for solid background (transition-all duration-500).
  * - Mobile menu: open/close overlay and drawer.
+ * - Desktop dropdowns: keyboard (Escape to close, aria-expanded sync).
  */
 
 (function () {
   const HEADER_SCROLL_THRESHOLD = 24;
+
+  function initDesktopDropdowns() {
+    const nav = document.querySelector('.header-1__nav');
+    if (!nav) return;
+
+    const items = nav.querySelectorAll('.header-1__nav-item[data-header-dropdown]');
+    items.forEach(function (item) {
+      const trigger = item.querySelector('.header-1__nav-link[aria-controls]');
+      const panel = trigger ? document.getElementById(trigger.getAttribute('aria-controls')) : null;
+      if (!trigger || !panel) return;
+
+      function setExpanded(open) {
+        const value = open ? 'true' : 'false';
+        trigger.setAttribute('aria-expanded', value);
+        item.setAttribute('aria-expanded', value);
+      }
+
+      item.addEventListener('focusin', function () {
+        setExpanded(true);
+      });
+
+      item.addEventListener('focusout', function (e) {
+        if (!item.contains(e.relatedTarget)) setExpanded(false);
+      });
+
+      item.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') return;
+        setExpanded(false);
+        trigger.focus();
+      });
+    });
+  }
 
   function initHeader1() {
     const header = document.getElementById('header-1');
@@ -74,9 +107,11 @@
     document.addEventListener('DOMContentLoaded', function () {
       initHeader1();
       initMobileMenu();
+      initDesktopDropdowns();
     });
   } else {
     initHeader1();
     initMobileMenu();
+    initDesktopDropdowns();
   }
 })();

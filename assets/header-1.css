@@ -147,7 +147,8 @@
   z-index: 100;
 }
 
-.header-1__nav-item:hover .header-1__dropdown {
+.header-1__nav-item--has-dropdown:hover .header-1__dropdown,
+.header-1__nav-item--has-dropdown:focus-within .header-1__dropdown {
   opacity: 1;
   visibility: visible;
 }
@@ -168,6 +169,94 @@
 .header-1__dropdown-link:hover {
   color: var(--header-1-text);
   background-color: rgba(26, 26, 26, 0.04);
+}
+
+/* Mega menu — wide panel, 2–5 columns, show on hover/focus */
+.header-1__mega {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(0.4rem);
+  margin-top: 0.25rem;
+  width: min(100vw, 72rem);
+  min-width: 20rem;
+  padding: 2rem 2.5rem;
+  background-color: #FAF7F2;
+  border: 1px solid rgba(26, 26, 26, 0.08);
+  border-radius: var(--header-1-radius, 0.5rem);
+  box-shadow: 0 8px 24px rgba(26, 26, 26, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+  z-index: 100;
+}
+
+.header-1__nav-item--mega:hover .header-1__mega,
+.header-1__nav-item--mega:focus-within .header-1__mega {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.header-1__mega-inner {
+  display: grid;
+  grid-template-columns: repeat(var(--mega-columns, 2), minmax(0, 1fr));
+  gap: 2rem 2.5rem;
+}
+
+.header-1__mega-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.header-1__mega-column-image {
+  border-radius: 0.25rem;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background-color: rgba(26, 26, 26, 0.06);
+}
+
+.header-1__mega-column-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.header-1__mega-column-heading {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--header-1-text);
+  margin: 0 0 0.25rem;
+}
+
+.header-1__mega-column-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header-1__mega-column-links li {
+  margin: 0;
+}
+
+.header-1__mega-link {
+  display: block;
+  padding: 0.35rem 0;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.35rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--header-1-text-muted);
+  text-decoration: none;
+  transition: color var(--header-1-transition-fast) ease;
+}
+
+.header-1__mega-link:hover {
+  color: var(--header-1-text);
 }
 
 /* Actions: cart + mobile toggle */
