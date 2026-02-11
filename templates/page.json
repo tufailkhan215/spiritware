@@ -171,41 +171,6 @@
           },
           "blocks": {}
         },
-        "ai_gen_block_5239485_fwk8EV": {
-          "type": "ai_gen_block_5239485",
-          "settings": {
-            "heading": "Stories of Transformation",
-            "heading_font": "serif",
-            "heading_size": 42,
-            "heading_color": "#5a4a42",
-            "testimonial_1_name": "Sarah Mitchell",
-            "testimonial_1_label": "Wellness Coach",
-            "testimonial_1_quote": "This journey has completely transformed how I approach my daily rituals. The mindfulness practices have brought such peace into my life.",
-            "testimonial_2_name": "Emma Rodriguez",
-            "testimonial_2_label": "Yoga Instructor",
-            "testimonial_2_quote": "I've discovered a deeper connection to myself through these practices. Every day feels more intentional and aligned with my true purpose.",
-            "testimonial_3_name": "Maya Chen",
-            "testimonial_3_label": "Meditation Teacher",
-            "testimonial_3_quote": "The transformation has been profound. I feel more grounded, centered, and connected to the sacred feminine energy within me.",
-            "card_background": "#f5f1ed",
-            "card_border_color": "#d4c4b8",
-            "card_hover_border_color": "#c4b4a8",
-            "card_border_width": 0,
-            "card_border_radius": 4,
-            "star_color": "#b8a89a",
-            "quote_size": 15,
-            "quote_color": "#5a4a42",
-            "name_size": 14,
-            "name_color": "#5a4a42",
-            "label_size": 12,
-            "label_color": "#8a7a72",
-            "background_color": "#ebe5df",
-            "section_padding_top": 72,
-            "section_padding_bottom": 72,
-            "max_width": 1200
-          },
-          "blocks": {}
-        },
         "ai_gen_block_ae9255e_yG4jkw": {
           "type": "ai_gen_block_ae9255e",
           "settings": {
@@ -287,6 +252,41 @@
             "button_link_3": ""
           },
           "blocks": {}
+        },
+        "ai_gen_block_5239485_fwk8EV": {
+          "type": "ai_gen_block_5239485",
+          "settings": {
+            "heading": "Stories of Transformation",
+            "heading_font": "serif",
+            "heading_size": 42,
+            "heading_color": "#5a4a42",
+            "testimonial_1_name": "Sarah Mitchell",
+            "testimonial_1_label": "Wellness Coach",
+            "testimonial_1_quote": "This journey has completely transformed how I approach my daily rituals. The mindfulness practices have brought such peace into my life.",
+            "testimonial_2_name": "Emma Rodriguez",
+            "testimonial_2_label": "Yoga Instructor",
+            "testimonial_2_quote": "I've discovered a deeper connection to myself through these practices. Every day feels more intentional and aligned with my true purpose.",
+            "testimonial_3_name": "Maya Chen",
+            "testimonial_3_label": "Meditation Teacher",
+            "testimonial_3_quote": "The transformation has been profound. I feel more grounded, centered, and connected to the sacred feminine energy within me.",
+            "card_background": "#f5f1ed",
+            "card_border_color": "#d4c4b8",
+            "card_hover_border_color": "#c4b4a8",
+            "card_border_width": 0,
+            "card_border_radius": 4,
+            "star_color": "#b8a89a",
+            "quote_size": 15,
+            "quote_color": "#5a4a42",
+            "name_size": 14,
+            "name_color": "#5a4a42",
+            "label_size": 12,
+            "label_color": "#8a7a72",
+            "background_color": "#ebe5df",
+            "section_padding_top": 72,
+            "section_padding_bottom": 72,
+            "max_width": 1200
+          },
+          "blocks": {}
         }
       },
       "block_order": [
@@ -294,8 +294,8 @@
         "ai_gen_block_3357a55_Eamh4n",
         "ai_gen_block_0916a8e_JwWUn7",
         "ai_gen_block_5614f22_VCCPwE",
-        "ai_gen_block_5239485_fwk8EV",
-        "ai_gen_block_ae9255e_yG4jkw"
+        "ai_gen_block_ae9255e_yG4jkw",
+        "ai_gen_block_5239485_fwk8EV"
       ],
       "settings": {}
     }
