@@ -42,7 +42,11 @@
                 {%- endif -%}
               </a>
               {%- if is_mega and mega_block != nil -%}
-                {%- assign col_count = mega_block.settings.columns | default: 2 -%}
+                {%- assign col_count_raw = mega_block.settings.columns | default: 2 -%}
+                {%- assign col_count = col_count_raw | plus: 0 -%}
+                {%- if col_count <= 0 -%}
+                  {%- assign col_count = 2 -%}
+                {%- endif -%}
                 <div class="header-1__mega" id="header-1-dropdown-{{ section.id }}-{{ forloop.index }}" role="menu" aria-label="{{ link.title | escape }}" style="--mega-columns: {{ col_count }};" {{ mega_block.shopify_attributes }}>
                   <div class="header-1__mega-inner">
                     {%- assign cols_done = 0 -%}
