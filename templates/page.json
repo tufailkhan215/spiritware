@@ -19,6 +19,7 @@
       "blocks": {
         "ai_gen_block_9e7f2cb_Mjjct6": {
           "type": "ai_gen_block_9e7f2cb",
+          "disabled": true,
           "settings": {
             "background_image": "shopify://shop_images/Screenshot_2026-02-11_at_8.15.34_PM.png",
             "section_height": 700,
