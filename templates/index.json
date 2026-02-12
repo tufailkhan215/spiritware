@@ -155,7 +155,7 @@
           "type": "testimonial",
           "settings": {
             "image": "shopify://shop_images/Screenshot2026-02-11at6.51.47PM.png",
-            "quote": "\"The quality is unmatched and the messages hit different. Every time I wear my hoodie, strangers stop me to ask about it.\"",
+            "quote": "The quality is unmatched and the messages hit different. Every time I wear my hoodie, strangers stop me to ask about it. This is more than clothing—it's a conversation starter.",
             "name": "Jordan K.",
             "location": "Austin, TX"
           }
@@ -164,7 +164,7 @@
           "type": "testimonial",
           "settings": {
             "image": "shopify://shop_images/Screenshot_2026-02-11_at_7.08.03_PM.png",
-            "quote": "\"Sacred Rebel isn't just clothing—it's a reminder to show up as yourself.\"",
+            "quote": "Sacred Rebel isn't just clothing—it's a reminder to show up as yourself. The craftsmanship is exceptional and the designs are truly unique.",
             "name": "Alex M.",
             "location": "Portland, OR"
           }
@@ -173,7 +173,7 @@
           "type": "testimonial",
           "settings": {
             "image": "shopify://shop_images/Screenshot2026-02-11at6.51.34PM.png",
-            "quote": "\"The pieces feel intentional. I get compliments every time I wear them.\"",
+            "quote": "The pieces feel intentional and purposeful. I get compliments every time I wear them, and I love knowing I'm supporting a brand that actually cares.",
             "name": "Sam R.",
             "location": "Brooklyn, NY"
           }
@@ -187,8 +187,8 @@
       "name": "Community Testimonials 1",
       "settings": {
         "section_id": "community",
-        "subheading": "The Tribe Speaks",
-        "heading": "Community Voices"
+        "subheading": "Real Stories from Real People",
+        "heading": "Loved by Our Community"
       }
     },
     "cta_1_E9LEbP": {
