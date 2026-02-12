@@ -380,10 +380,11 @@
         "blocks": {
           "mega_menu_jUWDXa": {
             "type": "mega_menu",
+            "disabled": true,
             "settings": {
-              "trigger_handle": "catalog",
+              "trigger_handle": "collections",
               "columns": "4",
-              "column_1_heading": "Column 1",
+              "column_1_heading": "Hot and Holy",
               "column_1_menu": "customer-account-main-menu",
               "column_2_heading": "Column 2",
               "column_2_menu": "footer",
