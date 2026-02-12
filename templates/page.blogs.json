@@ -324,6 +324,7 @@
         },
         "ai_gen_block_197b713_4TkYne": {
           "type": "ai_gen_block_197b713",
+          "disabled": true,
           "settings": {
             "title": "",
             "description": "",
