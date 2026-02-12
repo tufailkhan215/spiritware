@@ -335,6 +335,7 @@
         "ai_gen_block_69ccc26_emeLr8": {
           "type": "ai_gen_block_69ccc26",
           "settings": {
+            "background_image": "shopify://shop_images/Screenshot_2026-02-11_at_7.54.20_PM.png",
             "overlay_opacity": 40,
             "height_style": "full",
             "desktop_width_percent": 100,
