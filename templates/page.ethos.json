@@ -302,6 +302,42 @@
         "card_color": "#ede8e0"
       }
     },
+    "blocks_hzMGHz": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_582703b_MQRiUE": {
+          "type": "ai_gen_block_582703b",
+          "settings": {
+            "image_1": "shopify://shop_images/Screenshot_2026-02-11_at_7.37.08_PM.png",
+            "image_2": "shopify://shop_images/Screenshot_2026-02-11_at_7.37.30_PM.png",
+            "image_3": "shopify://shop_images/Screenshot_2026-02-11_at_7.37.20_PM.png",
+            "image_4": "shopify://shop_images/Screenshot_2026-02-11_at_7.37.36_PM.png",
+            "image_5": "shopify://shop_images/Screenshot_2026-02-11_at_7.38.16_PM.png",
+            "image_6": "shopify://shop_images/Screenshot_2026-02-11_at_7.38.42_PM.png",
+            "image_7": "shopify://shop_images/Screenshot_2026-02-11_at_7.41.13_PM.png",
+            "image_8": "shopify://shop_images/Screenshot_2026-02-11_at_7.40.14_PM.png",
+            "image_9": "shopify://shop_images/Screenshot_2026-02-11_at_7.42.27_PM.png",
+            "image_10": "shopify://shop_images/Screenshot_2026-02-11_at_7.40.21_PM.png",
+            "image_11": "shopify://shop_images/Screenshot_2026-02-11_at_7.42.42_PM.png",
+            "image_12": "shopify://shop_images/Screenshot_2026-02-11_at_7.45.27_PM.png",
+            "image_width": 300,
+            "image_height": 500,
+            "gap": 20,
+            "padding": 40,
+            "desktop_width_percent": 100,
+            "border_radius": 8,
+            "background_color": "#ffffff",
+            "scroll_speed": 30
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_582703b_MQRiUE"
+      ],
+      "name": "Photo carousel",
+      "settings": {}
+    },
     "17705044398e4cdbea": {
       "type": "_blocks",
       "blocks": {
@@ -521,6 +557,7 @@
     "values_1_RicVrz",
     "177050432393c4b975",
     "values_1_cyJPzb",
+    "blocks_hzMGHz",
     "17705044398e4cdbea",
     "values_1_Gte8Ax",
     "title_text_1_tzzQJU",
