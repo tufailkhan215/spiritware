@@ -236,6 +236,7 @@
         },
         "ai_gen_block_ae9255e_yG4jkw": {
           "type": "ai_gen_block_ae9255e",
+          "disabled": true,
           "settings": {
             "eyebrow": "JOIN US",
             "heading": "Upcoming Retreats",
