@@ -325,7 +325,7 @@
             "image_4": "shopify://shop_images/IMG_4934.jpg",
             "autoplay_speed": 2,
             "desktop_width_percent": 100,
-            "gap": 16,
+            "gap": 4,
             "border_radius": 0,
             "dot_active_color": "#000000",
             "dot_inactive_color": "#cccccc"
