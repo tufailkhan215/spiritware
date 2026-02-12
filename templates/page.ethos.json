@@ -60,29 +60,29 @@
             "background_image": "shopify://shop_images/Screenshot_2026-02-07_at_12.48.20_PM.png",
             "background_color": "#000000",
             "overlay_direction": "to bottom",
-            "overlay_color_1": "rgba(0, 0, 0, 0.7)",
-            "overlay_color_2": "rgba(0, 0, 0, 0.3)",
+            "overlay_color_1": "#000000b3",
+            "overlay_color_2": "#0000004d",
             "overlay_opacity": 0.6,
             "title_font": "sans_serif_n7",
             "title_size": 80,
-            "title_color": "#FFFFFF",
+            "title_color": "#ffffff",
             "title_letter_spacing": 0,
             "title_text_transform": "none",
             "subtitle_font": "sans_serif_n4",
             "subtitle_size": 20,
-            "subtitle_color": "#E0E0E0",
+            "subtitle_color": "#e0e0e0",
             "subtitle_letter_spacing": 0,
             "button_font": "sans_serif_n7",
             "cta_text_size": 16,
             "button_letter_spacing": 0,
             "button_text_transform": "none",
-            "cta_bg_color": "#FFFFFF",
+            "cta_bg_color": "#ffffff",
             "cta_text_color": "#000000",
             "cta_border_radius": 4,
             "particle_count": 50,
-            "particle_color": "#FFFFFF",
+            "particle_color": "#ffffff",
             "show_scroll_indicator": true,
-            "scroll_indicator_color": "#FFFFFF"
+            "scroll_indicator_color": "#ffffff"
           },
           "blocks": {}
         }
@@ -152,7 +152,7 @@
         "ai_gen_block_d8d18a5_hfjbRR": {
           "type": "ai_gen_block_d8d18a5",
           "settings": {
-            "image": "shopify://shop_images/Screenshot_2026-02-07_at_2.27.33_PM.png",
+            "image": "shopify://shop_images/Screenshot2026-02-11at6.48.15PM.png",
             "enable_height_control": true,
             "image_height_desktop": 350,
             "min_height_desktop": 400,
@@ -308,7 +308,7 @@
         "ai_gen_block_d8d18a5_MUeytk": {
           "type": "ai_gen_block_d8d18a5",
           "settings": {
-            "image": "shopify://shop_images/Screenshot_2026-02-07_at_2.27.33_PM.png",
+            "image": "shopify://shop_images/Screenshot_2026-02-11_at_7.08.03_PM.png",
             "enable_height_control": true,
             "image_height_desktop": 350,
             "min_height_desktop": 400,
@@ -362,6 +362,7 @@
         "value_VBBGMy",
         "value_fBmGKU"
       ],
+      "disabled": true,
       "name": "Values 1 (Ethical Manufacturing)",
       "settings": {
         "layout": "extended",
@@ -376,6 +377,32 @@
         "heading": "Ethical Manufacturing",
         "description": "Behind every garment is a human being. We partner exclusively with manufacturers who share our values of dignity, safety, and fair compensation.",
         "card_color": "#faf7f2"
+      }
+    },
+    "title_text_1_tzzQJU": {
+      "type": "title-text-1",
+      "disabled": true,
+      "name": "Title Text 1 (Contact CTA)",
+      "settings": {
+        "layout": "cta",
+        "background_type": "color",
+        "background_color": "#faf7f2",
+        "background_opacity": 60,
+        "overlay_color": "#1a1a1a",
+        "overlay_opacity": 70,
+        "heading_color": "#1a1a1a",
+        "body_color": "#1a1a1a",
+        "body_opacity": 70,
+        "subheading": "Our Purpose",
+        "heading": "Want to Know More?",
+        "body": "We're an open book. If you have questions about our practices, materials, or impact, we'd love to hear from you.",
+        "button_label": "Contact Us",
+        "button_link": "/contact",
+        "button_background_color": "#1a1a1a",
+        "button_text_color": "#faf7f2",
+        "button_hover_background_color": "#c4a77d",
+        "newsletter_placeholder": "Your email",
+        "newsletter_button_label": "Subscribe"
       }
     },
     "box_section_1_C86hXm": {
@@ -429,31 +456,6 @@
         "overlay_opacity": 50,
         "subheading": "Our Standards",
         "heading": "Certifications & Commitments"
-      }
-    },
-    "title_text_1_tzzQJU": {
-      "type": "title-text-1",
-      "name": "Title Text 1 (Contact CTA)",
-      "settings": {
-        "layout": "cta",
-        "background_type": "color",
-        "background_color": "#faf7f2",
-        "background_opacity": 60,
-        "overlay_color": "#1a1a1a",
-        "overlay_opacity": 70,
-        "heading_color": "#1a1a1a",
-        "body_color": "#1a1a1a",
-        "body_opacity": 70,
-        "subheading": "Our Purpose",
-        "heading": "Want to Know More?",
-        "body": "We're an open book. If you have questions about our practices, materials, or impact, we'd love to hear from you.",
-        "button_label": "Contact Us",
-        "button_link": "/contact",
-        "button_background_color": "#1a1a1a",
-        "button_text_color": "#faf7f2",
-        "button_hover_background_color": "#c4a77d",
-        "newsletter_placeholder": "Your email",
-        "newsletter_button_label": "Subscribe"
       }
     },
     "title_text_1_VQ89P9": {
@@ -521,8 +523,8 @@
     "values_1_cyJPzb",
     "17705044398e4cdbea",
     "values_1_Gte8Ax",
-    "box_section_1_C86hXm",
     "title_text_1_tzzQJU",
+    "box_section_1_C86hXm",
     "title_text_1_VQ89P9",
     "title_text_1_D47fUP"
   ]
