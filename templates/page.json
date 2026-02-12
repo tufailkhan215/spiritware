@@ -214,7 +214,7 @@
             "button_border_radius": 6,
             "enable_animations": true,
             "enable_parallax": true,
-            "image_1": "shopify://shop_images/waves-crash-on-feet.jpg",
+            "image_1": "shopify://shop_images/Screenshot_2026-02-11_at_8.34.07_PM.png",
             "location_1": "Bali, Indonesia",
             "dates_1": "March 15-22, 2026",
             "title_1": "Sacred Feminine Awakening",
@@ -316,6 +316,42 @@
           },
           "blocks": {}
         },
+        "ai_gen_block_fd697d1_CXcnfe": {
+          "type": "ai_gen_block_fd697d1",
+          "settings": {
+            "image_1": "shopify://shop_images/IMG_4931.jpg",
+            "image_2": "shopify://shop_images/IMG_4932.jpg",
+            "image_3": "shopify://shop_images/IMG_4933.jpg",
+            "image_4": "shopify://shop_images/IMG_4934.jpg",
+            "autoplay_speed": 2,
+            "desktop_width_percent": 100,
+            "gap": 16,
+            "border_radius": 0,
+            "dot_active_color": "#000000",
+            "dot_inactive_color": "#cccccc"
+          },
+          "blocks": {}
+        },
+        "ai_gen_block_582703b_xx8YHC": {
+          "type": "ai_gen_block_582703b",
+          "name": "Photo carousel",
+          "disabled": true,
+          "settings": {
+            "image_1": "shopify://shop_images/IMG_4931.jpg",
+            "image_2": "shopify://shop_images/IMG_4932.jpg",
+            "image_3": "shopify://shop_images/IMG_4933.jpg",
+            "image_4": "shopify://shop_images/IMG_4934.jpg",
+            "image_width": 300,
+            "image_height": 500,
+            "gap": 20,
+            "padding": 40,
+            "desktop_width_percent": 100,
+            "border_radius": 8,
+            "background_color": "#ffffff",
+            "scroll_speed": 50
+          },
+          "blocks": {}
+        },
         "ai_gen_block_ffaae6a_Lat6G3": {
           "type": "ai_gen_block_ffaae6a",
           "settings": {
@@ -380,6 +416,8 @@
         "ai_gen_block_ae9255e_yG4jkw",
         "ai_gen_block_555947b_8XcY93",
         "ai_gen_block_5239485_fwk8EV",
+        "ai_gen_block_fd697d1_CXcnfe",
+        "ai_gen_block_582703b_xx8YHC",
         "ai_gen_block_ffaae6a_Lat6G3",
         "ai_gen_block_69ccc26_emeLr8"
       ],
