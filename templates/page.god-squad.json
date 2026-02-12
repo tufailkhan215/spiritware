@@ -28,8 +28,8 @@
             "enable_parallax": true,
             "parallax_strength": 0.3,
             "eyebrow": "Spiritually Armed & Dangerously Aligned",
-            "headline": "Sacred Squad",
-            "subhead": "<p>For the warriors of light who claim their divine backup without apology.</p>",
+            "headline": "Hot & Holy",
+            "subhead": "<p>A collection for those who refuse to choose between devotion and desire.<br/>For those reclaiming softness as strength, faith as fire, and embodiment as truth.</p>",
             "content_max_width": 600,
             "button_primary_text": "Shop Collection",
             "button_primary_link": "",
@@ -57,22 +57,25 @@
           },
           "blocks": {}
         },
-        "ai_gen_block_24a0b50_jVVrQ7": {
-          "type": "ai_gen_block_24a0b50",
+        "ai_gen_block_555947b_8XcY93": {
+          "type": "ai_gen_block_555947b",
           "settings": {
-            "heading": "Hot & Holy",
-            "paragraph_1": "<p>A collection for those who refuse to choose between devotion & desire.</p><p>It’s for the ones reclaiming softness as strength, faith as fire, & embodiment as truth.</p><p>These pieces are vehicles, what you step into is the becoming.</p>",
-            "paragraph_2": "",
-            "paragraph_3": "",
-            "image_focal_point": "center",
-            "show_cta": false,
-            "cta_text": "Learn More",
-            "cta_url": "",
-            "mobile_image_first": false,
-            "background_color": "#f7f2eb",
-            "heading_color": "#2c2c2c",
-            "body_color": "#6b6b6b",
-            "accent_color": "#c4a77d"
+            "primary_image": "shopify://shop_images/Screenshot_2026-02-11_at_7.40.14_PM.png",
+            "eyebrow": "2026 Launch Capsule",
+            "name": "Hot & Holy",
+            "role": "Bravery In The Face Of Adversity",
+            "bio": "<p>A collection for those who refuse to choose between devotion & desire.</p><p>It’s for the ones reclaiming softness as strength, faith as fire, & embodiment as truth.</p><p>These pieces are vehicles, what you step into is the becoming.</p>",
+            "show_stats": true,
+            "stat_1_value": "Limited Drop",
+            "stat_1_label": "Feb 2026",
+            "stat_2_value": "",
+            "stat_2_label": "",
+            "stat_3_value": "Certified",
+            "stat_3_label": "HOT & HOLY",
+            "background_color": "#faf7f2",
+            "text_color": "#2c2c2c",
+            "accent_color": "#c4a77d",
+            "enable_animations": true
           },
           "blocks": {}
         },
@@ -317,28 +320,6 @@
           },
           "blocks": {}
         },
-        "ai_gen_block_555947b_8XcY93": {
-          "type": "ai_gen_block_555947b",
-          "settings": {
-            "primary_image": "shopify://shop_images/Screenshot_2026-02-11_at_7.40.14_PM.png",
-            "eyebrow": "2026 Launch Capsule",
-            "name": "Hot & Holy",
-            "role": "Bravery In The Face Of Adversity",
-            "bio": "<p>A collection for those who refuse to choose between devotion & desire.</p><p>It’s for the ones reclaiming softness as strength, faith as fire, & embodiment as truth.</p><p>These pieces are vehicles, what you step into is the becoming.</p>",
-            "show_stats": true,
-            "stat_1_value": "Limited Drop",
-            "stat_1_label": "Feb 2026",
-            "stat_2_value": "",
-            "stat_2_label": "",
-            "stat_3_value": "Certified",
-            "stat_3_label": "HOT & HOLY",
-            "background_color": "#faf7f2",
-            "text_color": "#2c2c2c",
-            "accent_color": "#c4a77d",
-            "enable_animations": true
-          },
-          "blocks": {}
-        },
         "ai_gen_block_582703b_YfT6aQ": {
           "type": "ai_gen_block_582703b",
           "name": "Photo carousel",
@@ -405,13 +386,12 @@
       },
       "block_order": [
         "ai_gen_block_9e7f2cb_Mjjct6",
-        "ai_gen_block_24a0b50_jVVrQ7",
+        "ai_gen_block_555947b_8XcY93",
         "ai_gen_block_72c2933_pmbMBT",
         "ai_gen_block_3357a55_Eamh4n",
         "ai_gen_block_0916a8e_JwWUn7",
         "ai_gen_block_5614f22_VCCPwE",
         "ai_gen_block_ae9255e_yG4jkw",
-        "ai_gen_block_555947b_8XcY93",
         "ai_gen_block_582703b_YfT6aQ",
         "ai_gen_block_5239485_fwk8EV"
       ],
