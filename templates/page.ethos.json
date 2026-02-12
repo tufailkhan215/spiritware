@@ -286,6 +286,7 @@
         "value_fdcT6d",
         "value_iDH744"
       ],
+      "disabled": true,
       "name": "Values 1 (Sustainability)",
       "settings": {
         "layout": "extended",
