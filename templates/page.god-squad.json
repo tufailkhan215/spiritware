@@ -81,6 +81,7 @@
         },
         "ai_gen_block_72c2933_pmbMBT": {
           "type": "ai_gen_block_72c2933",
+          "disabled": true,
           "settings": {
             "desktop_width_percent": 100,
             "max_width": 1200,
@@ -320,6 +321,34 @@
           },
           "blocks": {}
         },
+        "ai_gen_block_197b713_4TkYne": {
+          "type": "ai_gen_block_197b713",
+          "settings": {
+            "title": "Shop by category",
+            "description": "<p>Discover our curated collection of products</p>",
+            "collection": "hot-holy",
+            "products_to_show": 6,
+            "text_alignment": "center",
+            "columns_desktop": 3,
+            "columns_mobile": "2",
+            "desktop_width_percent": 100,
+            "grid_gap": 20,
+            "section_padding": 50,
+            "card_border_radius": 8,
+            "card_padding": 16,
+            "card_background": "#ffffff",
+            "background_color": "#ffffff",
+            "title_color": "#000000",
+            "description_color": "#666666",
+            "product_title_color": "#000000",
+            "price_color": "#000000",
+            "title_size": 36,
+            "description_size": 16,
+            "product_title_size": 16,
+            "price_size": 16
+          },
+          "blocks": {}
+        },
         "ai_gen_block_582703b_YfT6aQ": {
           "type": "ai_gen_block_582703b",
           "name": "Photo carousel",
@@ -392,6 +421,7 @@
         "ai_gen_block_0916a8e_JwWUn7",
         "ai_gen_block_5614f22_VCCPwE",
         "ai_gen_block_ae9255e_yG4jkw",
+        "ai_gen_block_197b713_4TkYne",
         "ai_gen_block_582703b_YfT6aQ",
         "ai_gen_block_5239485_fwk8EV"
       ],
