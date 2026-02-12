@@ -69,10 +69,10 @@
             "cta_text": "Learn More",
             "cta_url": "",
             "mobile_image_first": false,
-            "background_color": "#F7F2EB",
-            "heading_color": "#2C2C2C",
-            "body_color": "#6B6B6B",
-            "accent_color": "#C4A77D"
+            "background_color": "#f7f2eb",
+            "heading_color": "#2c2c2c",
+            "body_color": "#6b6b6b",
+            "accent_color": "#c4a77d"
           },
           "blocks": {}
         },
@@ -338,8 +338,36 @@
           },
           "blocks": {}
         },
+        "ai_gen_block_582703b_YfT6aQ": {
+          "type": "ai_gen_block_582703b",
+          "name": "Photo carousel",
+          "settings": {
+            "image_1": "shopify://shop_images/Screenshot_2026-02-11_at_7.41.13_PM.png",
+            "image_2": "shopify://shop_images/Screenshot2026-02-11at6.51.47PM.png",
+            "image_3": "shopify://shop_images/Screenshot2026-02-11at6.52.03PM.png",
+            "image_4": "shopify://shop_images/Screenshot2026-02-11at6.42.43PM.png",
+            "image_5": "shopify://shop_images/Screenshot2026-02-11at6.48.15PM.png",
+            "image_6": "shopify://shop_images/Screenshot2026-02-11at6.33.38PM.png",
+            "image_7": "shopify://shop_images/Screenshot2026-02-11at6.51.53PM.png",
+            "image_8": "shopify://shop_images/Screenshot2026-02-11at6.56.35PM.png",
+            "image_9": "shopify://shop_images/Screenshot2026-02-11at6.51.58PM.png",
+            "image_10": "shopify://shop_images/Screenshot2026-02-11at6.51.47PM.png",
+            "image_11": "shopify://shop_images/Screenshot2026-02-11at6.35.41PM.png",
+            "image_12": "shopify://shop_images/Screenshot_2026-02-07_at_12.46.43_PM.png",
+            "image_width": 300,
+            "image_height": 500,
+            "gap": 20,
+            "padding": 40,
+            "desktop_width_percent": 100,
+            "border_radius": 8,
+            "background_color": "#ffffff",
+            "scroll_speed": 30
+          },
+          "blocks": {}
+        },
         "ai_gen_block_5239485_fwk8EV": {
           "type": "ai_gen_block_5239485",
+          "disabled": true,
           "settings": {
             "heading": "Stories of Transformation",
             "heading_font": "serif",
@@ -383,6 +411,7 @@
         "ai_gen_block_5614f22_VCCPwE",
         "ai_gen_block_ae9255e_yG4jkw",
         "ai_gen_block_555947b_8XcY93",
+        "ai_gen_block_582703b_YfT6aQ",
         "ai_gen_block_5239485_fwk8EV"
       ],
       "settings": {}
