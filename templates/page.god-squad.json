@@ -324,8 +324,8 @@
         "ai_gen_block_197b713_4TkYne": {
           "type": "ai_gen_block_197b713",
           "settings": {
-            "title": "Shop by category",
-            "description": "<p>Discover our curated collection of products</p>",
+            "title": "",
+            "description": "",
             "collection": "hot-holy",
             "products_to_show": 6,
             "text_alignment": "center",
