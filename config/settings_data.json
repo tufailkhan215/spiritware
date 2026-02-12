@@ -380,7 +380,9 @@
         "settings": {
           "logo_text": "Sacred Rebel",
           "menu": "main-menu",
-          "header_scrolled_bg": true
+          "header_scrolled_bg": true,
+          "background_color": "#faf7f2",
+          "background_color_scrolled": "#faf7f2"
         }
       },
       "footer-1": {
