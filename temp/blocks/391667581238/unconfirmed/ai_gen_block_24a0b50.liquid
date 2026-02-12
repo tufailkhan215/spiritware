@@ -1,6 +1,607 @@
+{% doc %}
+  @prompt
+    Create a Shopify Online Store 2.0 custom section named “The Origin – Split Story (Spotlight)”.
+    
+    Layout / styling:
+    - Full-width section with warm ivory background (#F7F2EB style).
+    - Centered container max-width 1200px with generous padding (desktop 100px top/bottom, mobile 70px).
+    - Two-column layout on desktop:
+      - Left column: heading + 3 paragraph blocks (about 45–50% width).
+      - Right column: image (about 50–55% width), tall portrait crop, object-fit cover.
+    - Mobile: stack with image below text (or add a setting to choose image first).
+    
+    Typography:
+    - Heading: large serif, dark charcoal.
+    - Paragraphs: muted gray, line-height ~1.7, spaced out like the screenshot.
+    
+    Content settings (editable):
+    - Heading text
+    - Paragraphs as repeatable blocks (rich text)
+    - Image picker + image focal point
+    - Optional CTA button (toggle on/off)
+    - Color settings: background, heading color, body color, accent gold
+    
+    Make it unique (design detail):
+    - Add a subtle vertical accent line to the left of the text column (gold/neutral). It should move/activate with scroll.
+    
+    Animations (animate EVERYTHING):
+    Entrance (run once on scroll into view):
+    - Heading: mask reveal from bottom to top.
+    - Image: soft “curtain reveal” from right-to-left (clip-path wipe) + slight scale settle (1.04 → 1).
+    
+    Scroll spotlight (ongoing, subtle):
+    - As the user scrolls through the section, each paragraph becomes “active” one at a time:
+      - Active paragraph: opacity 1 and slightly darker text
+      - Inactive paragraphs: opacity 0.55
+    - The vertical accent line “travels” to align with the active paragraph (like a reading indicator).
+    - Image gets tiny parallax drift (translateY small range) for depth (desktop only).
+    
+    Micro-interactions:
+    - Hover (desktop): paragraph gently brightens on hover; image zooms slightly (1.03).
+    - Respect prefers-reduced-motion: disable parallax and scroll spotlight, use simple fade-ins only.
+    
+    Technical:
+    - Use IntersectionObserver for entrance.
+    - Use scroll listener + requestAnimationFrame for the active paragraph highlight and line position (very light).
+    - No external libraries.
+    , its not showing any of the paragraphs
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .origin-split-story-{{ ai_gen_id }} {
+    display: block;
+    background-color: {{ block.settings.background_color }};
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .origin-split-story__container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 40px;
+  }
+
+  .origin-split-story__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: 45fr 55fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .origin-split-story__content-{{ ai_gen_id }} {
+    position: relative;
+    padding-left: 30px;
+  }
+
+  .origin-split-story__accent-line-{{ ai_gen_id }} {
+    position: absolute;
+    left: 0;
+    width: 2px;
+    height: 60px;
+    background: linear-gradient(to bottom, {{ block.settings.accent_color }}, transparent);
+    transition: top 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: top;
+  }
+
+  .origin-split-story__heading-{{ ai_gen_id }} {
+    font-size: 48px;
+    line-height: 1.2;
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 40px 0;
+    font-family: Georgia, serif;
+    font-weight: 400;
+    overflow: hidden;
+  }
+
+  .origin-split-story__heading-inner-{{ ai_gen_id }} {
+    display: block;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+  }
+
+  .origin-split-story--visible-{{ ai_gen_id }} .origin-split-story__heading-inner-{{ ai_gen_id }} {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .origin-split-story__paragraphs-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .origin-split-story__paragraph-{{ ai_gen_id }} {
+    font-size: 16px;
+    line-height: 1.7;
+    color: {{ block.settings.body_color }};
+    margin: 0;
+    opacity: 0.55;
+    transition: opacity 0.4s ease, color 0.3s ease;
+    cursor: default;
+  }
+
+  .origin-split-story__paragraph-{{ ai_gen_id }}.active {
+    opacity: 1;
+    color: {{ block.settings.heading_color }};
+  }
+
+  .origin-split-story__paragraph-{{ ai_gen_id }}:hover {
+    opacity: 0.85;
+  }
+
+  .origin-split-story__image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+
+  .origin-split-story__image-clip-{{ ai_gen_id }} {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .origin-split-story--visible-{{ ai_gen_id }} .origin-split-story__image-clip-{{ ai_gen_id }} {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .origin-split-story__image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: {{ block.settings.image_focal_point }};
+    transform: scale(1.04);
+    transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+  }
+
+  .origin-split-story--visible-{{ ai_gen_id }} .origin-split-story__image-{{ ai_gen_id }} {
+    transform: scale(1);
+  }
+
+  .origin-split-story__image-wrapper-{{ ai_gen_id }}:hover .origin-split-story__image-{{ ai_gen_id }} {
+    transform: scale(1.03);
+  }
+
+  .origin-split-story__image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #e8e3db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .origin-split-story__image-placeholder-{{ ai_gen_id }} svg {
+    width: 80px;
+    height: 80px;
+    opacity: 0.3;
+  }
+
+  .origin-split-story__cta-{{ ai_gen_id }} {
+    margin-top: 40px;
+  }
+
+  .origin-split-story__button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 14px 32px;
+    background-color: {{ block.settings.accent_color }};
+    color: {{ block.settings.background_color }};
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .origin-split-story__button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.heading_color }};
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .origin-split-story__container-{{ ai_gen_id }} {
+      padding: 70px 24px;
+    }
+
+    .origin-split-story__grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 50px;
+    }
+
+    {% if block.settings.mobile_image_first %}
+      .origin-split-story__content-{{ ai_gen_id }} {
+        order: 2;
+      }
+
+      .origin-split-story__image-wrapper-{{ ai_gen_id }} {
+        order: 1;
+      }
+    {% endif %}
+
+    .origin-split-story__heading-{{ ai_gen_id }} {
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+
+    .origin-split-story__content-{{ ai_gen_id }} {
+      padding-left: 20px;
+    }
+
+    .origin-split-story__accent-line-{{ ai_gen_id }} {
+      height: 50px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .origin-split-story__heading-inner-{{ ai_gen_id }},
+    .origin-split-story__image-clip-{{ ai_gen_id }},
+    .origin-split-story__image-{{ ai_gen_id }},
+    .origin-split-story__accent-line-{{ ai_gen_id }},
+    .origin-split-story__paragraph-{{ ai_gen_id }} {
+      transition: opacity 0.3s ease;
+    }
+
+    .origin-split-story__heading-inner-{{ ai_gen_id }} {
+      transform: none;
+    }
+
+    .origin-split-story__image-clip-{{ ai_gen_id }} {
+      clip-path: none;
+    }
+
+    .origin-split-story__image-{{ ai_gen_id }} {
+      transform: none;
+    }
+
+    .origin-split-story--visible-{{ ai_gen_id }} .origin-split-story__heading-inner-{{ ai_gen_id }},
+    .origin-split-story--visible-{{ ai_gen_id }} .origin-split-story__image-clip-{{ ai_gen_id }} {
+      opacity: 1;
+    }
+  }
+{% endstyle %}
+
+<origin-split-story-{{ ai_gen_id }}
+  class="origin-split-story-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+  data-reduced-motion="false"
+>
+  <div class="origin-split-story__container-{{ ai_gen_id }}">
+    <div class="origin-split-story__grid-{{ ai_gen_id }}">
+      <div class="origin-split-story__content-{{ ai_gen_id }}">
+        <div class="origin-split-story__accent-line-{{ ai_gen_id }}" data-accent-line></div>
+        
+        {% if block.settings.heading != blank %}
+          <h2 class="origin-split-story__heading-{{ ai_gen_id }}">
+            <span class="origin-split-story__heading-inner-{{ ai_gen_id }}">
+              {{ block.settings.heading }}
+            </span>
+          </h2>
+        {% endif %}
+
+        <div class="origin-split-story__paragraphs-{{ ai_gen_id }}" data-paragraphs>
+          {% if block.settings.paragraph_1 != blank %}
+            <div class="origin-split-story__paragraph-{{ ai_gen_id }}" data-paragraph>
+              {{ block.settings.paragraph_1 }}
+            </div>
+          {% endif %}
+          
+          {% if block.settings.paragraph_2 != blank %}
+            <div class="origin-split-story__paragraph-{{ ai_gen_id }}" data-paragraph>
+              {{ block.settings.paragraph_2 }}
+            </div>
+          {% endif %}
+          
+          {% if block.settings.paragraph_3 != blank %}
+            <div class="origin-split-story__paragraph-{{ ai_gen_id }}" data-paragraph>
+              {{ block.settings.paragraph_3 }}
+            </div>
+          {% endif %}
+        </div>
+
+        {% if block.settings.show_cta and block.settings.cta_text != blank %}
+          <div class="origin-split-story__cta-{{ ai_gen_id }}">
+            <a href="{{ block.settings.cta_url }}" class="origin-split-story__button-{{ ai_gen_id }}">
+              {{ block.settings.cta_text }}
+            </a>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="origin-split-story__image-wrapper-{{ ai_gen_id }}">
+        <div class="origin-split-story__image-clip-{{ ai_gen_id }}">
+          {% if block.settings.image %}
+            <img
+              src="{{ block.settings.image | image_url: width: 1200 }}"
+              alt="{{ block.settings.image.alt | escape }}"
+              class="origin-split-story__image-{{ ai_gen_id }}"
+              data-image
+              loading="lazy"
+              width="{{ block.settings.image.width }}"
+              height="{{ block.settings.image.height }}"
+            >
+          {% else %}
+            <div class="origin-split-story__image-placeholder-{{ ai_gen_id }}">
+              {{ 'image' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</origin-split-story-{{ ai_gen_id }}>
+
+<script>
+(function() {
+  class OriginSplitStory{{ ai_gen_id }} extends HTMLElement {
+    constructor() {
+      super();
+      this.hasAnimated = false;
+      this.paragraphs = [];
+      this.accentLine = null;
+      this.image = null;
+      this.rafId = null;
+      this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      this.dataset.reducedMotion = this.reducedMotion;
+    }
+
+    connectedCallback() {
+      this.paragraphs = Array.from(this.querySelectorAll('[data-paragraph]'));
+      this.accentLine = this.querySelector('[data-accent-line]');
+      this.image = this.querySelector('[data-image]');
+      
+      this.setupIntersectionObserver();
+      
+      if (!this.reducedMotion && this.paragraphs.length > 0) {
+        this.setupScrollEffects();
+      } else if (this.paragraphs.length > 0) {
+        this.paragraphs[0].classList.add('active');
+      }
+    }
+
+    disconnectedCallback() {
+      if (this.observer) {
+        this.observer.disconnect();
+      }
+      if (this.rafId) {
+        cancelAnimationFrame(this.rafId);
+      }
+      window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    setupIntersectionObserver() {
+      this.observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !this.hasAnimated) {
+              this.classList.add('origin-split-story--visible-{{ ai_gen_id }}');
+              this.hasAnimated = true;
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+
+      this.observer.observe(this);
+    }
+
+    setupScrollEffects() {
+      this.handleScroll = () => {
+        if (this.rafId) return;
+        
+        this.rafId = requestAnimationFrame(() => {
+          this.updateActiveParagraph();
+          this.updateParallax();
+          this.rafId = null;
+        });
+      };
+
+      window.addEventListener('scroll', this.handleScroll, { passive: true });
+      this.updateActiveParagraph();
+    }
+
+    updateActiveParagraph() {
+      if (this.paragraphs.length === 0) return;
+
+      const viewportMiddle = window.innerHeight / 2;
+      let closestParagraph = null;
+      let closestDistance = Infinity;
+
+      this.paragraphs.forEach((paragraph) => {
+        const rect = paragraph.getBoundingClientRect();
+        const paragraphMiddle = rect.top + rect.height / 2;
+        const distance = Math.abs(paragraphMiddle - viewportMiddle);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestParagraph = paragraph;
+        }
+      });
+
+      this.paragraphs.forEach((p) => p.classList.remove('active'));
+      
+      if (closestParagraph) {
+        closestParagraph.classList.add('active');
+        this.updateAccentLine(closestParagraph);
+      }
+    }
+
+    updateAccentLine(activeParagraph) {
+      if (!this.accentLine || !activeParagraph) return;
+
+      const contentRect = this.querySelector('.origin-split-story__content-{{ ai_gen_id }}').getBoundingClientRect();
+      const paragraphRect = activeParagraph.getBoundingClientRect();
+      const relativeTop = paragraphRect.top - contentRect.top;
+
+      this.accentLine.style.top = relativeTop + 'px';
+    }
+
+    updateParallax() {
+      if (!this.image || window.innerWidth <= 768) return;
+
+      const rect = this.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      
+      if (rect.top < viewportHeight && rect.bottom > 0) {
+        const scrollProgress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
+        const translateY = (scrollProgress - 0.5) * 30;
+        
+        this.image.style.transform = `scale(1) translateY(${translateY}px)`;
+      }
+    }
+  }
+
+  customElements.define('origin-split-story-{{ ai_gen_id }}', OriginSplitStory{{ ai_gen_id }});
+})();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "The Origin – Split Story",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Origin Story"
+    },
+    {
+      "type": "header",
+      "content": "Paragraphs"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add up to 3 paragraphs that will highlight as you scroll"
+    },
+    {
+      "type": "richtext",
+      "id": "paragraph_1",
+      "label": "Paragraph 1",
+      "default": "<p>Every great journey begins with a single step. Ours started in a small workshop where passion met purpose, and tradition embraced innovation.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "paragraph_2",
+      "label": "Paragraph 2",
+      "default": "<p>Through years of dedication and countless hours of refinement, we've built something that honors the past while looking boldly toward the future.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "paragraph_3",
+      "label": "Paragraph 3",
+      "default": "<p>Today, we continue that legacy with every piece we create, ensuring that quality and craftsmanship remain at the heart of everything we do.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_focal_point",
+      "label": "Image focal point",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show button",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Mobile layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_image_first",
+      "label": "Show image first on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#F7F2EB"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#2C2C2C"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body text",
+      "default": "#6B6B6B"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#C4A77D"
+    }
+  ],
+  "presets": [
+    {
+      "name": "The Origin – Split Story"
+    }
+  ]
+}
 {% endschema %}
