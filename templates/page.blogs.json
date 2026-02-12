@@ -19,7 +19,6 @@
       "blocks": {
         "ai_gen_block_9e7f2cb_Mjjct6": {
           "type": "ai_gen_block_9e7f2cb",
-          "disabled": true,
           "settings": {
             "background_image": "shopify://shop_images/Screenshot_2026-02-07_at_2.27.33_PM.png",
             "section_height": 700,
@@ -194,11 +193,10 @@
         },
         "ai_gen_block_5614f22_VCCPwE": {
           "type": "ai_gen_block_5614f22",
-          "disabled": true,
           "settings": {
-            "top_label": "Where Healing Meets Luxury",
-            "main_heading": "The Experience",
-            "subtitle": "Milk & Honey retreats are intimate, curated experiences for women seeking deep transformation in a sanctuary setting. Named after the biblical promise of abundance, these retreats are designed to help you shed what no longer serves and step into the fullness of who you're meant to be.\n\nEach retreat blends spiritual practice with luxurious self-care, conscious community, and sacred space holding. You'll leave not just rested, but fundamentally shifted.",
+            "top_label": "Sacred Rebel News & Updates",
+            "main_heading": "",
+            "subtitle": "",
             "featured_badge_text": "FEATURED",
             "featured_category": "SUSTAINABILITY",
             "featured_title": "Conscious Consumerism: Voting With Your Dollar",
