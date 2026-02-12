@@ -3,7 +3,9 @@
   Per SACRED_REBEL_HOMEPAGE_PROMPT.md §2. Theme setting: header_style = 'header_1'.
 {% endcomment %}
 
-<header class="header-1" id="header-1" role="banner" data-scrolled-bg="{{ section.settings.header_scrolled_bg }}">
+{%- assign header_bg = section.settings.background_color | default: 'transparent' -%}
+{%- assign header_bg_scrolled = section.settings.background_color_scrolled | default: 'rgba(250, 247, 242, 0.95)' -%}
+<header class="header-1" id="header-1" role="banner" data-scrolled-bg="{{ section.settings.header_scrolled_bg }}" style="--header-1-bg: {{ header_bg }}; --header-1-bg-scrolled: {{ header_bg_scrolled }};">
   <div class="header-1__container">
     <div class="header-1__inner">
       <a href="{{ routes.root_url }}" class="header-1__logo">
@@ -165,6 +167,22 @@
       "label": "Solid background on scroll",
       "default": true,
       "info": "When enabled, header gets a solid background after scrolling."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Header background",
+      "info": "Leave unset for transparent (e.g. over hero)."
+    },
+    {
+      "type": "color",
+      "id": "background_color_scrolled",
+      "label": "Header background (when scrolled)",
+      "default": "#faf7f2"
     }
   ],
   "blocks": [
