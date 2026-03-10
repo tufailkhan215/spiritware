@@ -178,10 +178,12 @@
       {%- if has_description > 0 -%}<button class="product-tab active" data-tab="description" type="button">Description</button>{%- endif -%}
       {%- if has_features != blank -%}<button class="product-tab{% if has_description == 0 %} active{% endif %}" data-tab="features" type="button">Features</button>{%- endif -%}
       {%- if has_care != blank -%}<button class="product-tab{% if has_description == 0 and has_features == blank %} active{% endif %}" data-tab="care" type="button">Care</button>{%- endif -%}
+      <button class="product-tab" data-tab="desreview" type="button">Reviews</button>
     </div>
     {%- if has_description > 0 -%}<div class="product-tab-content active" id="tab-description"><div class="product-tab-body rte">{{ product.description }}</div></div>{%- endif -%}
     {%- if has_features != blank -%}<div class="product-tab-content{% if has_description == 0 %} active{% endif %}" id="tab-features"><div class="product-tab-body rte">{{ product.metafields.custom.features | metafield_tag }}</div></div>{%- endif -%}
     {%- if has_care != blank -%}<div class="product-tab-content{% if has_description == 0 and has_features == blank %} active{% endif %}" id="tab-care"><div class="product-tab-body rte">{{ product.metafields.custom.care | metafield_tag }}</div></div>{%- endif -%}
+  <div class="product-tab-content" id="tab-desreview"><div class="product-tab-body rte"><div id="looxReviews" data-id="{{product.id}}"></div></div></div>
   </div>
   {%- endif -%}
 </div>
