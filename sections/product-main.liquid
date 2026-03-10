@@ -26,8 +26,7 @@
             <div class="product-thumbnails">
               {%- for image in product.images -%}
                 <button type="button" class="product-thumbnail{% if forloop.first %} active{% endif %}" data-image-id="{{ image.id }}" aria-label="View {{ image.alt | escape }}">
-                 {% comment %} <img src="{{ image | image_url: width: 200 }}" alt="{{ image.alt | escape }}" loading="lazy"> {% endcomment %}
-                    <img src="{{ image | image_url }}" alt="{{ image.alt | escape }}" loading="lazy">
+                  <img src="{{ image | image_url: width: 200 }}" alt="{{ image.alt | escape }}" loading="lazy">
                 </button>
               {%- endfor -%}
             </div>
@@ -37,6 +36,7 @@
         <div class="product-details">
           {%- if product.vendor != blank -%}<span class="product-vendor">{{ product.vendor }}</span>{%- endif -%}
           <h1 class="product-title">{{ product.title }}</h1>
+          {% comment %}
           <div class="product-rating">
             <div class="product-rating__stars" aria-hidden="true">
               {%- assign rating_num = product.metafields.custom.rating | default: 4 | times: 1 -%}
@@ -44,6 +44,8 @@
             </div>
             <span class="product-rating__count">{{ product.metafields.custom.review_count | default: '0' }} reviews</span>
           </div>
+          {% endcomment %}
+           <div class="loox-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}"></div>
           <div class="product-price-wrapper">
             <span class="product-price" id="ProductPrice">{{ product.selected_or_first_available_variant.price | money }}</span>
             {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
