@@ -35,7 +35,9 @@
             {% form 'contact', id: 'NewsletterPopupForm' %}
               <div class="newsletter-popup-message newsletter-popup-message--error" id="NewsletterPopupFormError" style="display: none;"></div>
 
+              <input type="hidden" name="utf8" value="✓">
               <input type="hidden" name="contact[tags]" value="newsletter">
+              <input type="hidden" name="contact[body]" value="Newsletter signup">
 
               <div class="newsletter-popup-fields">
                 <div class="newsletter-popup-field">
@@ -184,12 +186,17 @@
           if (!formData.has('form_type')) formData.append('form_type', 'contact');
           var action = form.getAttribute('action') || '/contact#contact_form';
           if (action.indexOf('#') !== -1) action = action.split('#')[0];
+          var body = new URLSearchParams(formData).toString();
 
           fetch(action, {
             method: 'POST',
-            body: formData,
+            body: body,
             redirect: 'manual',
-            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+              'X-Requested-With': 'XMLHttpRequest',
+              'Accept': 'text/html'
+            }
           }).then(function(res) {
             if (res.type === 'opaqueredirect' || res.status === 0 || res.status === 302 || res.status === 303) {
               showSuccess();
