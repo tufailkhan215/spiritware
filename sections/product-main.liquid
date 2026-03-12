@@ -54,8 +54,8 @@
               <span class="product-sale-badge">Sale</span>
             {%- endif -%}
           </div>
-          {%- if product.metafields.custom.short_description != blank -%}
-            {%- assign short_desc = product.metafields.custom.short_description -%}
+          {%- if product.metafields.custom.short_description.value != blank -%}
+            {%- assign short_desc = product.metafields.custom.short_description.value -%}
           {%- else -%}
             {%- assign short_desc = product.description | strip_html | truncatewords: 28 -%}
           {%- endif -%}
