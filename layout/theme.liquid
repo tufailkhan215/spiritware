@@ -230,12 +230,12 @@
       {{ 'footer-1.css' | asset_url | stylesheet_tag }}
     {% endif %}
 
-    {%- unless settings.type_body_font.system? -%}
+    {%- if settings.type_body_font != blank and settings.type_body_font.family != blank and settings.type_body_font.system? == false -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
-    {%- endunless -%}
-    {%- unless settings.type_header_font.system? -%}
+    {%- endif -%}
+    {%- if settings.type_header_font != blank and settings.type_header_font.family != blank and settings.type_header_font.system? == false -%}
       <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
-    {%- endunless -%}
+    {%- endif -%}
 
     {%- if settings.predictive_search_enabled -%}
       <link rel="stylesheet" href="{{ 'component-predictive-search.css' | asset_url }}" media="print" onload="this.media='all'">

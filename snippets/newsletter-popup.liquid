@@ -32,7 +32,7 @@
           </div>
 
           <div id="NewsletterPopupFormWrapper" data-newsletter-popup-form-wrapper>
-            {% form 'customer', id: 'NewsletterPopupForm' %}
+            {% form 'contact', id: 'NewsletterPopupForm' %}
               <div class="newsletter-popup-message newsletter-popup-message--error" id="NewsletterPopupFormError" style="display: none;"></div>
 
               <input type="hidden" name="contact[tags]" value="newsletter">
@@ -181,6 +181,7 @@
             submitBtn.textContent = submitBtn.getAttribute('data-loading-text') || 'Sending...';
           }
           var formData = new FormData(form);
+          if (!formData.has('form_type')) formData.append('form_type', 'contact');
           var action = form.getAttribute('action') || '/contact#contact_form';
           if (action.indexOf('#') !== -1) action = action.split('#')[0];
 
