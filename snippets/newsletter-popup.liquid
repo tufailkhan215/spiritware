@@ -1,0 +1,161 @@
+{% liquid
+  assign popup_enabled = settings.newsletter_popup_enable
+%}
+
+{% if popup_enabled %}
+  <div class="newsletter-popup-overlay" data-newsletter-popup-overlay>
+    <div class="newsletter-popup">
+      <button class="newsletter-popup-close" type="button" aria-label="Close" data-newsletter-popup-close>&times;</button>
+
+      <div class="newsletter-popup-inner">
+        <div class="newsletter-popup-content">
+          {% if settings.newsletter_popup_badge != blank %}
+            <p class="newsletter-popup-badge">
+              {{ settings.newsletter_popup_badge }}
+            </p>
+          {% endif %}
+
+          {% if settings.newsletter_popup_heading != blank %}
+            <h2 class="newsletter-popup-heading">
+              {{ settings.newsletter_popup_heading }}
+            </h2>
+          {% endif %}
+
+          {% if settings.newsletter_popup_subtext != blank %}
+            <p class="newsletter-popup-subtext">
+              {{ settings.newsletter_popup_subtext }}
+            </p>
+          {% endif %}
+
+          {% form 'customer', id: 'NewsletterPopupForm' %}
+            {% if form.errors %}
+              <div class="newsletter-popup-message newsletter-popup-message--error">
+                {{ form.errors | default_errors }}
+              </div>
+            {% endif %}
+
+            {% if form.posted_successfully? %}
+              <div class="newsletter-popup-message newsletter-popup-message--success">
+                {{ 'general.newsletter.confirmation' | t }}
+              </div>
+            {% else %}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+
+              <div class="newsletter-popup-fields">
+                <div class="newsletter-popup-field">
+                  <label class="newsletter-popup-label" for="NewsletterPopupFirstName">
+                    {{ settings.newsletter_popup_first_name_label | default: 'First name' }}
+                  </label>
+                  <input
+                    id="NewsletterPopupFirstName"
+                    class="newsletter-popup-input"
+                    type="text"
+                    name="contact[first_name]"
+                    autocomplete="given-name"
+                  >
+                </div>
+
+                <div class="newsletter-popup-field">
+                  <label class="newsletter-popup-label" for="NewsletterPopupEmail">
+                    {{ settings.newsletter_popup_email_label | default: 'Email' }}
+                  </label>
+                  <input
+                    id="NewsletterPopupEmail"
+                    class="newsletter-popup-input"
+                    type="email"
+                    name="contact[email]"
+                    autocomplete="email"
+                    required
+                  >
+                </div>
+              </div>
+
+              <button class="newsletter-popup-button" type="submit">
+                {{ settings.newsletter_popup_button_label | default: 'Unlock your discount' }}
+              </button>
+
+              {% if settings.newsletter_popup_disclaimer != blank %}
+                <p class="newsletter-popup-disclaimer">
+                  {{ settings.newsletter_popup_disclaimer }}
+                </p>
+              {% endif %}
+            {% endif %}
+          {% endform %}
+        </div>
+
+        {% if settings.newsletter_popup_image != blank %}
+          <div class="newsletter-popup-image-wrapper">
+            <img
+              class="newsletter-popup-image"
+              src="{{ settings.newsletter_popup_image | image_url: width: 800 }}"
+              alt="{{ settings.newsletter_popup_heading | escape }}"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var enabled = {{ settings.newsletter_popup_enable | json }};
+      if (!enabled) return;
+
+      var delaySeconds = {{ settings.newsletter_popup_delay | default: 5 | json }};
+      var overlay = document.querySelector('[data-newsletter-popup-overlay]');
+      if (!overlay) return;
+
+      var CLOSE_KEY = 'newsletter_popup_closed_v1';
+      if (window.localStorage && localStorage.getItem(CLOSE_KEY) === 'true') {
+        return;
+      }
+
+      function openPopup() {
+        overlay.classList.add('newsletter-popup-overlay--visible');
+        var emailInput = overlay.querySelector('#NewsletterPopupEmail');
+        if (emailInput) {
+          emailInput.focus();
+        }
+      }
+
+      function closePopup() {
+        overlay.classList.remove('newsletter-popup-overlay--visible');
+        if (window.localStorage) {
+          localStorage.setItem(CLOSE_KEY, 'true');
+        }
+      }
+
+      document.addEventListener('click', function(event) {
+        if (event.target.matches('[data-newsletter-popup-close]')) {
+          event.preventDefault();
+          closePopup();
+        }
+
+        if (event.target === overlay) {
+          closePopup();
+        }
+      });
+
+      var form = document.getElementById('NewsletterPopupForm');
+      if (form) {
+        form.addEventListener('submit', function() {
+          if (window.localStorage) {
+            localStorage.setItem(CLOSE_KEY, 'true');
+          }
+        });
+      }
+
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && overlay.classList.contains('newsletter-popup-overlay--visible')) {
+          closePopup();
+        }
+      });
+
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(openPopup, Math.max(0, delaySeconds) * 1000);
+      });
+    })();
+  </script>
+{% endif %}
+

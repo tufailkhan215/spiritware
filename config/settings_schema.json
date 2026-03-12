@@ -23,6 +23,73 @@
         ],
         "default": "default",
         "info": "Footer 1 matches the Sacred Rebel design (dark charcoal, newsletter, brand + link columns)."
+      },
+      {
+        "type": "header",
+        "content": "Newsletter popup"
+      },
+      {
+        "type": "checkbox",
+        "id": "newsletter_popup_enable",
+        "label": "Enable newsletter popup",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "newsletter_popup_delay",
+        "label": "Popup delay",
+        "min": 0,
+        "max": 60,
+        "step": 5,
+        "unit": "s",
+        "default": 5
+      },
+      {
+        "type": "image_picker",
+        "id": "newsletter_popup_image",
+        "label": "Popup image"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_popup_badge",
+        "label": "Top badge text",
+        "default": "Save 25%"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_popup_heading",
+        "label": "Heading",
+        "default": "Get the latest from SupraMood"
+      },
+      {
+        "type": "textarea",
+        "id": "newsletter_popup_subtext",
+        "label": "Subheading",
+        "default": "Be the first to know about our secret sales, collection drops, most wanted restocks & more!"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_popup_first_name_label",
+        "label": "First name label",
+        "default": "First name"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_popup_email_label",
+        "label": "Email label",
+        "default": "Email"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_popup_button_label",
+        "label": "Button text",
+        "default": "Unlock your discount"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_popup_disclaimer",
+        "label": "Fine print / disclaimer",
+        "default": ""
       }
     ]
   }
