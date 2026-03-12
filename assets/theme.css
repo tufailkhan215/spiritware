@@ -2103,9 +2103,10 @@ a:hover {
 }
 
 .newsletter-popup-badge {
-  display: inline-block;
+  display: block;
   padding: .4rem 1.2rem;
   color: #facc15;
+  margin-top: 70px;
   font-size: 3.2rem;
   font-weight: 600;
   text-align: center;
