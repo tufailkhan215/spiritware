@@ -54,12 +54,12 @@
               <span class="product-sale-badge">Sale</span>
             {%- endif -%}
           </div>
-          {%- if product.metafields.custom.short_description.value != blank -%}
-            {%- assign short_desc = product.metafields.custom.short_description.value -%}
+          {%- if product.metafields.custom.short_description != blank -%}
+            {%- assign short_desc = product.metafields.custom.short_description.value | strip -%}
           {%- else -%}
             {%- assign short_desc = product.description | strip_html | truncatewords: 28 -%}
           {%- endif -%}
-          {%- if short_desc != blank -%}<p class="product-short-desc">{{ short_desc }}</p>{%- endif -%}
+          {%- if short_desc != blank -%}<div class="product-short-desc">{{ short_desc | newline_to_br }}</div>{%- endif -%}
 
           <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" id="ProductForm">
             <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="ProductVariantId">
