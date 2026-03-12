@@ -15,7 +15,7 @@
     <div class="product-hero">
       <div class="product-hero__grid">
         <div class="product-images">
-          <div class="product-main-image">
+          <div class="product-main-image" id="ProductMainImageWrap" data-swipe-threshold="50">
             {%- if product.featured_image != blank -%}
               <img src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.featured_image.alt | escape }}" id="ProductImage" class="product-featured-image" loading="eager">
             {%- else -%}
@@ -54,7 +54,11 @@
               <span class="product-sale-badge">Sale</span>
             {%- endif -%}
           </div>
-          {%- assign short_desc = product.description | strip_html | truncatewords: 28 -%}
+          {%- if product.metafields.custom.short_description.value != blank -%}
+            {%- assign short_desc = product.metafields.custom.short_description.value -%}
+          {%- else -%}
+            {%- assign short_desc = product.description | strip_html | truncatewords: 28 -%}
+          {%- endif -%}
           {%- if short_desc != blank -%}<p class="product-short-desc">{{ short_desc }}</p>{%- endif -%}
 
           <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" id="ProductForm">
@@ -260,6 +264,30 @@
         var nextThumb = list[nextIndex];
         if (nextThumb) nextThumb.click();
       });
+      var mainImageWrap = document.getElementById('ProductMainImageWrap');
+      if (mainImageWrap) {
+        var touchStartX = 0;
+        var threshold = parseInt(mainImageWrap.getAttribute('data-swipe-threshold') || '50', 10);
+        mainImageWrap.addEventListener('touchstart', function(e) {
+          if (e.touches.length === 1) touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+        mainImageWrap.addEventListener('touchend', function(e) {
+          if (window.innerWidth >= 768) return;
+          if (e.changedTouches.length !== 1) return;
+          var touchEndX = e.changedTouches[0].clientX;
+          var diff = touchStartX - touchEndX;
+          var list = Array.prototype.slice.call(thumbnails);
+          var activeIndex = list.findIndex(function(t) { return t.classList.contains('active'); });
+          if (activeIndex === -1) return;
+          if (diff > threshold) {
+            var nextIndex = (activeIndex + 1) % list.length;
+            list[nextIndex].click();
+          } else if (diff < -threshold) {
+            var prevIndex = (activeIndex - 1 + list.length) % list.length;
+            list[prevIndex].click();
+          }
+        }, { passive: true });
+      }
     }
     var quantityInput = document.getElementById('Quantity');
     var quantityDisplay = document.getElementById('QuantityDisplay');
