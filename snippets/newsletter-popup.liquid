@@ -3,51 +3,38 @@
 %}
 
 {% if popup_enabled %}
-  <div class="newsletter-popup-overlay" data-newsletter-popup-overlay>
+  <div class="newsletter-popup-overlay" data-newsletter-popup-overlay
+    data-success-heading="{{ settings.newsletter_popup_success_heading | escape }}"
+    data-success-message="{{ settings.newsletter_popup_success_message | escape }}">
     <div class="newsletter-popup">
       <button class="newsletter-popup-close" type="button" aria-label="Close" data-newsletter-popup-close>&times;</button>
 
       <div class="newsletter-popup-inner">
         <div class="newsletter-popup-content">
-          {% if settings.newsletter_popup_badge != blank %}
-            <p class="newsletter-popup-badge">
-              {{ settings.newsletter_popup_badge }}
-            </p>
-          {% endif %}
-
-          {% if settings.newsletter_popup_heading != blank %}
-            <h2 class="newsletter-popup-heading">
-              {{ settings.newsletter_popup_heading }}
-            </h2>
-          {% endif %}
-
-          {% if settings.newsletter_popup_subtext != blank %}
-            <p class="newsletter-popup-subtext">
-              {{ settings.newsletter_popup_subtext }}
-            </p>
-          {% endif %}
-
-          {% form 'customer', id: 'NewsletterPopupForm' %}
-            {% if form.errors %}
-              <div class="newsletter-popup-message newsletter-popup-message--error">
-                {{ form.errors | default_errors }}
-              </div>
+          <div id="NewsletterPopupIntro" data-newsletter-popup-intro>
+            {% if settings.newsletter_popup_badge != blank %}
+              <p class="newsletter-popup-badge">
+                {{ settings.newsletter_popup_badge }}
+              </p>
             {% endif %}
 
-            {% if form.posted_successfully? %}
-              <div class="newsletter-popup-success" data-newsletter-popup-success>
-                {% if settings.newsletter_popup_success_heading != blank %}
-                  <h2 class="newsletter-popup-success-heading">
-                    {{ settings.newsletter_popup_success_heading }}
-                  </h2>
-                {% endif %}
-                {% if settings.newsletter_popup_success_message != blank %}
-                  <p class="newsletter-popup-success-message">
-                    {{ settings.newsletter_popup_success_message }}
-                  </p>
-                {% endif %}
-              </div>
-            {% else %}
+            {% if settings.newsletter_popup_heading != blank %}
+              <h2 class="newsletter-popup-heading">
+                {{ settings.newsletter_popup_heading }}
+              </h2>
+            {% endif %}
+
+            {% if settings.newsletter_popup_subtext != blank %}
+              <p class="newsletter-popup-subtext">
+                {{ settings.newsletter_popup_subtext }}
+              </p>
+            {% endif %}
+          </div>
+
+          <div id="NewsletterPopupFormWrapper" data-newsletter-popup-form-wrapper>
+            {% form 'customer', id: 'NewsletterPopupForm' %}
+              <div class="newsletter-popup-message newsletter-popup-message--error" id="NewsletterPopupFormError" style="display: none;"></div>
+
               <input type="hidden" name="contact[tags]" value="newsletter">
 
               <div class="newsletter-popup-fields">
@@ -79,7 +66,7 @@
                 </div>
               </div>
 
-              <button class="newsletter-popup-button" type="submit">
+              <button class="newsletter-popup-button" type="submit" id="NewsletterPopupSubmitBtn" data-original-text="{{ settings.newsletter_popup_button_label | default: 'Unlock your discount' | escape }}">
                 {{ settings.newsletter_popup_button_label | default: 'Unlock your discount' }}
               </button>
 
@@ -88,8 +75,13 @@
                   {{ settings.newsletter_popup_disclaimer }}
                 </p>
               {% endif %}
-            {% endif %}
-          {% endform %}
+            {% endform %}
+          </div>
+
+          <div class="newsletter-popup-success" id="NewsletterPopupSuccess" data-newsletter-popup-success style="display: none;">
+            <h2 class="newsletter-popup-success-heading" id="NewsletterPopupSuccessHeading"></h2>
+            <p class="newsletter-popup-success-message" id="NewsletterPopupSuccessMessage"></p>
+          </div>
         </div>
 
         {% if settings.newsletter_popup_image != blank %}
@@ -147,11 +139,77 @@
       });
 
       var form = document.getElementById('NewsletterPopupForm');
+      var formWrapper = document.getElementById('NewsletterPopupFormWrapper');
+      var successBlock = document.getElementById('NewsletterPopupSuccess');
+      var successHeadingEl = document.getElementById('NewsletterPopupSuccessHeading');
+      var successMessageEl = document.getElementById('NewsletterPopupSuccessMessage');
+      var errorEl = document.getElementById('NewsletterPopupFormError');
+      var submitBtn = document.getElementById('NewsletterPopupSubmitBtn');
+
+      function showSuccess() {
+        var overlay = document.querySelector('[data-newsletter-popup-overlay]');
+        var heading = overlay.getAttribute('data-success-heading') || 'Thank you!';
+        var message = overlay.getAttribute('data-success-message') || 'Check your inbox for your coupon.';
+        var intro = document.getElementById('NewsletterPopupIntro');
+        if (intro) intro.style.display = 'none';
+        if (formWrapper) formWrapper.style.display = 'none';
+        if (successBlock) {
+          if (successHeadingEl) successHeadingEl.textContent = heading;
+          if (successMessageEl) successMessageEl.textContent = message;
+          successBlock.style.display = 'block';
+        }
+        if (window.localStorage) localStorage.setItem(CLOSE_KEY, 'true');
+      }
+
+      function showError(msg) {
+        if (errorEl) {
+          errorEl.textContent = msg || 'Something went wrong. Please try again.';
+          errorEl.style.display = 'block';
+        }
+      }
+
+      function hideError() {
+        if (errorEl) errorEl.style.display = 'none';
+      }
+
       if (form) {
-        form.addEventListener('submit', function() {
-          if (window.localStorage) {
-            localStorage.setItem(CLOSE_KEY, 'true');
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          hideError();
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = submitBtn.getAttribute('data-loading-text') || 'Sending...';
           }
+          var formData = new FormData(form);
+          var action = form.getAttribute('action') || '/contact#contact_form';
+          if (action.indexOf('#') !== -1) action = action.split('#')[0];
+
+          fetch(action, {
+            method: 'POST',
+            body: formData,
+            redirect: 'manual',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+          }).then(function(res) {
+            if (res.type === 'opaqueredirect' || res.status === 0 || res.status === 302 || res.status === 303) {
+              showSuccess();
+              return;
+            }
+            if (res.ok) {
+              return res.text().then(function(html) {
+                if (html && html.indexOf('form-posted-successfully') !== -1) showSuccess();
+                else showError();
+              }).catch(function() { showError(); });
+            } else {
+              showError();
+            }
+          }).catch(function() {
+            showError();
+          }).then(function() {
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = submitBtn.getAttribute('data-original-text') || 'Unlock your discount';
+            }
+          });
         });
       }
 
