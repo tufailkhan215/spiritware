@@ -181,11 +181,17 @@
             submitBtn.disabled = true;
             submitBtn.textContent = submitBtn.getAttribute('data-loading-text') || 'Sending...';
           }
-          var formData = new FormData(form);
-          if (!formData.has('form_type')) formData.append('form_type', 'customer');
           var action = form.getAttribute('action') || '/contact#contact_form';
           if (action.indexOf('#') !== -1) action = action.split('#')[0];
-          var body = new URLSearchParams(formData).toString();
+          var params = new URLSearchParams();
+          params.set('form_type', 'customer');
+          params.set('utf8', '✓');
+          params.set('contact[tags]', 'newsletter');
+          var firstName = form.querySelector('input[name="contact[first_name]"]');
+          if (firstName && firstName.value.trim()) params.set('contact[first_name]', firstName.value.trim());
+          var emailInput = form.querySelector('input[name="contact[email]"]');
+          if (emailInput) params.set('contact[email]', emailInput.value);
+          var body = params.toString();
 
           fetch(action, {
             method: 'POST',
