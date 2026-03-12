@@ -55,7 +55,7 @@
             {%- endif -%}
           </div>
           {%- if product.metafields.custom.short_description != blank -%}
-            {%- assign short_desc = product.metafields.custom.short_description.value -%}
+            {%- assign short_desc = product.metafields.custom.short_description -%}
           {%- else -%}
             {%- assign short_desc = product.description | strip_html | truncatewords: 28 -%}
           {%- endif -%}
