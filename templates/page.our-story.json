@@ -46,13 +46,13 @@
             "eyebrow_color": "#000000",
             "heading_font": "serif",
             "headline_size": 48,
-            "headline_color": "#1A1A1A",
+            "headline_color": "#1a1a1a",
             "body_font": "system_ui_n4",
             "description_size": 16,
-            "description_color": "#4A4A4A",
+            "description_color": "#4a4a4a",
             "marble_color_1": "#e4ddd4",
-            "marble_color_2": "#D4C4B0",
-            "marble_color_3": "#F0E6D8",
+            "marble_color_2": "#d4c4b0",
+            "marble_color_3": "#f0e6d8",
             "animation_duration": 15
           },
           "blocks": {}
@@ -77,7 +77,7 @@
         "heading": "Where It All Began",
         "paragraph_1": "Sacred Rebel emerged from the space between—the sacred and the savage, the divine and the dichotomy. We saw a world where spirituality was being boxed into rigid definitions, where \"holy\" meant quiet and \"rebellious\" meant lost.",
         "paragraph_2": "We disagreed.",
-        "paragraph_3": "We believe God is limitless, and so are we. True spirituality isn't about confinement—it's about expansion, embodiment, and liberation. Our fire, sensuality, and unfiltered expression aren't meant to be suppressed. They're meant to be celebrated.",
+        "paragraph_3": "We believe God is limitless, and so are we. True spirituality isn't about confinement. It's about expansion, embodiment, and liberation. Our fire, sensuality, and unfiltered expression aren't meant to be suppressed. They're meant to be celebrated.",
         "subheading": "The Founder",
         "subtitle": "Founder & Creative Director",
         "blockquote": "\"I created Sacred Rebel for the ones who feel too wild for the temple and too sacred for the streets. This is for us.\"",
@@ -102,7 +102,7 @@
         "body_opacity": 90,
         "subheading": "Our Purpose",
         "heading": "Our Mission",
-        "body": "\"To craft sustainable, stylish clothing that empowers individuals to embody their authentic selves and wear their truth with reverence. Through poems, prayers, and passages, we offer the opportunity to be about it—not just talk about it.\"",
+        "body": "\"To craft sustainable, stylish & swaggy clothing that empowers individuals to embody their authentic selves & wear their truth with reverence. Through poems, prayers, & passages, we offer the opportunity to be about it. Not just talk about it.\"",
         "button_label": "Shop Now",
         "button_link": "",
         "button_background_color": "#faf7f2",
@@ -143,7 +143,7 @@
           "type": "value",
           "settings": {
             "title": "Radical Authenticity",
-            "description": "We celebrate the full spectrum—holy and wild, raw and refined, rebellious and reverent."
+            "description": "We celebrate the full spectrum.. holy & wild, raw & refined, rebellious & reverent."
           }
         },
         "value_3TcLNC": {
@@ -196,33 +196,33 @@
         "entry_GM8rCM": {
           "type": "entry",
           "settings": {
-            "year": "2023",
+            "year": "2016",
             "title": "Sacred Rebel concept born",
-            "description": "The vision for wearable prayers takes shape"
+            "description": "The vision for wearable prayers takes shape - it started as 'Coconut Warrior'"
           }
         },
         "entry_wbaDJm": {
           "type": "entry",
           "settings": {
-            "year": "2024",
-            "title": "First collection launches",
-            "description": "God Squad and Milk & Honey debut"
+            "year": "2023",
+            "title": "Refined Vision",
+            "description": "Sacred Rebel vision debut, vision in clarity"
           }
         },
         "entry_cJhLmb": {
           "type": "entry",
           "settings": {
-            "year": "2024",
-            "title": "Sustainability certification",
-            "description": "Partnered with certified ethical manufacturers"
+            "year": "2023",
+            "title": "Company birth, sustainability certification",
+            "description": "The LLC was created. Partnered with certified ethical manufacturers. Got first samples"
           }
         },
         "entry_bhV3GK": {
           "type": "entry",
           "settings": {
             "year": "2025",
-            "title": "Community reaches 50K",
-            "description": "The rebellion grows worldwide"
+            "title": "Community is alive, SR launch",
+            "description": "The rebellion grows worldwide as SR is birthed fully into the world"
           }
         }
       },
