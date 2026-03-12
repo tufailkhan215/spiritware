@@ -174,9 +174,32 @@
         if (errorEl) errorEl.style.display = 'none';
       }
 
+      var cooldownTimer = null;
+      function cooldownUntil(seconds) {
+        if (!submitBtn) return;
+        submitBtn.setAttribute('data-cooldown', 'true');
+        submitBtn.disabled = true;
+        var left = seconds;
+        submitBtn.textContent = 'Try again in ' + left + 's';
+        if (cooldownTimer) clearInterval(cooldownTimer);
+        cooldownTimer = setInterval(function() {
+          left--;
+          if (left <= 0) {
+            clearInterval(cooldownTimer);
+            cooldownTimer = null;
+            submitBtn.removeAttribute('data-cooldown');
+            submitBtn.disabled = false;
+            submitBtn.textContent = submitBtn.getAttribute('data-original-text') || 'Unlock your discount';
+          } else {
+            submitBtn.textContent = 'Try again in ' + left + 's';
+          }
+        }, 1000);
+      }
+
       if (form) {
         form.addEventListener('submit', function(e) {
           e.preventDefault();
+          e.stopPropagation();
           hideError();
           if (submitBtn) {
             submitBtn.disabled = true;
@@ -202,6 +225,11 @@
               showSuccess();
               return;
             }
+            if (res.status === 429) {
+              showError('Too many attempts. Please try again in a few minutes.');
+              cooldownUntil(60);
+              return;
+            }
             if (res.ok) {
               return res.text().then(function(html) {
                 if (html && html.indexOf('form-posted-successfully') !== -1) showSuccess();
@@ -213,12 +241,13 @@
           }).catch(function() {
             showError();
           }).then(function() {
-            if (submitBtn) {
+            if (submitBtn && !submitBtn.hasAttribute('data-cooldown')) {
               submitBtn.disabled = false;
               submitBtn.textContent = submitBtn.getAttribute('data-original-text') || 'Unlock your discount';
             }
           });
-        });
+          return false;
+        }, false);
       }
 
       document.addEventListener('keydown', function(event) {
