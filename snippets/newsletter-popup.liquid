@@ -3,6 +3,7 @@
 %}
 
 {% if popup_enabled %}
+  <iframe name="newsletter-popup-frame" id="newsletter-popup-frame" title="Newsletter submit" style="position:absolute;width:0;height:0;border:0;visibility:hidden;" aria-hidden="true"></iframe>
   <div class="newsletter-popup-overlay" data-newsletter-popup-overlay
     data-success-heading="{{ settings.newsletter_popup_success_heading | escape }}"
     data-success-message="{{ settings.newsletter_popup_success_message | escape }}">
@@ -173,6 +174,7 @@
       }
 
       if (form) {
+        var frame = document.getElementById('newsletter-popup-frame');
         form.addEventListener('submit', function(e) {
           e.preventDefault();
           e.stopPropagation();
@@ -181,57 +183,21 @@
             submitBtn.disabled = true;
             submitBtn.textContent = submitBtn.getAttribute('data-loading-text') || 'Sending...';
           }
-          var action = form.getAttribute('action') || '/contact#contact_form';
-          if (action.indexOf('#') !== -1) action = action.split('#')[0];
-          var params = new URLSearchParams();
-          params.set('form_type', 'customer');
-          params.set('utf8', '✓');
-          params.set('contact[tags]', 'newsletter');
-          var firstName = form.querySelector('input[name="contact[first_name]"]');
-          if (firstName && firstName.value.trim()) params.set('contact[first_name]', firstName.value.trim());
-          var emailInput = form.querySelector('input[name="contact[email]"]');
-          if (emailInput) params.set('contact[email]', emailInput.value);
-          var body = params.toString();
-
-          fetch(action, {
-            method: 'POST',
-            body: body,
-            redirect: 'manual',
-            credentials: 'same-origin',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-            }
-          }).then(function(res) {
-            if (res.type === 'opaqueredirect' || res.status === 0 || res.status === 302 || res.status === 303) {
+          form.setAttribute('target', 'newsletter-popup-frame');
+          if (frame) {
+            frame.onload = function() {
+              frame.onload = null;
               showSuccess();
-              return;
-            }
-            if (res.status === 429) {
-              showError('Please try again in a moment.');
-              return;
-            }
-            if (res.status === 400) {
-              showError('Something went wrong. Please try again.');
-              return;
-            }
-            if (res.ok) {
-              return res.text().then(function(html) {
-                if (!html) { showError('Something went wrong. Please try again.'); return; }
-                var isSuccess = html.indexOf('form-posted-successfully') !== -1 || html.indexOf('form-success') !== -1;
-                if (isSuccess) showSuccess();
-                else showError('Something went wrong. Please try again.');
-              }).catch(function() { showError('Something went wrong. Please try again.'); });
-            } else {
-              showError('Something went wrong. Please try again.');
-            }
-          }).catch(function() {
-            showError('Something went wrong. Please try again.');
-          }).then(function() {
-            if (submitBtn) {
-              submitBtn.disabled = false;
-              submitBtn.textContent = submitBtn.getAttribute('data-original-text') || 'Unlock your discount';
-            }
-          });
+              if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = submitBtn.getAttribute('data-original-text') || 'Unlock your discount';
+              }
+            };
+          } else {
+            setTimeout(function() { showSuccess(); if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = submitBtn.getAttribute('data-original-text') || 'Unlock your discount'; } }, 1500);
+          }
+          form.submit();
+          form.removeAttribute('target');
           return false;
         }, false);
       }
