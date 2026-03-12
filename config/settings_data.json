@@ -11,6 +11,8 @@
   "current": {
     "header_style": "header_1",
     "footer_style": "footer_1",
+    "newsletter_popup_image": "shopify://shop_images/Photoroom_20260312_124041.jpg",
+    "newsletter_popup_heading": "Get the latest from Sacred Rebel",
     "show_color_swatches": true,
     "swatch_color_map": "Vintage Black|||#1A1A1A\nSand|||#C4A77D\nCream|||#FAF7F2\nBlack|||#000000\nWhite|||#000000",
     "sections": {
@@ -490,6 +492,15 @@
         "settings": {
           "show_color_swatches": true,
           "show_trust_strip": true
+        }
+      },
+      "related-products": {
+        "type": "related-products",
+        "settings": {
+          "heading": "You may also like",
+          "background_color": "#faf7f2",
+          "products_per_row": 4,
+          "max_products": 4
         }
       }
     },
