@@ -90,6 +90,22 @@
         "id": "newsletter_popup_disclaimer",
         "label": "Fine print / disclaimer",
         "default": "We respect your privacy. Unsubscribe at any time."
+      },
+      {
+        "type": "header",
+        "content": "After submission message"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_popup_success_heading",
+        "label": "Success heading",
+        "default": "Thank you!"
+      },
+      {
+        "type": "textarea",
+        "id": "newsletter_popup_success_message",
+        "label": "Success message",
+        "default": "Check your inbox for your 25% off coupon code."
       }
     ]
   }

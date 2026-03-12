@@ -35,8 +35,17 @@
             {% endif %}
 
             {% if form.posted_successfully? %}
-              <div class="newsletter-popup-message newsletter-popup-message--success">
-                {{ 'general.newsletter.confirmation' | t }}
+              <div class="newsletter-popup-success" data-newsletter-popup-success>
+                {% if settings.newsletter_popup_success_heading != blank %}
+                  <h2 class="newsletter-popup-success-heading">
+                    {{ settings.newsletter_popup_success_heading }}
+                  </h2>
+                {% endif %}
+                {% if settings.newsletter_popup_success_message != blank %}
+                  <p class="newsletter-popup-success-message">
+                    {{ settings.newsletter_popup_success_message }}
+                  </p>
+                {% endif %}
               </div>
             {% else %}
               <input type="hidden" name="contact[tags]" value="newsletter">
