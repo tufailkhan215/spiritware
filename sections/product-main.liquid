@@ -244,6 +244,22 @@
         this.classList.add('active');
       });
     });
+    if (mainImage && thumbnails.length > 0) {
+      document.addEventListener('keydown', function(e) {
+        if (window.innerWidth < 768) return;
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        var focusTag = document.activeElement && document.activeElement.tagName;
+        if (focusTag === 'INPUT' || focusTag === 'TEXTAREA' || focusTag === 'SELECT') return;
+        var list = Array.prototype.slice.call(thumbnails);
+        var activeIndex = list.findIndex(function(t) { return t.classList.contains('active'); });
+        if (activeIndex === -1) return;
+        var nextIndex = activeIndex;
+        if (e.key === 'ArrowLeft') nextIndex = (activeIndex - 1 + list.length) % list.length;
+        else if (e.key === 'ArrowRight') nextIndex = (activeIndex + 1) % list.length;
+        var nextThumb = list[nextIndex];
+        if (nextThumb) nextThumb.click();
+      });
+    }
     var quantityInput = document.getElementById('Quantity');
     var quantityDisplay = document.getElementById('QuantityDisplay');
     var qMinus = document.querySelector('.quantity-minus');
