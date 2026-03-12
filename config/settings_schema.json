@@ -89,7 +89,7 @@
         "type": "text",
         "id": "newsletter_popup_disclaimer",
         "label": "Fine print / disclaimer",
-        "default": ""
+        "default": "We respect your privacy. Unsubscribe at any time."
       }
     ]
   }
