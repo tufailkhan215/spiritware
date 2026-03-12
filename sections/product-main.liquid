@@ -45,7 +45,8 @@
             <span class="product-rating__count">{{ product.metafields.custom.review_count | default: '0' }} reviews</span>
           </div>
           {% endcomment %}
-           <div class="loox-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}"></div>
+           <a href="#looxReviews"><div class="loox-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}"></div></a>
+          
           <div class="product-price-wrapper">
             <span class="product-price" id="ProductPrice">{{ product.selected_or_first_available_variant.price | money }}</span>
             {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
