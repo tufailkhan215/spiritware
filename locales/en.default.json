@@ -31,7 +31,11 @@
   "sections": {
     "cart": {
       "cart_error": "There was an error while updating your cart.",
-      "cart_quantity_error_html": "You can only add {{ quantity }} of this item to your cart."
+      "cart_quantity_error_html": "You can only add {{ quantity }} of this item to your cart.",
+      "update": "Update cart",
+      "remove": "Remove",
+      "subtotal": "Subtotal",
+      "taxes_and_shipping_at_checkout": "Taxes and shipping calculated at checkout"
     },
     "slideshow": {
       "pause_slideshow": "Pause slideshow",

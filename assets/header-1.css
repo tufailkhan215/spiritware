@@ -282,7 +282,7 @@
   transform: scale(1.1);
 }
 
-/* Cart — group for hover scale on icon */
+/* Cart — group for hover scale on icon (button or link) */
 .header-1__cart {
   position: relative;
   display: inline-flex;
@@ -292,6 +292,11 @@
   border: 0;
   background: none;
   cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+.header-1__cart--link:hover {
+  color: inherit;
 }
 
 .header-1__cart-icon {
