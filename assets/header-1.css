@@ -259,11 +259,27 @@
   color: var(--header-1-text);
 }
 
-/* Actions: cart + mobile toggle */
+/* Actions: wishlist, cart + mobile toggle */
 .header-1__actions {
   display: flex;
   align-items: center;
   gap: 1.5rem;
+}
+
+.header-1__wishlist {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--header-1-text);
+  transition: transform var(--header-1-transition-fast) ease, color 0.2s ease;
+}
+.header-1__wishlist svg {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+.header-1__wishlist:hover {
+  color: var(--header-1-accent, #C4A77D);
+  transform: scale(1.1);
 }
 
 /* Cart — group for hover scale on icon */

@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "wishlist": {
+      "type": "wishlist",
+      "settings": {
+        "heading": "Your Wishlist",
+        "subtitle": "Items you've saved for later.",
+        "empty_message": "Your wishlist is empty.",
+        "empty_cta": "Continue shopping",
+        "loading_message": "Loading…"
+      }
+    }
+  },
+  "order": ["wishlist"]
+}

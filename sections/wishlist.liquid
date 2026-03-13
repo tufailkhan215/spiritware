@@ -1,0 +1,155 @@
+{% comment %}
+  Wishlist page section: reads product IDs/handles from localStorage, fetches product JSON, renders grid.
+  Expects wishlist array of { id, handle } (handle required for fetch). Legacy string IDs are skipped.
+{% endcomment %}
+
+<section class="wishlist-page section" data-section-id="{{ section.id }}">
+  <div class="wishlist-page__inner">
+    <h1 class="wishlist-page__title">{{ section.settings.heading | default: 'Your Wishlist' }}</h1>
+    <p class="wishlist-page__subtitle">{{ section.settings.subtitle }}</p>
+    <div id="wishlist-root" class="wishlist-page__grid" aria-live="polite">
+      <div id="wishlist-empty" class="wishlist-page__empty" style="display: none;">
+        <p>{{ section.settings.empty_message | default: 'Your wishlist is empty.' }}</p>
+        <a href="{{ routes.collections_url }}" class="wishlist-page__cta">{{ section.settings.empty_cta | default: 'Continue shopping' }}</a>
+      </div>
+      <div id="wishlist-loading" class="wishlist-page__loading">
+        <span aria-hidden="true">{{ section.settings.loading_message | default: 'Loading…' }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var root = document.getElementById('wishlist-root');
+  var emptyEl = document.getElementById('wishlist-empty');
+  var loadingEl = document.getElementById('wishlist-loading');
+  if (!root) return;
+
+  function formatMoney(cents) {
+    return (cents / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+  }
+
+  function getWishlist() {
+    var raw = localStorage.getItem('wishlist');
+    if (!raw) return [];
+    try {
+      var list = JSON.parse(raw);
+      return Array.isArray(list) ? list : [];
+    } catch (e) { return []; }
+  }
+
+  function normalizeItem(item) {
+    if (typeof item === 'string') return { id: item, handle: '' };
+    if (item && typeof item === 'object' && item.id) return { id: String(item.id), handle: item.handle || '' };
+    return null;
+  }
+
+  function removeFromWishlist(productId) {
+    var list = getWishlist().filter(function(item) {
+      var n = normalizeItem(item);
+      return n && n.id !== productId;
+    });
+    localStorage.setItem('wishlist', JSON.stringify(list));
+  }
+
+  function renderProduct(product, productId) {
+    var url = '/products/' + (product.handle || '');
+    var img = product.featured_image || '';
+    var title = (product.title || '').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    var price = formatMoney(product.price || 0);
+    var available = product.available !== false;
+    var card = document.createElement('div');
+    card.className = 'wishlist-card';
+    card.setAttribute('data-product-id', productId);
+    card.innerHTML =
+      '<div class="wishlist-card__image-wrap">' +
+        (img ? '<a href="' + url + '"><img src="' + (typeof img === 'string' ? img : (img.src || '')) + '" alt="" class="wishlist-card__img" loading="lazy"></a>' : '<a href="' + url + '" class="wishlist-card__placeholder">No image</a>') +
+        '<button type="button" class="wishlist-card__remove wishlist-remove-btn" data-product-id="' + productId + '" aria-label="Remove from wishlist">×</button>' +
+      '</div>' +
+      '<div class="wishlist-card__info">' +
+        '<a href="' + url + '" class="wishlist-card__title">' + title + '</a>' +
+        '<p class="wishlist-card__price">' + price + '</p>' +
+        (available ? '<a href="' + url + '" class="wishlist-card__add">View product</a>' : '<span class="wishlist-card__sold-out">Sold out</span>') +
+      '</div>';
+    var removeBtn = card.querySelector('.wishlist-remove-btn');
+    if (removeBtn) {
+      removeBtn.addEventListener('click', function() {
+        removeFromWishlist(productId);
+        card.remove();
+        if (root.querySelectorAll('.wishlist-card').length === 0) {
+          loadingEl.style.display = 'none';
+          emptyEl.style.display = 'block';
+        }
+      });
+    }
+    return card;
+  }
+
+  function run() {
+    var list = getWishlist();
+    var items = list.map(normalizeItem).filter(function(n) { return n && n.handle; });
+    loadingEl.style.display = items.length === 0 ? 'none' : 'block';
+    emptyEl.style.display = items.length === 0 ? 'block' : 'none';
+    loadingEl.innerHTML = '<span aria-hidden="true">Loading…</span>';
+    items.forEach(function(item) {
+      var handle = item.handle;
+      fetch('/products/' + handle + '.js')
+        .then(function(res) { return res.ok ? res.json() : Promise.reject(); })
+        .then(function(product) {
+          loadingEl.style.display = 'none';
+          var card = renderProduct(product, item.id);
+          root.appendChild(card);
+        })
+        .catch(function() {
+          loadingEl.style.display = 'none';
+          if (!root.querySelector('.wishlist-card')) emptyEl.style.display = 'block';
+        });
+    });
+    if (items.length === 0) loadingEl.style.display = 'none';
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Wishlist",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your Wishlist"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "empty_message",
+      "label": "Empty message",
+      "default": "Your wishlist is empty."
+    },
+    {
+      "type": "text",
+      "id": "empty_cta",
+      "label": "Empty CTA button text",
+      "default": "Continue shopping"
+    },
+    {
+      "type": "text",
+      "id": "loading_message",
+      "label": "Loading message",
+      "default": "Loading…"
+    }
+  ]
+}
+{% endschema %}

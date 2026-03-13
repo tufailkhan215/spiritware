@@ -25,7 +25,8 @@
         btn.addEventListener('click', (e) => {
           e.preventDefault();
           const productId = btn.dataset.productId;
-          this.toggleWishlist(productId, btn);
+          const productHandle = btn.dataset.productHandle || '';
+          this.toggleWishlist(productId, btn, productHandle);
         });
       });
 
@@ -110,15 +111,15 @@
       document.body.style.overflow = '';
     }
 
-    toggleWishlist(productId, btn) {
+    toggleWishlist(productId, btn, productHandle) {
       let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-      const index = wishlist.indexOf(productId);
+      const index = wishlist.findIndex(item => item && (item.id === productId || item === productId));
 
       if (index > -1) {
         wishlist.splice(index, 1);
         btn.classList.remove('active');
       } else {
-        wishlist.push(productId);
+        wishlist.push({ id: productId, handle: productHandle || '' });
         btn.classList.add('active');
       }
 
