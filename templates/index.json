@@ -23,27 +23,28 @@
         "secondary_button_link": ""
       }
     },
-    "17737713818fb76301": {
+    "1773771918d396c296": {
       "type": "_blocks",
       "blocks": {
-        "ai_gen_block_fc38b06_zxjFEX": {
-          "type": "ai_gen_block_fc38b06",
+        "ai_gen_block_af609ad_kbGnhP": {
+          "type": "ai_gen_block_af609ad",
           "settings": {
             "video": "shopify://files/videos/6EB56589-209A-4764-BD29-BDB451E9F6D5.mov",
-            "aspect_ratio": "56.25",
+            "show_controls": false,
             "desktop_width_percent": 100,
-            "border_radius": 0,
-            "loop_video": true,
-            "mute_video": true,
-            "show_custom_controls": true,
-            "show_controls": false
+            "aspect_ratio": "56.25",
+            "border_radius": 0
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "ai_gen_block_fc38b06_zxjFEX"
+        "ai_gen_block_af609ad_kbGnhP"
       ],
+      "settings": {}
+    },
+    "17737713818fb76301": {
+      "type": "_blocks",
       "settings": {}
     },
     "story_1_ENFzzD": {
@@ -657,6 +658,7 @@
   },
   "order": [
     "hero_1_AHTeLw",
+    "1773771918d396c296",
     "17737713818fb76301",
     "story_1_ENFzzD",
     "1770865801691a3ef3",
