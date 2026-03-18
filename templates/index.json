@@ -23,27 +23,7 @@
         "secondary_button_link": ""
       }
     },
-    "1773771918d396c296": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_af609ad_kbGnhP": {
-          "type": "ai_gen_block_af609ad",
-          "settings": {
-            "video": "shopify://files/videos/6EB56589-209A-4764-BD29-BDB451E9F6D5.mov",
-            "show_controls": false,
-            "desktop_width_percent": 100,
-            "aspect_ratio": "56.25",
-            "border_radius": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_af609ad_kbGnhP"
-      ],
-      "settings": {}
-    },
-    "17737713818fb76301": {
+    "1773770876365640f8": {
       "type": "_blocks",
       "settings": {}
     },
@@ -69,18 +49,18 @@
         "ai_gen_block_582703b_a3Ap3X": {
           "type": "ai_gen_block_582703b",
           "settings": {
-            "image_1": "shopify://shop_images/Screenshot2026-02-11at6.52.03PM.png",
-            "image_2": "shopify://shop_images/Screenshot2026-02-11at6.42.28PM.png",
+            "image_1": "shopify://shop_images/IMG_7952.jpg",
+            "image_2": "shopify://shop_images/Facetune_17-03-2026-11-52-00_b34a7dfd-d4f4-4941-8788-d3dd6b0fdbcc.heic",
             "image_3": "shopify://shop_images/Screenshot2026-02-11at6.56.35PM.png",
             "image_4": "shopify://shop_images/Facetune_11-03-2026-09-47-50_2.heic",
-            "image_5": "shopify://shop_images/Screenshot_2026-02-07_at_12.43.57_PM.png",
-            "image_6": "shopify://shop_images/Screenshot_2026-02-11_at_7.19.16_PM.png",
-            "image_7": "shopify://shop_images/Screenshot2026-02-11at6.51.42PM.png",
-            "image_8": "shopify://shop_images/Screenshot2026-02-11at6.47.49PM.png",
-            "image_9": "shopify://shop_images/Screenshot_2026-02-11_at_7.08.03_PM.png",
-            "image_10": "shopify://shop_images/Screenshot_2026-02-11_at_7.20.32_PM.png",
-            "image_11": "shopify://shop_images/Screenshot_2026-02-11_at_7.20.44_PM.png",
-            "image_12": "shopify://shop_images/Screenshot_2026-02-11_at_7.21.07_PM.png",
+            "image_5": "shopify://shop_images/Facetune_17-03-2026-11-51-37.heic",
+            "image_6": "shopify://shop_images/Facetune_17-03-2026-11-53-04.heic",
+            "image_7": "shopify://shop_images/IMG_7950.jpg",
+            "image_8": "shopify://shop_images/Photoroom_20260312_123017_2.jpg",
+            "image_9": "shopify://shop_images/Facetune_17-03-2026-11-55-15.heic",
+            "image_10": "shopify://shop_images/Facetune_17-03-2026-11-50-52.heic",
+            "image_11": "shopify://shop_images/IMG_7953.jpg",
+            "image_12": "shopify://shop_images/Facetune_17-03-2026-11-54-46.heic",
             "image_width": 300,
             "image_height": 500,
             "gap": 20,
@@ -658,8 +638,7 @@
   },
   "order": [
     "hero_1_AHTeLw",
-    "1773771918d396c296",
-    "17737713818fb76301",
+    "1773770876365640f8",
     "story_1_ENFzzD",
     "1770865801691a3ef3",
     "shop_homepage_9nEXF6",
